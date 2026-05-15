@@ -4,7 +4,9 @@ using System.Collections.Generic;
 public class InputManager : MonoBehaviour
 {
     [Header("Drag Settings")]
-    [SerializeField] private float mergeDistance = 1.0f;
+    [SerializeField] private float mergeDistance = 2.0f; // 스택되는 범위
+    [SerializeField] private float dragYOffset = 1.0f;
+    [SerializeField] private float dragLagStrength = 5.0f; // 드래그중 딸려가는 강도
     [SerializeField] private GameObject cardStackPrefab;
 
     [Header("Camera")]
@@ -69,8 +71,13 @@ public class InputManager : MonoBehaviour
         // 임시 스택 생성
         draggingStack = CreateTempStack(moved, card.transform.position);
 
-        // 드래그 평면(탑다운이므로 XZ평면, normal = Vector3.up)
-        dragPlane = new Plane(Vector3.up, draggingStack.transform.position);
+        // 스택을 즉시 올려 모든 카드가 첫 프레임부터 최상위에 표시
+        Vector3 elevatedPos = draggingStack.transform.position;
+        elevatedPos.y += dragYOffset;
+        draggingStack.transform.position = elevatedPos;
+
+        // dragPlane은 원래 카드 Y 기준 (elevation 이전)
+        dragPlane = new Plane(Vector3.up, card.transform.position);
 
         if (dragPlane.Raycast(ray, out float distance))
         {
@@ -78,7 +85,6 @@ public class InputManager : MonoBehaviour
             offset = draggingStack.transform.position - mouseWorldPos;
             isDragging = true;
         }
-
     }
 
     // 2. 카드 끌기
@@ -90,9 +96,22 @@ public class InputManager : MonoBehaviour
         if (dragPlane.Raycast(ray, out float distance))
         {
             Vector3 mouseWorldPos = ray.GetPoint(distance);
-            draggingStack.transform.position = mouseWorldPos + offset;
-        }
+            Vector3 newPos = mouseWorldPos + offset;
+            // dragYOffset은 StartDragging의 offset에 이미 포함됨
 
+            Vector3 worldDelta = newPos - draggingStack.transform.position;
+            draggingStack.transform.position = newPos;
+
+            if (draggingStack.cards.Count > 1)
+            {
+                Vector3 localDelta = draggingStack.transform.InverseTransformDirection(worldDelta);
+                for (int i = 1; i < draggingStack.cards.Count; i++)
+                {
+                    Vector3 basePos = new Vector3(0, 0.01f * i, -0.7f * i);
+                    draggingStack.cards[i].targetLocalPosition = basePos - localDelta * i * dragLagStrength;
+                }
+            }
+        }
     }
 
     // 3. 카드 놓기
@@ -126,6 +145,14 @@ public class InputManager : MonoBehaviour
             target.AddCards(cardsToMerge);
 
             Destroy(draggingStack.gameObject);
+        }
+        else
+        {
+            // 병합 없이 놓을 때 Y를 원래 높이로 되돌려 놓인 카드가 계속 높아지는 걸 방지
+            Vector3 pos = draggingStack.transform.position;
+            pos.y -= dragYOffset;
+            draggingStack.transform.position = pos;
+            draggingStack.Refresh();
         }
     }
 
@@ -161,8 +188,9 @@ public class InputManager : MonoBehaviour
             if (s.IsEmpty) continue;
 
             Vector3 a = new Vector3(pos.x, 0, pos.z);
-            Vector3 b = new Vector3(s.transform.position.x, 0, s.transform.position.z);
-            float dist = Vector3.Distance(a, b);
+            Vector3 bOrigin = new Vector3(s.transform.position.x, 0, s.transform.position.z);
+            Vector3 bTop = new Vector3(s.TopCard.transform.position.x, 0, s.TopCard.transform.position.z);
+            float dist = Mathf.Min(Vector3.Distance(a, bOrigin), Vector3.Distance(a, bTop));
 
             if (dist < nearestDist)
             {

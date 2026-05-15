@@ -14,16 +14,19 @@ public class CardStack : MonoBehaviour
         cards.Add(card);
         card.stack = this;
         card.transform.SetParent(transform);
+        if (card.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = true;
         ArrangeCards();
     }
 
-    public void AddCards(List<Card> newCards)
+    public void AddCards(List<Card> newCards, bool snapToOrigin = false)
     {
         foreach (var c in newCards)
         {
             cards.Add(c);
             c.stack = this;
             c.transform.SetParent(transform);
+            if (c.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = true;
+            if (snapToOrigin) c.transform.localPosition = Vector3.zero;
         }
         ArrangeCards();
     }
@@ -42,20 +45,22 @@ public class CardStack : MonoBehaviour
         {
             c.stack = null;
             c.transform.SetParent(null);
+            if (c.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = false;
         }
 
         ArrangeCards();
         return moved;
     }
 
+    // 카드가 찰딱 붙을 때
+    public void Refresh() => ArrangeCards();
+
     private void ArrangeCards()
     {
         for (int i = 0; i < cards.Count; i++)
         {
-            cards[i].transform.localPosition =
-                new Vector3(0, 0.01f * i, -0.25f * i);
-
-
+            cards[i].targetLocalPosition = new Vector3(0, 0.01f * i, -0.7f * i);
+            cards[i].followSpeed = Mathf.Max(20f, 20f - i * 3f);
         }
     }
 }
