@@ -9,6 +9,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float dragLagStrength = 5.0f; // 드래그중 딸려가는 강도
     [SerializeField] private GameObject cardStackPrefab;
 
+    private Vector3 stackVelocity;       // 스택의 부드러운 속도
+    private Vector3 lastStackPosition;
+
     [Header("Camera")]
     [SerializeField] private Camera mainCamera;
 
@@ -85,6 +88,9 @@ public class InputManager : MonoBehaviour
             offset = draggingStack.transform.position - mouseWorldPos;
             isDragging = true;
         }
+
+        lastStackPosition = draggingStack.transform.position;
+        stackVelocity = Vector3.zero;
     }
 
     // 2. 카드 끌기
@@ -102,13 +108,22 @@ public class InputManager : MonoBehaviour
             Vector3 worldDelta = newPos - draggingStack.transform.position;
             draggingStack.transform.position = newPos;
 
+            Vector3 instantVelocity = (newPos - lastStackPosition) / Mathf.Max(Time.deltaTime, 0.0001f);
+            
+            // 속도를 부드럽게 보간 → 들쭉날쭉함 제거
+            stackVelocity = Vector3.Lerp(stackVelocity, instantVelocity, Time.deltaTime * 10f);
+            
+            lastStackPosition = newPos;
+
             if (draggingStack.cards.Count > 1)
             {
-                Vector3 localDelta = draggingStack.transform.InverseTransformDirection(worldDelta);
+                Vector3 localVelocity = draggingStack.transform.InverseTransformDirection(stackVelocity);
+
                 for (int i = 1; i < draggingStack.cards.Count; i++)
                 {
                     Vector3 basePos = new Vector3(0, 0.01f * i, -0.7f * i);
-                    draggingStack.cards[i].targetLocalPosition = basePos - localDelta * i * dragLagStrength;
+                    // velocity * i * 작은 계수 → 위 카드일수록 더 뒤로
+                    draggingStack.cards[i].targetLocalPosition = basePos - localVelocity * i * 0.02f;
                 }
             }
         }

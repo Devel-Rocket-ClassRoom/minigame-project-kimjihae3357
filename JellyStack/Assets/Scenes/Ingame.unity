@@ -251,28 +251,28 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
---- !u!114 &295680115 stripped
+--- !u!114 &658711772 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7374127364426829445, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  m_PrefabInstance: {fileID: 45156369}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dea614771834740a3c088fe362c475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Card
---- !u!114 &658711767 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7374127364426829445, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
   m_PrefabInstance: {fileID: 1015153589}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dea614771834740a3c088fe362c475, type: 3}
+  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Card
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
+--- !u!114 &666580709 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_PrefabInstance: {fileID: 45156369}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
 --- !u!1 &698070142
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,10 +304,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestSetup
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   cardsToRegister:
-  - {fileID: 1802103283}
-  - {fileID: 295680115}
-  - {fileID: 658711767}
-  - {fileID: 1110101675}
+  - {fileID: 1802103288}
+  - {fileID: 666580709}
+  - {fileID: 658711772}
+  - {fileID: 1832804493}
 --- !u!4 &698070144
 Transform:
   m_ObjectHideFlags: 0
@@ -627,17 +627,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1110101675 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7374127364426829445, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  m_PrefabInstance: {fileID: 81139173}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dea614771834740a3c088fe362c475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Card
 --- !u!1 &1639397420
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,17 +739,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1802103283 stripped
+--- !u!114 &1802103288 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7374127364426829445, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
   m_PrefabInstance: {fileID: 3058658654938971205}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dea614771834740a3c088fe362c475, type: 3}
+  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Card
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
+--- !u!114 &1832804493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_PrefabInstance: {fileID: 81139173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
 --- !u!1001 &3058658654938971205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -813,7 +813,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: VillagerCard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7374127364426829445, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
