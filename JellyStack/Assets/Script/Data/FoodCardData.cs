@@ -4,5 +4,5 @@ using UnityEngine;
 public class FoodCardData : CardData
 {
     [Header("음식 카드")]
-    public int fullnessValue;
+    public int maxFullness;
 }

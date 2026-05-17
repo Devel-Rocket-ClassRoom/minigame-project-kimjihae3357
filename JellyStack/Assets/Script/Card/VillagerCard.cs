@@ -20,6 +20,7 @@ public class VillagerCard : Card
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+        NotifyStatChanged();
 
         if (currentHealth == 0)
         {

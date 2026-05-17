@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &5 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1533702428846187149, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_PrefabInstance: {fileID: 81139173}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
 --- !u!1001 &45156369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -251,10 +262,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
---- !u!114 &658711772 stripped
+--- !u!114 &87630623 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  m_PrefabInstance: {fileID: 1015153589}
+  m_CorrespondingSourceObject: {fileID: 1533702428846187149, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_PrefabInstance: {fileID: 3058658654938971205}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -262,9 +273,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
---- !u!114 &666580709 stripped
+--- !u!1001 &169130970
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.062
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.95671
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481278547604517009, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      propertyPath: m_Name
+      value: FoodCard 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1744560198085132436, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7856585325476218487, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+--- !u!114 &350027044 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1533702428846187149, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
   m_PrefabInstance: {fileID: 45156369}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -304,10 +378,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestSetup
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   cardsToRegister:
-  - {fileID: 1802103288}
-  - {fileID: 666580709}
-  - {fileID: 658711772}
-  - {fileID: 1832804493}
+  - {fileID: 87630623}
+  - {fileID: 350027044}
+  - {fileID: 1326090707}
+  - {fileID: 5}
+  - {fileID: 1941315444}
+  - {fileID: 1002321965}
 --- !u!4 &698070144
 Transform:
   m_ObjectHideFlags: 0
@@ -512,6 +588,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
+--- !u!114 &1002321965 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5966923641713962010, guid: f930fd9e8f49dc74280a85ca89608c13, type: 3}
+  m_PrefabInstance: {fileID: 169130970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5941c950f9449264e948f0c6dcaec03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodCard
 --- !u!1001 &1015153589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -627,6 +714,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1326090707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1533702428846187149, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+  m_PrefabInstance: {fileID: 1015153589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
 --- !u!1 &1639397420
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,28 +837,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1802103288 stripped
+--- !u!1001 &1920775157
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.3459
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.95081
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481278547604517009, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      propertyPath: m_Name
+      value: FoodCard
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1744560198085132436, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7856585325476218487, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+--- !u!114 &1941315444 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  m_PrefabInstance: {fileID: 3058658654938971205}
+  m_CorrespondingSourceObject: {fileID: 5966923641713962010, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+  m_PrefabInstance: {fileID: 1920775157}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5941c950f9449264e948f0c6dcaec03f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
---- !u!114 &1832804493 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6661999877547454708, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  m_PrefabInstance: {fileID: 81139173}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
+  m_EditorClassIdentifier: Assembly-CSharp::FoodCard
 --- !u!1001 &3058658654938971205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -841,3 +991,5 @@ SceneRoots:
   - {fileID: 1015153589}
   - {fileID: 81139173}
   - {fileID: 698070144}
+  - {fileID: 1920775157}
+  - {fileID: 169130970}
