@@ -105,3 +105,6 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# 외부 저장소 에셋 폴더
+/Assets/Imported/
