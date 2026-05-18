@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 578560275105535729}
   - component: {fileID: 3434512564670382638}
   m_Layer: 0
-  m_Name: Image_icon
+  m_Name: Sprite_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,8 +418,7 @@ GameObject:
   - component: {fileID: 115328413053555574}
   - component: {fileID: 5594718368014385323}
   - component: {fileID: 6954896302920449507}
-  - component: {fileID: 5966923641713962010}
-  - component: {fileID: 4783888551339185957}
+  - component: {fileID: 4990237338087074902}
   m_Layer: 0
   m_Name: ResouceCard
   m_TagString: Untagged
@@ -477,7 +476,7 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
---- !u!114 &5966923641713962010
+--- !u!114 &4990237338087074902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -486,28 +485,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8481278547604517009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5941c950f9449264e948f0c6dcaec03f, type: 3}
+  m_Script: {fileID: 11500000, guid: 30684ed009b0a1e4f8e5d0532787070f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FoodCard
-  data: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
-  stack: {fileID: 0}
-  targetLocalPosition: {x: 0, y: 0, z: 0}
-  followSpeed: 10
---- !u!114 &4783888551339185957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8481278547604517009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd8846a389225ff4481a392af909cb5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FoodCardUI
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceCardUI
   spriteIcon: {fileID: 578560275105535729}
   nameText: {fileID: 5934524711116554432}
-  fullnessText: {fileID: 0}
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0

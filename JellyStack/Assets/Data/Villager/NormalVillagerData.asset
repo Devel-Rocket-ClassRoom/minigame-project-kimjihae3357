@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4045921e9aa3a4635ac6a81bbd1b5518, type: 3}
   m_Name: NormalVillagerData
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCardData
-  cardName: "\uC8FC\uBBFC"
-  icon: {fileID: 0}
   cardType: 1
+  cardName: "\uC77C\uBC18\uC8FC\uBBFC"
+  icon: {fileID: 0}
+  villagerType: 0
   maxHealth: 5
   maxHunger: 1
   attackPower: 2
