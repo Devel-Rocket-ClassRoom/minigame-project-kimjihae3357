@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class InputManager : MonoBehaviour
     private CardStack draggingStack;
     private CardStack sourceStack;
 
+    private Vector2 currentPointerPosition;
+
     private void Awake()
     {
         if (mainCamera == null) mainCamera = Camera.main;
@@ -29,24 +32,33 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current != null)
+            currentPointerPosition = Mouse.current.position.ReadValue();
+
+        if (isDragging) DragCard();
+    }
+
+    // PlayerInput (Invoke Unity Events) 콜백 — 클릭 시작
+    public void OnClick(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
         {
             TryPickCard();
         }
-        else if (Input.GetMouseButton(0) && isDragging)
+        else if (ctx.canceled)
         {
-            DragCard();
-        }
-        else if (Input.GetMouseButtonUp(0) && isDragging)
-        {
-            ReleaseCard();
+            if (isDragging)
+            {
+                ReleaseCard();
+            }
         }
     }
+
 
     // 카드 집기
     private void TryPickCard()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
 
         if (hits.Length == 0) return;
@@ -94,26 +106,24 @@ public class InputManager : MonoBehaviour
         stackVelocity = Vector3.zero;
     }
 
-    // 2. 카드 끌기
+    // 카드 끌기
     private void DragCard()
     {
         if (draggingStack == null) return;
 
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
         if (dragPlane.Raycast(ray, out float distance))
         {
             Vector3 mouseWorldPos = ray.GetPoint(distance);
             Vector3 newPos = mouseWorldPos + offset;
-            // dragYOffset은 StartDragging의 offset에 이미 포함됨
 
-            Vector3 worldDelta = newPos - draggingStack.transform.position;
             draggingStack.transform.position = newPos;
 
             Vector3 instantVelocity = (newPos - lastStackPosition) / Mathf.Max(Time.deltaTime, 0.0001f);
-            
+
             // 속도를 부드럽게 보간 → 들쭉날쭉함 제거
             stackVelocity = Vector3.Lerp(stackVelocity, instantVelocity, Time.deltaTime * 10f);
-            
+
             lastStackPosition = newPos;
 
             if (draggingStack.cards.Count > 1)
@@ -123,17 +133,19 @@ public class InputManager : MonoBehaviour
                 for (int i = 1; i < draggingStack.cards.Count; i++)
                 {
                     Vector3 basePos = new Vector3(0, 0.01f * i, -0.7f * i);
-                    // velocity * i * 작은 계수 → 위 카드일수록 더 뒤로
                     draggingStack.cards[i].targetLocalPosition = basePos - localVelocity * i * 0.02f;
                 }
             }
         }
     }
 
-    // 3. 카드 놓기
+    // 카드 놓기
     private void ReleaseCard()
     {
         isDragging = false;
+
+        if (draggingStack == null)
+            return;
 
         TryMergeOrDrop();
 
@@ -216,5 +228,4 @@ public class InputManager : MonoBehaviour
         }
         return nearest;
     }
-
 }
