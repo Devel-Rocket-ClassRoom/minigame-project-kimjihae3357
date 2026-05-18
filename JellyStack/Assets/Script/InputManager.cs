@@ -7,7 +7,6 @@ public class InputManager : MonoBehaviour
     [Header("Drag Settings")]
     [SerializeField] private float mergeDistance = 2.0f; // 스택되는 범위
     [SerializeField] private float dragYOffset = 1.0f;
-    [SerializeField] private float dragLagStrength = 5.0f; // 드래그중 딸려가는 강도
     [SerializeField] private GameObject cardStackPrefab;
 
     private Vector3 stackVelocity;       // 스택의 부드러운 속도
@@ -15,6 +14,7 @@ public class InputManager : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private CameraController cameraController;
 
     private bool isDragging;
     private Plane dragPlane;
@@ -43,7 +43,10 @@ public class InputManager : MonoBehaviour
     {
         if (ctx.started)
         {
-            TryPickCard();
+            if (!TryPickCard())
+            {
+                cameraController.StartPan(currentPointerPosition);
+            }
         }
         else if (ctx.canceled)
         {
@@ -51,17 +54,21 @@ public class InputManager : MonoBehaviour
             {
                 ReleaseCard();
             }
+            else if (cameraController.IsPanning)
+            {
+                cameraController.EndPan();
+            }
         }
     }
 
 
     // 카드 집기
-    private void TryPickCard()
+    private bool TryPickCard()
     {
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
 
-        if (hits.Length == 0) return;
+        if (hits.Length == 0) return false;
 
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
@@ -71,9 +78,10 @@ public class InputManager : MonoBehaviour
             if (card != null && card.stack != null)
             {
                 StartDragging(card, ray);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     private void StartDragging(Card card, Ray ray)
