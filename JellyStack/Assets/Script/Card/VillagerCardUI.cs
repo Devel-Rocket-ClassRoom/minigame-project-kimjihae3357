@@ -29,7 +29,7 @@ public class VillagerCardUI : MonoBehaviour
     {
         spriteIcon.sprite = villager.data.icon;
         nameText.text = villager.data.cardName;
-        healthText.text = villager.currentHealth.ToString();
-        hungerText.text = villager.currenthunger.ToString();
+        healthText.text = villager.CurrentHealth.ToString();
+        hungerText.text = villager.Currenthunger.ToString();
     }
 }

@@ -4,6 +4,7 @@ public enum CardType
 {
     None,
     villager,
+    Source,
     Resource,
     Building,
     Enemy,

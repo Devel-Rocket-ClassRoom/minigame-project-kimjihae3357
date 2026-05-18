@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour
     private bool isDragging;
     private Plane dragPlane;
     private Vector3 offset;
+
     private CardStack draggingStack;
     private CardStack sourceStack;
 

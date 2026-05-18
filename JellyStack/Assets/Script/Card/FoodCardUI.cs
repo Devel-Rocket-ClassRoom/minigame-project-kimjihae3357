@@ -28,6 +28,6 @@ public class FoodCardUI : MonoBehaviour
     {
         spriteIcon.sprite = food.data.icon;
         nameText.text = food.data.cardName;
-        fullnessText.text = food.currentFullness.ToString();
+        fullnessText.text = food.CurrentFullness.ToString();
     }
 }

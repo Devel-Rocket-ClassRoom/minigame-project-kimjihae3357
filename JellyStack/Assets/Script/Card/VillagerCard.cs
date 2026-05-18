@@ -4,8 +4,8 @@ using UnityEngine;
 public class VillagerCard : Card
 {
 
-    public int currentHealth {get; private set;}
-    public int currenthunger {get; private set;}
+    public int CurrentHealth {get; private set;}
+    public int Currenthunger {get; private set;}
 
     public System.Action OnStatChanged;
 
@@ -13,16 +13,16 @@ public class VillagerCard : Card
 
     private void Awake()
     {
-        currentHealth = VillagerData.maxHealth;
-        currenthunger = VillagerData.maxHunger;
+        CurrentHealth = VillagerData.maxHealth;
+        Currenthunger = VillagerData.maxHunger;
     }
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        CurrentHealth -= amount;
         NotifyStatChanged();
 
-        if (currentHealth == 0)
+        if (CurrentHealth == 0)
         {
             //Die();
         }

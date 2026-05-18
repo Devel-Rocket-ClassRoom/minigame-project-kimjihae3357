@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class FoodCard : Card
 {
-    public int currentFullness { get; private set;  }
+    public int CurrentFullness { get; private set;  }
 
     private FoodCardData FoodData => data as FoodCardData;
 
     private void Awake()
     {
-        currentFullness = FoodData.maxFullness;
+        CurrentFullness = FoodData.maxFullness;
     }
 
     public void Consume(int amount)
     {
-        currentFullness -= amount;
+        CurrentFullness -= amount;
         NotifyStatChanged();
     }
 }
