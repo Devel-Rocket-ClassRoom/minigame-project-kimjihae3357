@@ -7,8 +7,6 @@ public class VillagerCard : Card
     public int CurrentHealth {get; private set;}
     public int Currenthunger {get; private set;}
 
-    public System.Action OnStatChanged;
-
     private VillagerCardData VillagerData => data as VillagerCardData;
 
     private void Awake()

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02666ec1dbc544d57b3e698abab8d894, type: 3}
   m_Name: BerryData
   m_EditorClassIdentifier: Assembly-CSharp::FoodCardData
+  cardType: 3
   cardName: "\uBE14\uB8E8\uBCA0\uB9AC"
   icon: {fileID: 21300000, guid: 323e777ce13b91845a17a16e14d2d43a, type: 3}
-  cardType: 5
   maxFullness: 1

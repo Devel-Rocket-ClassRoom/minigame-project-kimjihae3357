@@ -15,8 +15,8 @@ public enum CardType
 [CreateAssetMenu(fileName = "CardData", menuName = "Card/CardData")]
 public abstract class CardData : ScriptableObject
 {
+    public CardType cardType;
     public string cardName;
     public Sprite icon;
-    public CardType cardType;
 
 }
