@@ -7,12 +7,15 @@ public class ProgressTask : MonoBehaviour
     private float elapsed;
     private System.Action<CardRecipe, CardStack> onComplete;
 
+    private bool isCompleted;
+
     public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete)
     {
         this.recipe = recipe;
         this.stack = stack;
         this.elapsed = 0f;
         this.onComplete = onComplete;
+        this.isCompleted = false;
 
         if (stack != null && stack.ProgressBar != null)
         {
@@ -23,6 +26,8 @@ public class ProgressTask : MonoBehaviour
 
     private void Update()
     {
+        if (isCompleted) return;
+
         if (stack == null || recipe == null)
         {
             Cancel();
@@ -44,10 +49,20 @@ public class ProgressTask : MonoBehaviour
 
     private void Complete()
     {
+        if (isCompleted) return;
+        isCompleted = true;
+
         enabled = false;
         HideProgress();
-        onComplete?.Invoke(recipe, stack);
-        Destroy(this);
+
+        try
+        {
+            onComplete?.Invoke(recipe, stack);
+        }
+        finally
+        {
+            Destroy(this);
+        }
     }
 
     public void Cancel()

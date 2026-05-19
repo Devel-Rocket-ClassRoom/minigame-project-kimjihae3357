@@ -26,22 +26,32 @@ public class CardSpawner : MonoBehaviour
         // 카드 생성
         var cardGo = Instantiate(data.cardPrefab);
         var card = cardGo.GetComponent<Card>();
+        if (card == null)
+        {
+            Debug.LogError($"Spawn 실패: Prefab {data.cardPrefab.name}에 Card 컴포넌트가 없습니다.");
+            return null;
+        }
         card.data = data;
 
         stack.AddCard(card);
         return card;
-    }
+        }
 
-    public Card SpawnIntoStack(CardData data, CardStack targetStack)
-    {
+        public Card SpawnIntoStack(CardData data, CardStack targetStack)
+        {
         if (data == null || data.cardPrefab == null || targetStack == null)
             return null;
 
         var cardGo = Instantiate(data.cardPrefab);
         var card = cardGo.GetComponent<Card>();
+        if (card == null)
+        {
+            Debug.LogError($"SpawnIntoStack 실패: Prefab {data.cardPrefab.name}에 Card 컴포넌트가 없습니다.");
+            return null;
+        }
         card.data = data;
 
         targetStack.AddCard(card);
         return card;
-    }
+        }
 }
