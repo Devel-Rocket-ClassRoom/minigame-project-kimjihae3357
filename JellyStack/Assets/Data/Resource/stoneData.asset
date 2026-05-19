@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: stoneData
   m_EditorClassIdentifier: Assembly-CSharp::ResourceCardData
   cardType: 3
+  cardPrefab: {fileID: 8481278547604517009, guid: a4841e1ef65102d40b5d17c1b9126e43, type: 3}
   cardName: "\uB3CC"
   icon: {fileID: 21300000, guid: 3442847c7ba2f074e86b20855a9bbfdc, type: 3}
