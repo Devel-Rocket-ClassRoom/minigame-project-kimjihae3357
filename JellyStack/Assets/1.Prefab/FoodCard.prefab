@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1039457699516796071}
   - component: {fileID: 7913436818406275578}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: icon_fullness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3201525792984654689}
   - component: {fileID: 4177459221399962700}
   - component: {fileID: 567126408713551623}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text_fullness_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 86907976436508200}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 1844225787390212926}
   - component: {fileID: 6644385162962970420}
   - component: {fileID: 8396292596192805316}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text_health_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5985242003020259714}
   - component: {fileID: 3489080106904804781}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: icon_health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
@@ -592,7 +592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2396233755996746236}
   - component: {fileID: 7428077699344513898}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +665,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 89110598052481e42a164cdd2d95a225, type: 3}
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 2753784247545767071}
   - component: {fileID: 8879199773139193096}
   - component: {fileID: 5934524711116554432}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -760,7 +760,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
@@ -870,7 +870,7 @@ GameObject:
   - component: {fileID: 3707485651136545632}
   - component: {fileID: 578560275105535729}
   - component: {fileID: 3434512564670382638}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -938,7 +938,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 6954896302920449507}
   - component: {fileID: 5966923641713962010}
   - component: {fileID: 4783888551339185957}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FoodCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1025,7 +1025,7 @@ SortingGroup:
   m_GameObject: {fileID: 8481278547604517009}
   m_Enabled: 1
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -1070,7 +1070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8508511505199461102}
   - component: {fileID: 4851697798442716913}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Image_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1138,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1769161761
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}

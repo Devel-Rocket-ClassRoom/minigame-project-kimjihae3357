@@ -7,7 +7,6 @@ public class InputManager : MonoBehaviour
     [Header("Drag Settings")]
     [SerializeField] private float mergeDistance = 2.0f; // 스택되는 범위
     [SerializeField] private float dragYOffset = 1.0f;
-    [SerializeField] private float dragLagStrength = 5.0f; // 드래그중 딸려가는 강도
     [SerializeField] private GameObject cardStackPrefab;
 
     private Vector3 stackVelocity;       // 스택의 부드러운 속도
@@ -15,6 +14,10 @@ public class InputManager : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private CameraController cameraController;
+
+    [Header("Raycast")]
+    [SerializeField] private LayerMask cardMask;
 
     private bool isDragging;
     private Plane dragPlane;
@@ -28,14 +31,19 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         if (mainCamera == null) mainCamera = Camera.main;
+        if (cameraController == null && mainCamera != null)
+            cameraController = mainCamera.GetComponent<CameraController>();
     }
 
     private void Update()
     {
-        if (Mouse.current != null)
-            currentPointerPosition = Mouse.current.position.ReadValue();
-
         if (isDragging) DragCard();
+    }
+
+    // PlayerInput (Invoke Unity Events) 콜백 — 포인터 위치 갱신
+    public void OnPoint(InputAction.CallbackContext ctx)
+    {
+        currentPointerPosition = ctx.ReadValue<Vector2>();
     }
 
     // PlayerInput (Invoke Unity Events) 콜백 — 클릭 시작
@@ -43,38 +51,40 @@ public class InputManager : MonoBehaviour
     {
         if (ctx.started)
         {
-            TryPickCard();
+            CancelOngoingInteractions();
+
+            if (!TryPickCard())
+                cameraController?.StartPan(currentPointerPosition);
         }
         else if (ctx.canceled)
         {
             if (isDragging)
-            {
                 ReleaseCard();
-            }
+            else
+                cameraController?.EndPan();
         }
     }
 
+    private void CancelOngoingInteractions()
+    {
+        if (isDragging) ReleaseCard();
+        if (cameraController != null && cameraController.IsPanning) cameraController.EndPan();
+    }
 
+    
     // 카드 집기
-    private void TryPickCard()
+    private bool TryPickCard()
     {
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
-        RaycastHit[] hits = Physics.RaycastAll(ray);
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, cardMask)) return false;
 
-        if (hits.Length == 0) return;
+        var card = hit.collider.GetComponent<Card>();
+        if (card == null || card.stack == null) return false;
 
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-
-        foreach (var hit in hits)
-        {
-            var card = hit.collider.GetComponent<Card>();
-            if (card != null && card.stack != null)
-            {
-                StartDragging(card, ray);
-                return;
-            }
-        }
+        StartDragging(card, ray);
+        return true;
     }
+    
 
     private void StartDragging(Card card, Ray ray)
     {
