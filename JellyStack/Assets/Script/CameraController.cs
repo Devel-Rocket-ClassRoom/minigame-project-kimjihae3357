@@ -5,20 +5,20 @@ using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
     [Header("Zoom Setting")]
-    [SerializeField] private float zoomSpeed;
-    [SerializeField] private float smoothness;
-    [SerializeField] private float minZoom;
-    [SerializeField] private float maxZoom;
+    [SerializeField] private float zoomSpeed     = 30f;
+    [SerializeField] private float smoothness    = 10f;
+    [SerializeField] private float minZoom       = 8f;
+    [SerializeField] private float maxZoom       = 15f;
 
     [Header("Pan Setting")]
-    [SerializeField] private float panSmoothness;
+    [SerializeField] private float panSmoothness = 10f;
+    [SerializeField] private LayerMask tableMask = ~0;
 
     private Camera cam;
     private float targetZoom;
     private Vector3 targetPosition;
 
     private bool isPanning;
-    private Plane panPlane;
     private Vector3 panStartWorld;
     private Vector3 panStartCamPos;
 
@@ -40,27 +40,35 @@ public class CameraController : MonoBehaviour
 
     private void CameraZoom()
     {
-        if (Mouse.current != null)
-        {
-            float scroll = Mouse.current.scroll.ReadValue().y;
-            if (Mathf.Abs(scroll) > 0.01f)
-            {
-                targetZoom -= scroll * zoomSpeed * 0.01f;
-                targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
-            }
-        }
+        if (Mouse.current == null) return;
+        float scroll = Mouse.current.scroll.ReadValue().y;
+        if (Mathf.Abs(scroll) < 0.01f) return;
+
+        Vector2 mouseScreen = Mouse.current.position.ReadValue();
+        Vector3 before = cam.ScreenToWorldPoint(new Vector3(mouseScreen.x, mouseScreen.y, 0));
+
+        targetZoom = Mathf.Clamp(targetZoom - scroll * zoomSpeed * 0.01f, minZoom, maxZoom);
+
+        // 줌 전후 월드 좌표 차이만큼 targetPosition을 보정해 마우스 포인터 기준으로 확대
+        float prevSize = cam.orthographicSize;
+        cam.orthographicSize = targetZoom;
+        Vector3 after = cam.ScreenToWorldPoint(new Vector3(mouseScreen.x, mouseScreen.y, 0));
+        cam.orthographicSize = prevSize;
+
+        Vector3 offset = before - after;
+        targetPosition += offset;
+        if (isPanning) panStartCamPos += offset;
     }
 
     public void StartPan(Vector2 screenPosition)
     {
-        panPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y - 1f, 0));
-
         Ray ray = cam.ScreenPointToRay(screenPosition);
-        if (panPlane.Raycast(ray, out float distance))
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, tableMask))
         {
-            panStartWorld = ray.GetPoint(distance);
+            panStartWorld  = hit.point;
             panStartCamPos = transform.position;
-            isPanning = true;
+            isPanning      = true;
         }
     }
 
@@ -71,10 +79,10 @@ public class CameraController : MonoBehaviour
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = cam.ScreenPointToRay(mousePos);
-        if (panPlane.Raycast(ray,out float distance))
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, tableMask))
         {
-            Vector3 currentWorld = ray.GetPoint(distance);
-            Vector3 delta = panStartWorld - currentWorld;
+            Vector3 delta  = panStartWorld - hit.point;
             targetPosition = panStartCamPos + delta;
         }
     }
