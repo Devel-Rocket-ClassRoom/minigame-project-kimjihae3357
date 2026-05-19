@@ -409,7 +409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &764420922
 Transform:
   m_ObjectHideFlags: 0
@@ -720,6 +720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1697116338}
+  - component: {fileID: 1697116339}
   m_Layer: 0
   m_Name: RecipeManager
   m_TagString: Untagged
@@ -742,6 +743,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 962233589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1697116339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697116337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babc50aeeab07554caa4039aeff72216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeManager
+  recipes:
+  - {fileID: 11400000, guid: 2342f3c17d75b2e409fa4164fd6e779f, type: 2}
+  resultSpawnOffset: {x: 2, y: 0, z: 0}
 --- !u!114 &1960551608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7016172979503510638, guid: 456be6442ba56f047963b72b189b910e, type: 3}

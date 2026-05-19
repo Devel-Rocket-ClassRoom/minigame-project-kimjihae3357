@@ -18,5 +18,5 @@ MonoBehaviour:
   result: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
   resultCount: 1
   duration: 3
-  consumeIngredients: 1
+  consumeIngredients: 0
   iconPrefab: {fileID: 0}

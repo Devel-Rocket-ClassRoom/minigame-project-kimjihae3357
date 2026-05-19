@@ -5,6 +5,10 @@ public class CardStack : MonoBehaviour
 {
     public List<Card> cards = new List<Card>();
 
+    [Header("UI")]
+    [SerializeField] private CardProgressBarUI progressBar;
+    public CardProgressBarUI ProgressBar => progressBar;
+
     public Card TopCard => cards.Count > 0 ? cards[cards.Count - 1] : null;
     public Card BottomCard => cards.Count > 0 ? cards[0] : null;
     public bool IsEmpty => cards.Count == 0;
@@ -29,6 +33,9 @@ public class CardStack : MonoBehaviour
             if (snapToOrigin) c.transform.localPosition = Vector3.zero;
         }
         ArrangeCards();
+
+        if (RecipeManager.Instance != null)
+            RecipeManager.Instance.CheckStack(this);
     }
 
     public List<Card> SplitFrom(Card card)
@@ -48,6 +55,10 @@ public class CardStack : MonoBehaviour
             if (c.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = false;
         }
 
+        var task = GetComponent<ProgressTask>();
+        if (task != null)
+            task.Cancel();
+
         ArrangeCards();
         return moved;
     }
@@ -62,5 +73,16 @@ public class CardStack : MonoBehaviour
             cards[i].targetLocalPosition = new Vector3(0, 0.01f * i, -0.7f * i);
             cards[i].followSpeed = Mathf.Max(20f, 20f - i * 3f);
         }
+    }
+
+    private void UpdateProgressBarPosition()
+    {
+        if (progressBar == null || cards.Count == 0)
+            return;
+
+        int topIndex = cards.Count - 1;
+        Vector3 topCardLocalPos = new Vector3(0, 0.01f * topIndex, -0.7f * topIndex);
+
+        progressBar.transform.localPosition = topCardLocalPos + new Vector3(0, 0.5f, 0.3f);
     }
 }

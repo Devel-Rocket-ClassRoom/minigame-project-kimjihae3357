@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardStack
   cards: []
+  progressBar: {fileID: 7114180548030217849}
 --- !u!1001 &3077052646785202301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,3 +157,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1490020549624234009, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
   m_PrefabInstance: {fileID: 3077052646785202301}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7114180548030217849 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5190757631414437380, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
+  m_PrefabInstance: {fileID: 3077052646785202301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56e7b9a5aefef64fb48de4e0c50cee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardProgressBar

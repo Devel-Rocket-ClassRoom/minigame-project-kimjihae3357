@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardProgressBar : MonoBehaviour
+public class CardProgressBarUI : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject visualRoot;

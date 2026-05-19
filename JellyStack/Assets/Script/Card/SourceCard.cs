@@ -8,6 +8,15 @@ public class SourceCard : Card
 
     private void Awake()
     {
-        CurrentCount = sourceData.GatherCount;
+        if (sourceData != null)
+            CurrentCount = sourceData.GatherCount;
+
     }
+
+    public void Gather()
+    {
+        CurrentCount--;
+    }
+
+    public bool IsExhausted => CurrentCount <= 0;
 }

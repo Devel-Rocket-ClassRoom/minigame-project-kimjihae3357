@@ -9,6 +9,7 @@ public class ResourceCardUI : MonoBehaviour
     private Card card;
     private void Start()
     {
+        card = GetComponent<Card>();
         UpdateUI();
     }
 
