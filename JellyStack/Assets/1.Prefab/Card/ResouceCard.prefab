@@ -419,6 +419,7 @@ GameObject:
   - component: {fileID: 5594718368014385323}
   - component: {fileID: 6954896302920449507}
   - component: {fileID: 4990237338087074902}
+  - component: {fileID: 6739615015248714191}
   m_Layer: 7
   m_Name: ResouceCard
   m_TagString: Untagged
@@ -435,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 8481278547604517009}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.38, z: -1.45}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -471,8 +472,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8481278547604517009}
   m_Enabled: 1
-  m_SortingLayerID: -1769161761
-  m_SortingLayer: 0
+  m_SortingLayerID: 570098223
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -490,6 +491,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceCardUI
   spriteIcon: {fileID: 578560275105535729}
   nameText: {fileID: 5934524711116554432}
+--- !u!114 &6739615015248714191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8481278547604517009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dea614771834740a3c088fe362c475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Card
+  data: {fileID: 0}
+  stack: {fileID: 0}
+  targetLocalPosition: {x: 0, y: 0, z: 0}
+  followSpeed: 10
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0

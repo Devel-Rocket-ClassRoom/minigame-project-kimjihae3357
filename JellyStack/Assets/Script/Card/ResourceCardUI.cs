@@ -7,6 +7,12 @@ public class ResourceCardUI : MonoBehaviour
     [SerializeField] private TMP_Text nameText;
 
     private Card card;
+    private void Awake()
+    {
+        card = GetComponent<Card>();
+        if (card == null) card = GetComponentInParent<Card>();
+    }
+
     private void Start()
     {
         UpdateUI();
@@ -14,7 +20,9 @@ public class ResourceCardUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        spriteIcon.sprite = card.data.icon;
-        nameText.text = card.data.cardName;
+        if (card == null || card.data == null) return;
+
+        if (spriteIcon != null) spriteIcon.sprite = card.data.icon;
+        if (nameText != null) nameText.text = card.data.cardName;
     }
 }
