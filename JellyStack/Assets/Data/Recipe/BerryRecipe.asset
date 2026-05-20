@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: CardRecipe
+  m_Name: BerryRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
   - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}

@@ -24,7 +24,7 @@ public class CardSpawner : MonoBehaviour
         var stack = stackGo.GetComponent<CardStack>();
 
         // 카드 생성
-        var cardGo = Instantiate(data.cardPrefab);
+        var cardGo = Instantiate(data.cardPrefab, worldPos, Quaternion.identity);
         var card = cardGo.GetComponent<Card>();
         if (card == null)
         {

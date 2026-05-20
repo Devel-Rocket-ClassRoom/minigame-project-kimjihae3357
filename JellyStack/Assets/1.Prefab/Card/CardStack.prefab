@@ -139,9 +139,13 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4416721538666379536, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 250
+    - target: {fileID: 3653405942143904118, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3653405942143904118, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 570098223
       objectReference: {fileID: 0}
     - target: {fileID: 4624916414435645778, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
       propertyPath: m_Name

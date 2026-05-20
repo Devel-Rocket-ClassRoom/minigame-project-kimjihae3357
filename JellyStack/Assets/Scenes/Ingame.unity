@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &232743062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7016172979503510638, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+  m_PrefabInstance: {fileID: 1669357844}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d89a69608e12240aaa035326c20f33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SourceCard
 --- !u!1001 &655736494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -281,6 +292,7 @@ MonoBehaviour:
   cardsToRegister:
   - {fileID: 1062824249}
   - {fileID: 1960551608}
+  - {fileID: 232743062}
 --- !u!4 &698070144
 Transform:
   m_ObjectHideFlags: 0
@@ -711,6 +723,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b5259c5269c44c687f36c959cb87d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCard
+--- !u!1001 &1669357844
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.97209
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.251
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328413053555574, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016172979503510638, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
+    - target: {fileID: 8481278547604517009, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      propertyPath: m_Name
+      value: SouceCard (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1744560198085132436, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7856585325476218487, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: 456be6442ba56f047963b72b189b910e, type: 3}
 --- !u!1 &1697116337
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +836,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RecipeManager
   recipes:
   - {fileID: 11400000, guid: 2342f3c17d75b2e409fa4164fd6e779f, type: 2}
-  resultSpawnOffset: {x: 2, y: 0, z: 0}
+  - {fileID: 11400000, guid: a67a7f498c4a2a44283ab60fbd180b87, type: 2}
+  resultSpawnOffset: {x: 2, y: 0, z: 2}
 --- !u!114 &1960551608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7016172979503510638, guid: 456be6442ba56f047963b72b189b910e, type: 3}
@@ -837,3 +917,4 @@ SceneRoots:
   - {fileID: 962233589}
   - {fileID: 655736494}
   - {fileID: 659575847}
+  - {fileID: 1669357844}

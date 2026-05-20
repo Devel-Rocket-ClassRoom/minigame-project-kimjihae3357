@@ -12,6 +12,8 @@ public class RecipeManager : MonoBehaviour
 
     [Header("결과물 스폰 위치 오프셋")]
     [SerializeField] private Vector3 resultSpawnOffset = new Vector3(2f, 0, 0);
+    [SerializeField] private float spawnRadiusMin = 1.5f;
+    [SerializeField] private float spawnRadiusMax = 2.5f;
 
     private void Awake()
     {
@@ -22,11 +24,12 @@ public class RecipeManager : MonoBehaviour
     {
         if (stack == null || stack.cards.Count < 2)
             return;
-        if (stack.GetComponent<ProgressTask>() != null)
+        var existingTask = stack.GetComponent<ProgressTask>();
+        if (existingTask != null && existingTask.enabled)
             return;
 
         CardRecipe matched = FindMatchingRecipe(stack);
-        if (matched != null )
+        if (matched != null)
         {
             var task = stack.gameObject.AddComponent<ProgressTask>();
             task.Begin(matched, stack, OnRecipeComplete);
@@ -47,6 +50,7 @@ public class RecipeManager : MonoBehaviour
     // 스택이 재료 리스트를 포함하는지 검사 (순서 무관)
     private bool StackMatchesIngredients(CardStack stack, List<CardData> ingredients)
     {
+        if (ingredients == null || ingredients.Count == 0) return false;
         var stackData = new List<CardData>(stack.cards.Select(c => c.data));
         foreach (var ingredient in ingredients)
         {
@@ -111,15 +115,28 @@ public class RecipeManager : MonoBehaviour
 
     private void SpawnResults(CardRecipe recipe, CardStack stack)
     {
-        if(CardSpawner.Instance == null) return;
+        if (CardSpawner.Instance == null) return;
+
+        Vector3 sourcePos = stack.transform.position;
 
         for (int i = 0; i < recipe.resultCount; i++)
         {
-            Vector3 spawnPos = stack.transform.position
-                + resultSpawnOffset
-                + new Vector3(i * 0.5f, 0, 0);
-
-            CardSpawner.Instance.Spawn(recipe.result, spawnPos);
+            Vector3 spawnPos = GetRandomPositionAround(sourcePos);
+            var card = CardSpawner.Instance.Spawn(recipe.result, spawnPos);
+            if (card != null)
+                card.transform.position = sourcePos;
         }
+    }
+
+    private Vector3 GetRandomPositionAround(Vector3 center)
+    {
+        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float distance = Random.Range(spawnRadiusMin, spawnRadiusMax);
+
+        return center + new Vector3(
+            Mathf.Cos(angle) * distance,
+            0,
+            Mathf.Sin(angle) * distance
+        );
     }
 }
