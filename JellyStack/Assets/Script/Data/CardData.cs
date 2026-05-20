@@ -18,6 +18,6 @@ public abstract class CardData : ScriptableObject
     public CardType cardType;
     public GameObject cardPrefab;
     public string cardName;
-    public Sprite icon;
+    public Sprite Image;
 
 }

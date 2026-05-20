@@ -11,6 +11,10 @@ public class Card : MonoBehaviour
 
     public System.Action OnStatChanged;
 
+    public virtual void InitializeFromData()
+    {
+    }
+
     private void Update()
     {
         transform.localPosition = Vector3.Lerp(

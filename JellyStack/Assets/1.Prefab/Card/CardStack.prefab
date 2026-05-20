@@ -47,6 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardStack
   cards: []
   progressBar: {fileID: 7114180548030217849}
+  cardMask:
+    serializedVersion: 2
+    m_Bits: 128
+  pushRadius: 2
+  pushStrength: 5
 --- !u!1001 &3077052646785202301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,6 +151,10 @@ PrefabInstance:
     - target: {fileID: 3653405942143904118, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
       propertyPath: m_SortingLayerID
       value: 570098223
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416721538666379536, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 4624916414435645778, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
       propertyPath: m_Name
