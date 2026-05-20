@@ -192,6 +192,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2421913029168902545, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 9015336644548488798, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 7856585325476218487, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -840,6 +843,15 @@ MonoBehaviour:
   resultSpawnOffset: {x: 2, y: 0, z: 2}
   spawnRadiusMin: 3
   spawnRadiusMax: 5
+  occupiedRadius: 1.4
+  autoStackRadius: 7
+  randomSpawnAttempts: 12
+  searchRingCount: 4
+  searchSlotsPerRing: 12
+  cardMask:
+    serializedVersion: 2
+    m_Bits: 128
+  spawnCheckHalfExtents: {x: 0.8, y: 0.2, z: 1.1}
 --- !u!114 &1960551608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7016172979503510638, guid: 456be6442ba56f047963b72b189b910e, type: 3}
