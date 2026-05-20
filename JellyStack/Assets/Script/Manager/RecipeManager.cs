@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RecipeManager : MonoBehaviour
@@ -14,6 +15,14 @@ public class RecipeManager : MonoBehaviour
     [SerializeField] private Vector3 resultSpawnOffset = new Vector3(2f, 0, 0);
     [SerializeField] private float spawnRadiusMin = 1.5f;
     [SerializeField] private float spawnRadiusMax = 2.5f;
+    [SerializeField] private float occupiedRadius = 1.4f;
+    [SerializeField] private float autoStackRadius = 7f; //해당 반경안에서 자동 스택
+    [SerializeField] private int randomSpawnAttempts = 12;
+    [SerializeField] private int searchRingCount = 4;
+    [SerializeField] private int searchSlotsPerRing = 12;
+
+    [SerializeField] private LayerMask cardMask;
+    [SerializeField] private Vector3 spawnCheckHalfExtents = new Vector3(0.8f, 0.2f, 1.1f);
 
     private void Awake()
     {
@@ -67,7 +76,7 @@ public class RecipeManager : MonoBehaviour
 
         // 1. 결과물 스폰 (consumeIngredients와 무관)
         if (recipe.result != null)
-            SpawnResults(recipe, stack);   // ← SpawnResult가 아니라 SpawnResults (s 붙음)
+            SpawnResults(recipe, stack);
 
         // 2. 재료 처리 (consumeIngredients는 HandleIngredients 안에서 검사)
         HandleIngredients(recipe, stack);
@@ -121,11 +130,130 @@ public class RecipeManager : MonoBehaviour
 
         for (int i = 0; i < recipe.resultCount; i++)
         {
-            Vector3 spawnPos = GetRandomPositionAround(sourcePos);
-            var card = CardSpawner.Instance.Spawn(recipe.result, spawnPos);
+            CardStack sameCardStack = FindSameCardStackNearby(recipe.result, sourcePos, stack);
+            Card card;
+
+            if (sameCardStack != null)
+            {
+                card = CardSpawner.Instance.SpawnIntoStack(recipe.result, sameCardStack);
+            }
+            else
+            {
+                Vector3 spawnPos = FindEmptySpawnPosition(sourcePos);
+                card = CardSpawner.Instance.Spawn(recipe.result, spawnPos);
+            }
+
             if (card != null)
                 card.transform.position = sourcePos;
         }
+    }
+
+    private CardStack FindSameCardStackNearby(CardData data, Vector3 center, CardStack exclude)
+    {
+        if (data == null)
+            return null;
+
+        CardStack[] allStacks = Object.FindObjectsByType<CardStack>(FindObjectsSortMode.None);
+        CardStack nearestStack = null;
+        float nearestDistance = autoStackRadius;
+
+        foreach (var stack in allStacks)
+        {
+            if (stack == null || stack == exclude || stack.IsEmpty)
+                continue;
+
+            if (!IsSameCardOnlyStack(stack, data))
+                continue;
+
+            float distance = GetClosestStackDistance(center, stack);
+            if (distance < nearestDistance)
+            {
+                nearestStack = stack;
+                nearestDistance = distance;
+            }
+        }
+
+        return nearestStack;
+    }
+
+    private bool IsSameCardOnlyStack(CardStack stack, CardData data)
+    {
+        foreach (var card in stack.cards)
+        {
+            if (card == null || card.data != data)
+                return false;
+        }
+
+        return true;
+    }
+
+    private float GetClosestStackDistance(Vector3 center, CardStack stack)
+    {
+        Vector2 centerPos = new Vector2(center.x, center.z);
+        float closestDistance = Vector2.Distance(
+            centerPos,
+            new Vector2(stack.transform.position.x, stack.transform.position.z)
+        );
+
+        foreach (var card in stack.cards)
+        {
+            if (card == null)
+                continue;
+
+            Vector2 cardPos = new Vector2(card.transform.position.x, card.transform.position.z);
+            closestDistance = Mathf.Min(closestDistance, Vector2.Distance(centerPos, cardPos));
+        }
+
+        return closestDistance;
+    }
+
+    private Vector3 FindEmptySpawnPosition(Vector3 center)
+    {
+        Vector3 preferredPos = center + resultSpawnOffset;
+        if (IsSpawnPositionEmpty(preferredPos))
+            return preferredPos;
+
+        for (int i = 0; i < randomSpawnAttempts; i++)
+        {
+            Vector3 candidate = GetRandomPositionAround(center);
+            if (IsSpawnPositionEmpty(candidate))
+                return candidate;
+        }
+
+        for (int ring = 0; ring < searchRingCount; ring++)
+        {
+            float distance = spawnRadiusMin + occupiedRadius * ring;
+            int slotCount = searchSlotsPerRing + ring * 4;
+            float angleOffset = Random.Range(0f, 360f / slotCount);
+
+            for (int slot = 0; slot < slotCount; slot++)
+            {
+                float angle = (angleOffset + slot * 360f / slotCount) * Mathf.Deg2Rad;
+                Vector3 candidate = center + new Vector3(
+                    Mathf.Cos(angle) * distance,
+                    0,
+                    Mathf.Sin(angle) * distance
+                );
+
+                if (IsSpawnPositionEmpty(candidate))
+                    return candidate;
+            }
+        }
+
+        return GetRandomPositionAround(center);
+    }
+
+    private bool IsSpawnPositionEmpty(Vector3 position)
+    {
+        // 근처에 빈자리 체크
+        Collider[] hits = Physics.OverlapBox(
+            position,
+            spawnCheckHalfExtents,
+            Quaternion.identity,
+            cardMask
+            );
+
+        return hits.Length == 0;
     }
 
     private Vector3 GetRandomPositionAround(Vector3 center)

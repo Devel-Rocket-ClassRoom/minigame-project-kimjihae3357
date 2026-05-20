@@ -11,6 +11,14 @@ public class VillagerCard : Card
 
     private void Awake()
     {
+        InitializeFromData();
+    }
+
+    public override void InitializeFromData()
+    {
+        if (VillagerData == null)
+            return;
+
         CurrentHealth = VillagerData.maxHealth;
         Currenthunger = VillagerData.maxHunger;
     }

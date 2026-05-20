@@ -8,7 +8,13 @@ public class FoodCard : Card
 
     private void Awake()
     {
-        CurrentFullness = FoodData.maxFullness;
+        InitializeFromData();
+    }
+
+    public override void InitializeFromData()
+    {
+        if (FoodData != null)
+            CurrentFullness = FoodData.maxFullness;
     }
 
     public void Consume(int amount)

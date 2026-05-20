@@ -36,14 +36,24 @@ public class ProgressTask : MonoBehaviour
 
         // 시간 진행
         elapsed += Time.deltaTime;
-        float progress = elapsed / recipe.duration;
+        float effectiveDuration = Mathf.Max(0.01f, recipe.duration);
+        foreach (var card in stack.cards)
+        {
+            if (card.data is VillagerCardData villagerData)
+            {
+                effectiveDuration /= Mathf.Max(0.01f, villagerData.workSpeed);
+                break;
+            }
+        }
+
+        float progress = elapsed / effectiveDuration;
 
         // ProgressBar 갱신
         if (stack.ProgressBar != null )
             stack.ProgressBar.SetProgress(progress);
 
         // 완료 체크
-        if (elapsed >= recipe.duration)
+        if (elapsed >= effectiveDuration)
             Complete();
     }
 

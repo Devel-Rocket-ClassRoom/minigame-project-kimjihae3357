@@ -5,13 +5,16 @@ public class SourceCard : Card
     public int CurrentCount { get; private set;  }
 
     private SourceCardData sourceData => data as SourceCardData;
-    private Card card;
 
     private void Awake()
     {
+        InitializeFromData();
+    }
+
+    public override void InitializeFromData()
+    {
         if (sourceData != null)
             CurrentCount = sourceData.GatherCount;
-
     }
 
     public void Gather()

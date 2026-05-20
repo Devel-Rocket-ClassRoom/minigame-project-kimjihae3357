@@ -22,7 +22,7 @@ public class ResourceCardUI : MonoBehaviour
     {
         if (card == null || card.data == null) return;
 
-        if (spriteIcon != null) spriteIcon.sprite = card.data.icon;
+        if (spriteIcon != null) spriteIcon.sprite = card.data.Image;
         if (nameText != null) nameText.text = card.data.cardName;
     }
 }

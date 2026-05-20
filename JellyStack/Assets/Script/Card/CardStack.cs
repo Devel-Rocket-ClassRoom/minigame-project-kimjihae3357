@@ -9,9 +9,53 @@ public class CardStack : MonoBehaviour
     [SerializeField] private CardProgressBarUI progressBar;
     public CardProgressBarUI ProgressBar => progressBar;
 
+    [SerializeField] private LayerMask cardMask;
+    [SerializeField] private float pushRadius = 2;
+    [SerializeField] private float pushStrength = 5f; //카드 겹칠때 밀어내는 범위 및 세기
+
+    public bool IsDragging { get; set; }
+
     public Card TopCard => cards.Count > 0 ? cards[cards.Count - 1] : null;
     public Card BottomCard => cards.Count > 0 ? cards[0] : null;
     public bool IsEmpty => cards.Count == 0;
+
+    private void LateUpdate()
+    {
+        ResolveOverlap();
+    }
+
+    private void ResolveOverlap()
+    {
+        if (IsDragging || IsEmpty)
+            return;
+
+        // 근처에 겹치는걸 체크
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            pushRadius,
+            cardMask
+            );
+
+        foreach (var hit in hits)
+        {
+            Card otherCard = hit.GetComponent<Card>();
+            if (otherCard == null || otherCard.stack == null)
+                continue;
+
+            CardStack otherStack = otherCard.stack;
+
+            if (otherStack == this || otherStack.IsEmpty || otherStack.IsDragging)
+                continue;
+
+            Vector3 direction = transform.position - otherStack.transform.position;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude < 0.001f)
+                direction = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
+
+            transform.position += direction.normalized * pushStrength * Time.deltaTime;
+        }
+    }
 
     public void AddCard(Card card)
     {
@@ -75,14 +119,4 @@ public class CardStack : MonoBehaviour
         }
     }
 
-    private void UpdateProgressBarPosition()
-    {
-        if (progressBar == null || cards.Count == 0)
-            return;
-
-        int topIndex = cards.Count - 1;
-        Vector3 topCardLocalPos = new Vector3(0, 0.01f * topIndex, -0.7f * topIndex);
-
-        progressBar.transform.localPosition = topCardLocalPos + new Vector3(0, 0.5f, 0.3f);
-    }
 }

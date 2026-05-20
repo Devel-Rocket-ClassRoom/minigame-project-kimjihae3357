@@ -16,7 +16,14 @@ public class SourceCardUI : MonoBehaviour
 
     private void OnEnable()
     {
-        source.OnStatChanged += UpdateUI;
+        if (source != null)
+            source.OnStatChanged += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        if (source != null)
+            source.OnStatChanged -= UpdateUI;
     }
 
     private void Start()
@@ -26,9 +33,12 @@ public class SourceCardUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        spriteIcon.sprite = source.data.icon;
-        nameText.text = source.data.cardName;
-        countText.text = source.CurrentCount.ToString();
+        if (source == null || source.data == null)
+            return;
+
+        if (spriteIcon != null) spriteIcon.sprite = source.data.Image;
+        if (nameText != null) nameText.text = source.data.cardName;
+        if (countText != null) countText.text = source.CurrentCount.ToString();
 
     }
 }

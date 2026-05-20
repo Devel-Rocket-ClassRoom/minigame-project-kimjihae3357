@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- Unity compiles scripts itself. Keep Visual Studio from running live analyzers
+         and source generators that can crash IntelliSense for this project. -->
+    <RunAnalyzers>false</RunAnalyzers>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+  </PropertyGroup>
+</Project>

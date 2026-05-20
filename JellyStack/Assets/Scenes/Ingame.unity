@@ -838,6 +838,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2342f3c17d75b2e409fa4164fd6e779f, type: 2}
   - {fileID: 11400000, guid: a67a7f498c4a2a44283ab60fbd180b87, type: 2}
   resultSpawnOffset: {x: 2, y: 0, z: 2}
+  spawnRadiusMin: 3
+  spawnRadiusMax: 5
 --- !u!114 &1960551608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7016172979503510638, guid: 456be6442ba56f047963b72b189b910e, type: 3}

@@ -96,6 +96,7 @@ public class InputManager : MonoBehaviour
 
         // 임시 스택 생성
         draggingStack = CreateTempStack(moved, card.transform.position);
+        draggingStack.IsDragging = true;
 
         // 스택을 즉시 올려 모든 카드가 첫 프레임부터 최상위에 표시
         Vector3 elevatedPos = draggingStack.transform.position;
@@ -158,6 +159,9 @@ public class InputManager : MonoBehaviour
             return;
 
         TryMergeOrDrop();
+
+        if (draggingStack != null)
+            draggingStack.IsDragging = false;
 
         // 원래 떠나온 스택이 비었으면 정리
         if (sourceStack != null && sourceStack.IsEmpty)

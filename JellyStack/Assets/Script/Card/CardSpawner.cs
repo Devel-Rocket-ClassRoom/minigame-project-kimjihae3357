@@ -32,6 +32,7 @@ public class CardSpawner : MonoBehaviour
             return null;
         }
         card.data = data;
+        card.InitializeFromData();
 
         stack.AddCard(card);
         return card;
@@ -50,6 +51,7 @@ public class CardSpawner : MonoBehaviour
             return null;
         }
         card.data = data;
+        card.InitializeFromData();
 
         targetStack.AddCard(card);
         return card;

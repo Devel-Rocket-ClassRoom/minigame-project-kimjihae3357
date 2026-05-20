@@ -16,7 +16,14 @@ public class FoodCardUI : MonoBehaviour
 
     private void OnEnable()
     {
-        food.OnStatChanged += UpdateUI;
+        if (food != null)
+            food.OnStatChanged += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        if (food != null)
+            food.OnStatChanged -= UpdateUI;
     }
 
     private void Start()
@@ -26,8 +33,11 @@ public class FoodCardUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        spriteIcon.sprite = food.data.icon;
-        nameText.text = food.data.cardName;
-        fullnessText.text = food.CurrentFullness.ToString();
+        if (food == null || food.data == null)
+            return;
+
+        if (spriteIcon != null) spriteIcon.sprite = food.data.Image;
+        if (nameText != null) nameText.text = food.data.cardName;
+        if (fullnessText != null) fullnessText.text = food.CurrentFullness.ToString();
     }
 }
