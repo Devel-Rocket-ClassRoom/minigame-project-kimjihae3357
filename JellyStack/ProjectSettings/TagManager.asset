@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Table
   - Card
-  - 
+  - CardPack
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Card
     uniqueID: 570098223
+    locked: 0
+  - name: CardPack
+    uniqueID: 2680623077
     locked: 0
   m_RenderingLayers:
   - Default

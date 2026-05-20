@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 86907976436508200}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2396233755996746236}
   - component: {fileID: 7428077699344513898}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 2753784247545767071}
   - component: {fileID: 8879199773139193096}
   - component: {fileID: 5934524711116554432}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Text_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 3707485651136545632}
   - component: {fileID: 578560275105535729}
   - component: {fileID: 3434512564670382638}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Sprite_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,10 +418,9 @@ GameObject:
   - component: {fileID: 115328413053555574}
   - component: {fileID: 5594718368014385323}
   - component: {fileID: 6954896302920449507}
-  - component: {fileID: 4990237338087074902}
-  - component: {fileID: 6739615015248714191}
+  - component: {fileID: 5796046727471367312}
   m_Layer: 7
-  m_Name: ResouceCard
+  m_Name: StarterCardPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -472,12 +471,12 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8481278547604517009}
   m_Enabled: 1
-  m_SortingLayerID: 570098223
-  m_SortingLayer: 1
+  m_SortingLayerID: -1614344219
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
---- !u!114 &4990237338087074902
+--- !u!114 &5796046727471367312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -486,27 +485,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8481278547604517009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30684ed009b0a1e4f8e5d0532787070f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a9c7307562059b4aab98bd3f2e82e71, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResourceCardUI
-  spriteIcon: {fileID: 578560275105535729}
-  nameText: {fileID: 5934524711116554432}
---- !u!114 &6739615015248714191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8481278547604517009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dea614771834740a3c088fe362c475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Card
+  m_EditorClassIdentifier: Assembly-CSharp::OpenPack
   data: {fileID: 0}
   stack: {fileID: 0}
   targetLocalPosition: {x: 0, y: 0, z: 0}
   followSpeed: 10
+  packData: {fileID: 11400000, guid: 0b8a1d1f527feab428294c3374a68bec, type: 2}
+  spawnRadius: 1.5
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8508511505199461102}
   - component: {fileID: 4851697798442716913}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Image_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}

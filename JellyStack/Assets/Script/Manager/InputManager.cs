@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class InputManager : MonoBehaviour
 {
     [Header("Drag Settings")]
-    [SerializeField] private float mergeDistance = 2.0f; // 스택되는 범위
+    [SerializeField] private float mergeDistance = 2.0f;
     [SerializeField] private float dragYOffset = 1.0f;
     [SerializeField] private GameObject cardStackPrefab;
 
-    private Vector3 stackVelocity;       // 스택의 부드러운 속도
+    private Vector3 stackVelocity;
     private Vector3 lastStackPosition;
 
     [Header("Camera")]
@@ -19,12 +19,19 @@ public class InputManager : MonoBehaviour
     [Header("Raycast")]
     [SerializeField] private LayerMask cardMask;
 
+    [Header("Pack Settings")]
+    [SerializeField] private float dragStartDistance = 10f;
+
+    // 카드 드래그 상태
     private bool isDragging;
     private Plane dragPlane;
     private Vector3 offset;
-
     private CardStack draggingStack;
     private CardStack sourceStack;
+
+    // 팩 대기 상태
+    private PackCard pendingPack;
+    private Vector2 packPressStartPos;
 
     private Vector2 currentPointerPosition;
 
@@ -37,7 +44,18 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (isDragging) DragCard();
+        if (isDragging)
+        {
+            DragCard();
+        }
+        else if (pendingPack != null &&
+                 (currentPointerPosition - packPressStartPos).magnitude >= dragStartDistance)
+        {
+            var pack = pendingPack;
+            pendingPack = null;
+            Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
+            StartDragging(pack, ray);
+        }
     }
 
     // PlayerInput (Invoke Unity Events) 콜백 — 포인터 위치 갱신
@@ -46,7 +64,7 @@ public class InputManager : MonoBehaviour
         currentPointerPosition = ctx.ReadValue<Vector2>();
     }
 
-    // PlayerInput (Invoke Unity Events) 콜백 — 클릭 시작
+    // PlayerInput (Invoke Unity Events) 콜백 — 클릭
     public void OnClick(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
@@ -59,20 +77,30 @@ public class InputManager : MonoBehaviour
         else if (ctx.canceled)
         {
             if (isDragging)
+            {
                 ReleaseCard();
+            }
+            else if (pendingPack != null)
+            {
+                // holdThreshold 미만 → 짧은 클릭: 카드 한 장 소환
+                pendingPack.SpawnNextCard();
+                pendingPack = null;
+            }
             else
+            {
                 cameraController?.EndPan();
+            }
         }
     }
 
     private void CancelOngoingInteractions()
     {
         if (isDragging) ReleaseCard();
+        pendingPack = null;
         if (cameraController != null && cameraController.IsPanning) cameraController.EndPan();
     }
 
-    
-    // 카드 집기
+    // 카드(팩 포함) 집기
     private bool TryPickCard()
     {
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
@@ -81,29 +109,32 @@ public class InputManager : MonoBehaviour
         var card = hit.collider.GetComponent<Card>();
         if (card == null || card.stack == null) return false;
 
+        // PackCard: holdThreshold 이후 드래그 시작
+        if (card is PackCard packCard)
+        {
+            pendingPack = packCard;
+            packPressStartPos = currentPointerPosition;
+            return true;
+        }
+
         StartDragging(card, ray);
         return true;
     }
-    
 
     private void StartDragging(Card card, Ray ray)
     {
         sourceStack = card.stack;
 
-        // 나 + 내 위 카드들을 떼어내기
         var moved = sourceStack.SplitFrom(card);
         if (moved == null || moved.Count == 0) return;
 
-        // 임시 스택 생성
         draggingStack = CreateTempStack(moved, card.transform.position);
         draggingStack.IsDragging = true;
 
-        // 스택을 즉시 올려 모든 카드가 첫 프레임부터 최상위에 표시
         Vector3 elevatedPos = draggingStack.transform.position;
         elevatedPos.y += dragYOffset;
         draggingStack.transform.position = elevatedPos;
 
-        // dragPlane은 원래 카드 Y 기준 (elevation 이전)
         dragPlane = new Plane(Vector3.up, card.transform.position);
 
         if (dragPlane.Raycast(ray, out float distance))
@@ -131,16 +162,12 @@ public class InputManager : MonoBehaviour
             draggingStack.transform.position = newPos;
 
             Vector3 instantVelocity = (newPos - lastStackPosition) / Mathf.Max(Time.deltaTime, 0.0001f);
-
-            // 속도를 부드럽게 보간 → 들쭉날쭉함 제거
             stackVelocity = Vector3.Lerp(stackVelocity, instantVelocity, Time.deltaTime * 10f);
-
             lastStackPosition = newPos;
 
             if (draggingStack.cards.Count > 1)
             {
                 Vector3 localVelocity = draggingStack.transform.InverseTransformDirection(stackVelocity);
-
                 for (int i = 1; i < draggingStack.cards.Count; i++)
                 {
                     Vector3 basePos = new Vector3(0, 0.01f * i, -0.7f * i);
@@ -163,11 +190,8 @@ public class InputManager : MonoBehaviour
         if (draggingStack != null)
             draggingStack.IsDragging = false;
 
-        // 원래 떠나온 스택이 비었으면 정리
         if (sourceStack != null && sourceStack.IsEmpty)
-        {
             Destroy(sourceStack.gameObject);
-        }
 
         sourceStack = null;
         draggingStack = null;
@@ -177,20 +201,19 @@ public class InputManager : MonoBehaviour
     {
         if (draggingStack == null) return;
 
-        CardStack target = FindNearestStack(
-            draggingStack.transform.position, draggingStack);
+        // 팩 카드는 병합하지 않고 현재 위치에 드롭
+        bool isPackStack = draggingStack.cards.Count > 0 && draggingStack.cards[0] is PackCard;
+        CardStack target = isPackStack ? null : FindNearestStack(draggingStack.transform.position, draggingStack);
 
         if (target != null)
         {
             var cardsToMerge = new List<Card>(draggingStack.cards);
             draggingStack.cards.Clear();
             target.AddCards(cardsToMerge);
-
             Destroy(draggingStack.gameObject);
         }
         else
         {
-            // 병합 없이 놓을 때 Y를 원래 높이로 되돌려 놓인 카드가 계속 높아지는 걸 방지
             Vector3 pos = draggingStack.transform.position;
             pos.y -= dragYOffset;
             draggingStack.transform.position = pos;

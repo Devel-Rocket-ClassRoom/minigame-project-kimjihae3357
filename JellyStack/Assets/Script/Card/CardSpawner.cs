@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CardSpawner : MonoBehaviour
 {
-    public static CardSpawner Instance {  get; private set; }
+    public static CardSpawner Instance { get; private set; }
 
     [SerializeField] private GameObject cardStackPrefab;
 
@@ -11,7 +11,7 @@ public class CardSpawner : MonoBehaviour
         Instance = this;
     }
 
-    public Card Spawn(CardData data, Vector3 worldPos)
+    public Card Spawn(CardData data, Vector3 worldPos, Vector3? fromPos = null)
     {
         if (data == null || data.cardPrefab == null)
         {
@@ -19,11 +19,9 @@ public class CardSpawner : MonoBehaviour
             return null;
         }
 
-        // 스택 생성
         var stackGo = Instantiate(cardStackPrefab, worldPos, Quaternion.identity);
         var stack = stackGo.GetComponent<CardStack>();
 
-        // 카드 생성
         var cardGo = Instantiate(data.cardPrefab, worldPos, Quaternion.identity);
         var card = cardGo.GetComponent<Card>();
         if (card == null)
@@ -35,11 +33,16 @@ public class CardSpawner : MonoBehaviour
         card.InitializeFromData();
 
         stack.AddCard(card);
-        return card;
-        }
 
-        public Card SpawnIntoStack(CardData data, CardStack targetStack)
-        {
+        // fromPos가 있으면 카드를 해당 위치에서 시작시켜 worldPos로 보간되며 날아오게 함
+        if (fromPos.HasValue)
+            card.transform.position = fromPos.Value;
+
+        return card;
+    }
+
+    public Card SpawnIntoStack(CardData data, CardStack targetStack)
+    {
         if (data == null || data.cardPrefab == null || targetStack == null)
             return null;
 
@@ -55,5 +58,5 @@ public class CardSpawner : MonoBehaviour
 
         targetStack.AddCard(card);
         return card;
-        }
+    }
 }
