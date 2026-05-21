@@ -492,8 +492,9 @@ MonoBehaviour:
   stack: {fileID: 0}
   targetLocalPosition: {x: 0, y: 0, z: 0}
   followSpeed: 10
+  suppressFollow: 0
   packData: {fileID: 11400000, guid: 0b8a1d1f527feab428294c3374a68bec, type: 2}
-  spawnRadius: 1.5
+  spawnRadius: 2
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0

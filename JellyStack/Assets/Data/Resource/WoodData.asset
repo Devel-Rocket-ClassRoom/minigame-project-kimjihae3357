@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50198e5bfcb7b0b499f8ffba46f317fb, type: 3}
-  m_Name: StoneData
+  m_Name: WoodData
   m_EditorClassIdentifier: Assembly-CSharp::ResourceCardData
   cardType: 3
   cardPrefab: {fileID: 8481278547604517009, guid: a4841e1ef65102d40b5d17c1b9126e43, type: 3}
-  cardName: "\uB3CC"
-  Image: {fileID: 21300000, guid: 3442847c7ba2f074e86b20855a9bbfdc, type: 3}
+  cardName: "\uD1B5\uB098\uBB34"
+  Image: {fileID: 21300000, guid: c31cd25f0ae4dc6498a92dcd16790da1, type: 3}
