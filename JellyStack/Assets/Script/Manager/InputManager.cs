@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
@@ -21,6 +22,9 @@ public class InputManager : MonoBehaviour
 
     [Header("Pack Settings")]
     [SerializeField] private float dragStartDistance = 10f;
+
+    [Header("UI")]
+    [SerializeField] private UIManager uiManager;
 
     // 카드 드래그 상태
     private bool isDragging;
@@ -64,11 +68,23 @@ public class InputManager : MonoBehaviour
         currentPointerPosition = ctx.ReadValue<Vector2>();
     }
 
+    // PlayerInput (Invoke Unity Events) 콜백 — ESC (일시정지 토글)
+    public void OnPause(InputAction.CallbackContext ctx)
+    {
+        if (!ctx.performed) return;
+        if (uiManager == null) return;
+
+        CancelOngoingInteractions();
+        uiManager.TogglePause();
+    }
+
     // PlayerInput (Invoke Unity Events) 콜백 — 클릭
     public void OnClick(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
         {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
             CancelOngoingInteractions();
 
             if (!TryPickCard())
