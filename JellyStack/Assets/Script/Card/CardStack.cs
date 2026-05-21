@@ -6,8 +6,8 @@ public class CardStack : MonoBehaviour
     public List<Card> cards = new List<Card>();
 
     [Header("UI")]
-    [SerializeField] private CardProgressBarUI progressBar;
-    public CardProgressBarUI ProgressBar => progressBar;
+    [SerializeField] private UI_CardProgressBar progressBar;
+    public UI_CardProgressBar ProgressBar => progressBar;
 
     [SerializeField] private LayerMask cardMask;
     [SerializeField] private float pushRadius = 2;

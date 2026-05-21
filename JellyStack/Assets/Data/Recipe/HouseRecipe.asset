@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: stoneRecipe
+  m_Name: HouseRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
-  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
-  result: {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
+  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
+  - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+  - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+  result: {fileID: 0}
   resultCount: 1
-  duration: 3
-  consumeIngredients: 0
+  duration: 10
+  consumeIngredients: 1
   iconPrefab: {fileID: 0}
