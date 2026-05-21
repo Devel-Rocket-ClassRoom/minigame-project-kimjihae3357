@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: stoneRecipe
+  m_Name: StoneRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
   - {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}

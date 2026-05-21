@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
 
     [HideInInspector] public Vector3 targetLocalPosition;
     [HideInInspector] public float followSpeed = 10f;
+    [HideInInspector] public bool suppressFollow = false;
 
     public System.Action OnStatChanged;
 
@@ -17,6 +18,7 @@ public class Card : MonoBehaviour
 
     private void Update()
     {
+        if (suppressFollow) return;
         transform.localPosition = Vector3.Lerp(
             transform.localPosition, targetLocalPosition, Time.deltaTime * followSpeed);
     }
