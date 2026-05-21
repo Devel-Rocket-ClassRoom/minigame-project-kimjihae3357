@@ -101,7 +101,28 @@ public class CardStack : MonoBehaviour
 
         var task = GetComponent<ProgressTask>();
         if (task != null)
-            task.Cancel();
+        {
+            var activeRecipe = task.Recipe;
+            bool stillValid =
+                activeRecipe != null &&
+                cards.Count >= 2 &&
+                RecipeManager.Instance != null &&
+                RecipeManager.Instance.StackMatchesIngredients(this, activeRecipe.ingredients);
+
+            if (!stillValid)
+            {
+                bool movedCarriesRecipe =
+                    activeRecipe != null &&
+                    moved.Count >= 2 &&
+                    RecipeManager.Instance != null &&
+                    RecipeManager.Instance.CardsMatchIngredients(moved, activeRecipe.ingredients);
+
+                if (movedCarriesRecipe)
+                    RecipeManager.Instance.StageTransfer(activeRecipe, task.Elapsed);
+
+                task.Cancel();
+            }
+        }
 
         ArrangeCards();
         return moved;

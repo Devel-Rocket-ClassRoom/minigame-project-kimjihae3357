@@ -11,11 +11,10 @@ public struct CardEntry
 }
 
 [CreateAssetMenu(fileName = "StarterPack", menuName = "CardPack/StarterPack")]
-public class StarterPack : ScriptableObject
+public class StarterPack : CardPackData
 {
     [SerializeField] private List<CardEntry> cardEntries = new List<CardEntry>();
-    public string cardName;
-    public Sprite Image;
+   
     public List<CardData> GetAllCards()
     {
         var result = new List<CardData>();

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02666ec1dbc544d57b3e698abab8d894, type: 3}
   m_Name: BerryData
   m_EditorClassIdentifier: Assembly-CSharp::FoodCardData
-  cardType: 3
-  cardPrefab: {fileID: 8481278547604517009, guid: a4841e1ef65102d40b5d17c1b9126e43, type: 3}
+  cardType: 6
+  cardPrefab: {fileID: 8481278547604517009, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
   cardName: "\uBE14\uB8E8\uBCA0\uB9AC"
   Image: {fileID: 21300000, guid: 323e777ce13b91845a17a16e14d2d43a, type: 3}
   maxFullness: 1
