@@ -3,24 +3,27 @@ using UnityEngine;
 public class ProgressTask : MonoBehaviour
 {
     private CardRecipe recipe;
+    public CardRecipe Recipe => recipe;
     private CardStack stack;
     private float elapsed;
+    public float Elapsed => elapsed;
     private System.Action<CardRecipe, CardStack> onComplete;
 
     private bool isCompleted;
 
-    public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete)
+    public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f)
     {
         this.recipe = recipe;
         this.stack = stack;
-        this.elapsed = 0f;
+        this.elapsed = startElapsed;
         this.onComplete = onComplete;
         this.isCompleted = false;
 
         if (stack != null && stack.ProgressBar != null)
         {
             stack.ProgressBar.Show();
-            stack.ProgressBar.SetProgress(0f);
+            float duration = Mathf.Max(0.01f, recipe.duration);
+            stack.ProgressBar.SetProgress(startElapsed / duration);
         }
     }
 
@@ -49,8 +52,11 @@ public class ProgressTask : MonoBehaviour
         float progress = elapsed / effectiveDuration;
 
         // ProgressBar 갱신
-        if (stack.ProgressBar != null )
+        if (stack.ProgressBar != null)
+        {
+            stack.ProgressBar.Show();
             stack.ProgressBar.SetProgress(progress);
+        }
 
         // 완료 체크
         if (elapsed >= effectiveDuration)

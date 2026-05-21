@@ -117,7 +117,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 89110598052481e42a164cdd2d95a225, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.504717, g: 0.76495355, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -152,7 +152,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7856585325476218487}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.22}
+  m_AnchoredPosition: {x: 0, y: 1.6199998}
   m_SizeDelta: {x: 5, y: 3.5}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!23 &8879199773139193096
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCE74\uB4DC \uC774\uB984"
+  m_text: "\uCE74\uB4DC\uD329 \uC774\uB984"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a3c94f4173f2df44b2fc91ef0704e02, type: 2}
   m_sharedMaterial: {fileID: -1570773559560105147, guid: 3a3c94f4173f2df44b2fc91ef0704e02, type: 2}
@@ -259,8 +259,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -418,7 +418,8 @@ GameObject:
   - component: {fileID: 115328413053555574}
   - component: {fileID: 5594718368014385323}
   - component: {fileID: 6954896302920449507}
-  - component: {fileID: 5796046727471367312}
+  - component: {fileID: 7483108112530119735}
+  - component: {fileID: 1851869085641104426}
   m_Layer: 7
   m_Name: StarterCardPack
   m_TagString: Untagged
@@ -476,7 +477,7 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
---- !u!114 &5796046727471367312
+--- !u!114 &7483108112530119735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -487,14 +488,28 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a9c7307562059b4aab98bd3f2e82e71, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OpenPack
+  m_EditorClassIdentifier: Assembly-CSharp::PackCard
   data: {fileID: 0}
   stack: {fileID: 0}
   targetLocalPosition: {x: 0, y: 0, z: 0}
   followSpeed: 10
   suppressFollow: 0
   packData: {fileID: 11400000, guid: 0b8a1d1f527feab428294c3374a68bec, type: 2}
-  spawnRadius: 2
+--- !u!114 &1851869085641104426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8481278547604517009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba837d3a56473034d85109ec35475742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardPackUI
+  spriteIcon: {fileID: 4851697798442716913}
+  nameText: {fileID: 5934524711116554432}
+  cardPack: {fileID: 11400000, guid: 0b8a1d1f527feab428294c3374a68bec, type: 2}
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,8 +536,8 @@ Transform:
   m_GameObject: {fileID: 8718462980046807130}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.7, z: 0}
-  m_LocalScale: {x: 4.5, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 2.1, z: 0}
+  m_LocalScale: {x: 4.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 86907976436508200}
@@ -577,7 +592,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.5707547, b: 0.5707547, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

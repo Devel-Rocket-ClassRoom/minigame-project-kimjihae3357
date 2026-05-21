@@ -10,9 +10,34 @@ public class RecipeManager : MonoBehaviour
     [Header("등록된 레시피 목록")]
     [SerializeField] private List<CardRecipe> recipes = new List<CardRecipe>();
 
+    private CardRecipe pendingRecipe;
+    private float pendingElapsed;
+    private int pendingFrame = -1;
+
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void StageTransfer(CardRecipe recipe, float elapsed)
+    {
+        pendingRecipe = recipe;
+        pendingElapsed = elapsed;
+        pendingFrame = Time.frameCount;
+    }
+
+    public bool CardsMatchIngredients(List<Card> cards, List<CardData> ingredients)
+    {
+        if (cards == null || ingredients == null || ingredients.Count == 0) return false;
+        var data = new List<CardData>(cards.Count);
+        foreach (var c in cards) data.Add(c.data);
+        foreach (var ing in ingredients)
+        {
+            int idx = data.IndexOf(ing);
+            if (idx < 0) return false;
+            data.RemoveAt(idx);
+        }
+        return true;
     }
 
     public void CheckStack(CardStack stack)
@@ -26,8 +51,15 @@ public class RecipeManager : MonoBehaviour
         CardRecipe matched = FindMatchingRecipe(stack);
         if (matched != null)
         {
+            float startElapsed = 0f;
+            if (pendingRecipe == matched && pendingFrame == Time.frameCount)
+            {
+                startElapsed = pendingElapsed;
+                pendingRecipe = null;
+                pendingFrame = -1;
+            }
             var task = stack.gameObject.AddComponent<ProgressTask>();
-            task.Begin(matched, stack, OnRecipeComplete);
+            task.Begin(matched, stack, OnRecipeComplete, startElapsed);
         }
     }
 
@@ -41,7 +73,7 @@ public class RecipeManager : MonoBehaviour
         return null;
     }
 
-    private bool StackMatchesIngredients(CardStack stack, List<CardData> ingredients)
+    public bool StackMatchesIngredients(CardStack stack, List<CardData> ingredients)
     {
         if (ingredients == null || ingredients.Count == 0) return false;
         var stackData = new List<CardData>(stack.cards.Select(c => c.data));
