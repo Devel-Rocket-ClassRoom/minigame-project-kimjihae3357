@@ -40,6 +40,12 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void ShowGameOver()
+    {
+        gameover.Show();
+        Time.timeScale = 0f;
+    }
+
     public void RestartGame()
     {
         Debug.Log("리스타트");

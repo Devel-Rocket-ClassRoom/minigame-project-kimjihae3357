@@ -20,6 +20,6 @@ MonoBehaviour:
   - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
     count: 1
   - data: {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
-    count: 1
+    count: 2
   - data: {fileID: 11400000, guid: 2056a0ec82849dc4aa4589e4be55107a, type: 2}
     count: 1

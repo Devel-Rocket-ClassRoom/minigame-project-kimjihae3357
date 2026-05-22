@@ -34,4 +34,17 @@ public class VillagerCard : Card
         }
     }
 
+    public void Feed(int amount)
+    {
+        Currenthunger = Mathf.Max(0, Currenthunger - amount);
+        NotifyStatChanged();
+    }
+
+    public void ResetHunger()
+    {
+        if (VillagerData == null) return;
+        Currenthunger = VillagerData.maxHunger;
+        NotifyStatChanged();
+    }
+
 }
