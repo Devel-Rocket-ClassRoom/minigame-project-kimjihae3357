@@ -6,6 +6,7 @@ public class UI_Ingame : MonoBehaviour
 {
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text dayText;
+    [SerializeField] private TMP_Text nextDayText;
     [SerializeField] private CanvasGroup dayChangeGroup;
 
     private void Start()
@@ -36,6 +37,7 @@ public class UI_Ingame : MonoBehaviour
     private void HandleDayChanged(int newDay)
     {
         dayText.text = $"{newDay}";
+        nextDayText.text = $"{newDay}";
         Time.timeScale = 0f;
         if (dayChangeGroup != null)
             StartCoroutine(DayChangeEffect());

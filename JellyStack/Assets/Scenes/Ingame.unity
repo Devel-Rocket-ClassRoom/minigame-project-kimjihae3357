@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e740075f14e1c42b1b6ad308a69242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  dayDuration: 120
+  dayDuration: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,6 +1137,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOver_window
       objectReference: {fileID: 0}
+    - target: {fileID: 3685309165784496529, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509047922719461109, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509047922719461109, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509047922719461109, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 533.3334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509047922719461109, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -220
+      objectReference: {fileID: 0}
     - target: {fileID: 6297858586165323862, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1216,6 +1236,38 @@ PrefabInstance:
     - target: {fileID: 6297858586165323862, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385575444034424708, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385575444034424708, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385575444034424708, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 533.3334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385575444034424708, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -470
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682078421354801752, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682078421354801752, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682078421354801752, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 533.3334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682078421354801752, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -340
       objectReference: {fileID: 0}
     - target: {fileID: 9195105070296118075, guid: f9d12f2e32993c34690b5ea07ee12ff9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1343,6 +1395,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392315733010329974, guid: 9b596e90da5506240a8a96986a7aadeb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225131710478523485, guid: 9b596e90da5506240a8a96986a7aadeb, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7745688701598110934, guid: 9b596e90da5506240a8a96986a7aadeb, type: 3}
