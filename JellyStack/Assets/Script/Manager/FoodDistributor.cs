@@ -16,7 +16,8 @@ public class FeedManager : MonoBehaviour
     [SerializeField] private GameObject selectCardPrefab;
 
     [Header("애니메이션")]
-    [SerializeField] private float moveDuration = 0.45f;
+    [SerializeField] private float moveDuration = 0.55f;
+    [SerializeField] private float jumpPower = 2f;
 
     private System.Action _onFeedComplete;
     private readonly List<SelectFoodCard> _activeIndicators = new();
@@ -109,9 +110,9 @@ public class FeedManager : MonoBehaviour
         food.suppressFollow = true;
 
         food.transform
-            .DOMove(target.transform.position, moveDuration)
+            .DOJump(target.transform.position, jumpPower, 1, moveDuration)
             .SetUpdate(true)          // timeScale=0에서도 동작
-            .SetEase(Ease.InQuad)
+            .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
                 if (food != null)
@@ -183,7 +184,7 @@ public class FeedManager : MonoBehaviour
 
         if (success)
         {
-            // 모든 Villager hunger 리셋
+            // 모든 Villager hunger 리셋 후 다음 날로
             foreach (var v in Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None))
                 v.ResetHunger();
 
@@ -191,8 +192,37 @@ public class FeedManager : MonoBehaviour
         }
         else
         {
-            // 음식 부족 → GameOver
-            GameManager.Instance?.GameOver();
+            // 음식 부족 → 굶은 Villager만 사망 처리
+            var allVillagers = Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None);
+            var survivors = new System.Collections.Generic.List<VillagerCard>();
+
+            foreach (var v in allVillagers)
+            {
+                if (v.Currenthunger > 0)
+                {
+                    // 굶어 죽음
+                    v.stack?.cards.Remove(v);
+                    Destroy(v.gameObject);
+                }
+                else
+                {
+                    survivors.Add(v);
+                }
+            }
+
+            if (survivors.Count == 0)
+            {
+                // 살아남은 주민 없음 → 게임오버
+                GameManager.Instance?.GameOver();
+            }
+            else
+            {
+                // 생존자 hunger 리셋 후 다음 날로
+                foreach (var v in survivors)
+                    v.ResetHunger();
+
+                _onFeedComplete?.Invoke();
+            }
         }
     }
 
