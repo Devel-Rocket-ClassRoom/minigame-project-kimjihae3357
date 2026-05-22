@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class UI_Ingame : MonoBehaviour
 {
+    public static UI_Ingame Instance { get; private set; }
+
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text nextDayText;
     [SerializeField] private CanvasGroup dayChangeGroup;
+    [SerializeField] private CanvasGroup feedTimeGroup;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -19,6 +27,26 @@ public class UI_Ingame : MonoBehaviour
             dayChangeGroup.alpha = 0f;
             dayChangeGroup.gameObject.SetActive(false);
         }
+
+        if (feedTimeGroup != null)
+        {
+            feedTimeGroup.alpha = 0f;
+            feedTimeGroup.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowFeedOverlay()
+    {
+        if (feedTimeGroup == null) return;
+        feedTimeGroup.gameObject.SetActive(true);
+        feedTimeGroup.alpha = 1f;
+    }
+
+    public void HideFeedOverlay()
+    {
+        if (feedTimeGroup == null) return;
+        feedTimeGroup.alpha = 0f;
+        feedTimeGroup.gameObject.SetActive(false);
     }
 
     private void OnDestroy()

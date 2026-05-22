@@ -78,9 +78,19 @@ public class InputManager : MonoBehaviour
         uiManager.TogglePause();
     }
 
+    // FeedPhase 중 카드 드래그 전체 차단 플래그
+    public static bool IsBlocked = false;
+
     // PlayerInput (Invoke Unity Events) 콜백 — 클릭
     public void OnClick(InputAction.CallbackContext ctx)
     {
+        if (IsBlocked)
+        {
+            // FeedPhase 중: SelectFoodCard 전용 클릭 처리
+            if (ctx.started) TrySelectFood();
+            return;
+        }
+
         if (ctx.started)
         {
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
@@ -114,6 +124,17 @@ public class InputManager : MonoBehaviour
         if (isDragging) ReleaseCard();
         pendingPack = null;
         if (cameraController != null && cameraController.IsPanning) cameraController.EndPan();
+    }
+
+    // FeedPhase: SelectFoodCard 클릭 감지 (Raycast 전 레이어 무관)
+    private void TrySelectFood()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            var indicator = hit.collider.GetComponent<SelectFoodCard>();
+            indicator?.OnClick();
+        }
     }
 
     // 카드(팩 포함) 집기

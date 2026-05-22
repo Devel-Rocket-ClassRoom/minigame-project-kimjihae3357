@@ -11,6 +11,9 @@ public class ProgressTask : MonoBehaviour
 
     private bool isCompleted;
 
+    /// <summary>FeedTime 중 모든 ProgressTask 일시정지 플래그</summary>
+    public static bool IsPaused = false;
+
     public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f)
     {
         this.recipe = recipe;
@@ -30,6 +33,7 @@ public class ProgressTask : MonoBehaviour
     private void Update()
     {
         if (isCompleted) return;
+        if (IsPaused) return;  // FeedTime 중 정지
 
         if (stack == null || recipe == null)
         {
