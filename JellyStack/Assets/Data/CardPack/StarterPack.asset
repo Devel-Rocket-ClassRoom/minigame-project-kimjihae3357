@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f9f3cd0d1f88444b96f34773680498, type: 3}
   m_Name: StarterPack
   m_EditorClassIdentifier: Assembly-CSharp::StarterCardPack
+  cardName: "\uC2A4\uD0C0\uD130\uD329"
+  Image: {fileID: 0}
   cardEntries:
   - data: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
     count: 1
@@ -19,5 +21,5 @@ MonoBehaviour:
     count: 1
   - data: {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
     count: 1
-  cardName: "\uC2A4\uD0C0\uD130\uD329"
-  Image: {fileID: 0}
+  - data: {fileID: 11400000, guid: 2056a0ec82849dc4aa4589e4be55107a, type: 2}
+    count: 1

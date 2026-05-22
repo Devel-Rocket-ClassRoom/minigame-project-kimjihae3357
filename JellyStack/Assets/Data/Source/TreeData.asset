@@ -16,4 +16,4 @@ MonoBehaviour:
   cardPrefab: {fileID: 8481278547604517009, guid: 456be6442ba56f047963b72b189b910e, type: 3}
   cardName: "\uB098\uBB34"
   Image: {fileID: 21300000, guid: 0feec1996fca1ba4e88b533cec204bb0, type: 3}
-  GatherCount: 0
+  GatherCount: 3

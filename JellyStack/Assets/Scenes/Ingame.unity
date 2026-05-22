@@ -813,6 +813,8 @@ MonoBehaviour:
   recipes:
   - {fileID: 11400000, guid: 2342f3c17d75b2e409fa4164fd6e779f, type: 2}
   - {fileID: 11400000, guid: a67a7f498c4a2a44283ab60fbd180b87, type: 2}
+  - {fileID: 11400000, guid: ed30f975cdfd7754e86eb9c722e0b606, type: 2}
+  - {fileID: 11400000, guid: c4a5b554d7e76714eaeb1c7579d9765d, type: 2}
 --- !u!1 &1723756440
 GameObject:
   m_ObjectHideFlags: 0
