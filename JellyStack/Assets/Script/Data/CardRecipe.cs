@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "CardRecipe", menuName = "Card/CardRecipe")]
+[CreateAssetMenu(fileName = "CardRecipe", menuName = "CardRecipe/CardRecipe")]
 public class CardRecipe : ScriptableObject
 {
     [Header("재료")]

@@ -17,7 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
-  result: {fileID: 0}
+  result: {fileID: 11400000, guid: 01152f8b2299d1f40a225d961049fa08, type: 2}
   resultCount: 1
   duration: 10
   consumeIngredients: 1

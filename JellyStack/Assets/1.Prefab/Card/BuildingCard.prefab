@@ -418,10 +418,10 @@ GameObject:
   - component: {fileID: 115328413053555574}
   - component: {fileID: 5594718368014385323}
   - component: {fileID: 6954896302920449507}
-  - component: {fileID: 4990237338087074902}
   - component: {fileID: 6739615015248714191}
+  - component: {fileID: 144810899880701366}
   m_Layer: 7
-  m_Name: BuildCard
+  m_Name: BuildingCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,20 +477,6 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
---- !u!114 &4990237338087074902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8481278547604517009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30684ed009b0a1e4f8e5d0532787070f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResourceCardUI
-  spriteIcon: {fileID: 578560275105535729}
-  nameText: {fileID: 5934524711116554432}
 --- !u!114 &6739615015248714191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,6 +493,21 @@ MonoBehaviour:
   stack: {fileID: 0}
   targetLocalPosition: {x: 0, y: 0, z: 0}
   followSpeed: 10
+  suppressFollow: 0
+--- !u!114 &144810899880701366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8481278547604517009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44d3d25227550d43aa8b796af877a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildCardUI
+  spriteIcon: {fileID: 578560275105535729}
+  nameText: {fileID: 5934524711116554432}
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0
