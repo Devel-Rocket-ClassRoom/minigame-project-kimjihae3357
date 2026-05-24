@@ -47,5 +47,8 @@ TagManager:
   - name: CardPack
     uniqueID: 2680623077
     locked: 0
+  - name: Effect
+    uniqueID: 326241435
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -1,0 +1,28 @@
+{
+    "asset": "523099d6439ded64b93a5b9b458dfcfb",
+    "fileName": "019e5b44-f39b-7af8-b2b5-a735b5b1a17d.jpg",
+    "prompt": "A single cute pink glossy heart icon, simple cartoon casual mobile game style, bold outline, vibrant pink with red gradient, slight glow, centered on transparent background, no text, no extra decoration",
+    "negativePrompt": "",
+    "model": "game-ui-essentials-2",
+    "modelName": "Game UI Essentials 2.0",
+    "customSeed": -1,
+    "w3CTraceId": "",
+    "feedback": 0,
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelatePixelGridSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0,
+    "dimensions": {
+        "width": 2048,
+        "height": 2048
+    },
+    "spriteSheet": false,
+    "duration": 0.0
+}

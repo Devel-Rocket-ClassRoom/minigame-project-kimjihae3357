@@ -11,17 +11,19 @@ public class GameManager : MonoBehaviour
     [Header("[매니저]")]
     [SerializeField] private UIManager uiManager;
 
-    private Vector3 startSpawnPosition = Vector3.zero;
+     private Vector3 startSpawnPosition = Vector3.zero;
 
     private void Awake()
     {
         Instance = this;
+
     }
 
     public void GameOver()
     {
         if (uiManager != null)
             uiManager.ShowGameOver();
+                
     }
 
     private void Start()
