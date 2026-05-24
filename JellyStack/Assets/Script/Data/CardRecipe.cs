@@ -19,4 +19,6 @@ public class CardRecipe : ScriptableObject
     [Header("표시 아이콘")]
     public GameObject iconPrefab;
 
+    [Header("진행 이펙트")]
+    public GameObject progressEffectPrefab;   // 진행 중 카드 위에 표시할 이펙트 (선택)
 }

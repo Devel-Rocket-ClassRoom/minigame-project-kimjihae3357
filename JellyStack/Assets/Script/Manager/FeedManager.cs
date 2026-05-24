@@ -1,6 +1,7 @@
+using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 
 /// <summary>
@@ -19,15 +20,25 @@ public class FeedManager : MonoBehaviour
     [SerializeField] private float moveDuration = 0.55f;
     [SerializeField] private float jumpPower = 2f;
 
+    [Header("[연출]")]
+    [SerializeField] private GameObject deadEffect;
+    [SerializeField] private float deadEffectDuration = 1.0f; // 사망 이펙트 재생 대기 시간(초)
+    [SerializeField] private GameObject eatEffect;            // 음식 도착 시 과자 부스러기 이펙트
+
     private System.Action _onFeedComplete;
     private readonly List<SelectFoodCard> _activeIndicators = new();
     private bool _isAnimating;
 
-    private void Awake() => Instance = this;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
 
     private void Start()
     {
         DayManager.Instance.OnBeforeDayChanged += HandleBeforeDayChanged;
+
     }
 
     private void OnDestroy()
@@ -115,6 +126,15 @@ public class FeedManager : MonoBehaviour
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
+                // 음식이 Villager에 도착한 순간 - 과자 부스러기 이펙트 재생
+                if (eatEffect != null)
+                {
+                    Vector3 spawnPos = target != null
+                        ? target.transform.position
+                        : (food != null ? food.transform.position : Vector3.zero);
+                    Instantiate(eatEffect, spawnPos, Quaternion.identity);
+                }
+
                 if (food != null)
                 {
                     food.Consume(amount);
@@ -192,37 +212,55 @@ public class FeedManager : MonoBehaviour
         }
         else
         {
-            // 음식 부족 → 굶은 Villager만 사망 처리
-            var allVillagers = Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None);
-            var survivors = new System.Collections.Generic.List<VillagerCard>();
+            // 음식 부족 → 굶은 Villager 사망 처리 + 연출 대기 후 다음 단계로
+            StartCoroutine(DieAndFinish());
+        }
+    }
 
-            foreach (var v in allVillagers)
-            {
-                if (v.Currenthunger > 0)
-                {
-                    // 굶어 죽음
-                    v.stack?.cards.Remove(v);
-                    Destroy(v.gameObject);
-                }
-                else
-                {
-                    survivors.Add(v);
-                }
-            }
+    // ─────────────────────────────────────────────
+    // 사망 연출 + 후처리 코루틴
+    // ─────────────────────────────────────────────
 
-            if (survivors.Count == 0)
+    private IEnumerator DieAndFinish()
+    {
+        var allVillagers = Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None);
+        var survivors = new List<VillagerCard>();
+        bool anyDied = false;
+
+        foreach (var v in allVillagers)
+        {
+            if (v.Currenthunger > 0)
             {
-                // 살아남은 주민 없음 → 게임오버
-                GameManager.Instance?.GameOver();
+                // 굶어 죽음 - 죽는 카드 위치에서 이펙트 재생
+                if (deadEffect != null)
+                    Instantiate(deadEffect, v.transform.position, Quaternion.identity);
+
+                v.stack?.cards.Remove(v);
+                Destroy(v.gameObject);
+                anyDied = true;
             }
             else
             {
-                // 생존자 hunger 리셋 후 다음 날로
-                foreach (var v in survivors)
-                    v.ResetHunger();
-
-                _onFeedComplete?.Invoke();
+                survivors.Add(v);
             }
+        }
+
+        // 누군가 죽었다면 연출 시간만큼 대기 (timeScale 영향 없도록 Realtime 사용)
+        if (anyDied)
+            yield return new WaitForSecondsRealtime(deadEffectDuration);
+
+        if (survivors.Count == 0)
+        {
+            // 살아남은 주민 없음 → 게임오버
+            GameManager.Instance?.GameOver();
+        }
+        else
+        {
+            // 생존자 hunger 리셋 후 다음 날로
+            foreach (var v in survivors)
+                v.ResetHunger();
+
+            _onFeedComplete?.Invoke();
         }
     }
 

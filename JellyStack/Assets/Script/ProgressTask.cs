@@ -14,6 +14,8 @@ public class ProgressTask : MonoBehaviour
     /// <summary>FeedTime 중 모든 ProgressTask 일시정지 플래그</summary>
     public static bool IsPaused = false;
 
+    private GameObject _activeEffect;
+
     public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f)
     {
         this.recipe = recipe;
@@ -27,6 +29,21 @@ public class ProgressTask : MonoBehaviour
             stack.ProgressBar.Show();
             float duration = Mathf.Max(0.01f, recipe.duration);
             stack.ProgressBar.SetProgress(startElapsed / duration);
+        }
+
+        // 진행 이펙트 스폰 (스택 자식으로 부모 설정 → 카드 이동을 따라감)
+        if (recipe != null && recipe.progressEffectPrefab != null && stack != null)
+        {
+            Vector3 spawnPos = stack.TopCard != null
+                ? stack.TopCard.transform.position
+                : stack.transform.position;
+
+            _activeEffect = Instantiate(
+                recipe.progressEffectPrefab,
+                spawnPos,
+                Quaternion.identity,
+                stack.transform
+            );
         }
     }
 
@@ -74,6 +91,7 @@ public class ProgressTask : MonoBehaviour
 
         enabled = false;
         HideProgress();
+        DestroyActiveEffect();
 
         try
         {
@@ -88,6 +106,7 @@ public class ProgressTask : MonoBehaviour
     public void Cancel()
     {
         HideProgress();
+        DestroyActiveEffect();
         Destroy(this);
     }
 
@@ -95,5 +114,20 @@ public class ProgressTask : MonoBehaviour
     {
         if (stack != null && stack.ProgressBar != null)
             stack.ProgressBar.Hide();
+    }
+
+    private void DestroyActiveEffect()
+    {
+        if (_activeEffect != null)
+        {
+            Destroy(_activeEffect);
+            _activeEffect = null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 어떤 경로로 컴포넌트가 파괴되더라도 잔여 이펙트가 남지 않도록
+        DestroyActiveEffect();
     }
 }
