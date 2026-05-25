@@ -19,5 +19,7 @@ public abstract class CardData : ScriptableObject
     public GameObject cardPrefab;
     public string cardName;
     public Sprite Image;
+    public int sellPrice = 1;
+    public bool CanSell = true;
 
 }
