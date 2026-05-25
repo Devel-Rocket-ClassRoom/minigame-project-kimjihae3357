@@ -39,6 +39,12 @@ public class InputManager : MonoBehaviour
 
     private Vector2 currentPointerPosition;
 
+    // OnClick 콜백은 InputAction 이벤트 처리 단계에서 호출됨 (EventSystem.Update 이전).
+    // 그 시점에 IsPointerOverGameObject()를 호출하면 이전 프레임 상태를 읽으므로,
+    // 콜백에선 플래그만 세팅하고 실제 처리는 Update에서 수행한다.
+    private bool _clickStartedPending;
+    private bool _clickCanceledPending;
+
     private void Awake()
     {
         if (mainCamera == null) mainCamera = Camera.main;
@@ -48,6 +54,19 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        // 1. EventSystem-의존 클릭 처리 (Update 시점엔 UI 상태가 이번 프레임 기준으로 갱신돼 안전)
+        if (_clickStartedPending)
+        {
+            _clickStartedPending = false;
+            HandleClickStarted();
+        }
+        if (_clickCanceledPending)
+        {
+            _clickCanceledPending = false;
+            HandleClickCanceled();
+        }
+
+        // 2. 드래그/팩 진행 처리
         if (isDragging)
         {
             DragCard();
@@ -82,40 +101,48 @@ public class InputManager : MonoBehaviour
     public static bool IsBlocked = false;
 
     // PlayerInput (Invoke Unity Events) 콜백 — 클릭
+    // 실제 처리는 Update의 HandleClickStarted/HandleClickCanceled에서 수행 (UI 체크 정확성 확보)
     public void OnClick(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started) _clickStartedPending = true;
+        else if (ctx.canceled) _clickCanceledPending = true;
+    }
+
+    private void HandleClickStarted()
     {
         if (IsBlocked)
         {
             // FeedPhase 중: SelectFoodCard 전용 클릭 처리
-            if (ctx.started) TrySelectFood();
+            TrySelectFood();
             return;
         }
 
-        if (ctx.started)
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+        CancelOngoingInteractions();
+
+        if (!TryPickCard())
+            cameraController?.StartPan(currentPointerPosition);
+    }
+
+    private void HandleClickCanceled()
+    {
+        // FeedPhase 중엔 release 처리하지 않음 (원본 OnClick의 IsBlocked 분기와 동일하게 early return)
+        if (IsBlocked) return;
+
+        if (isDragging)
         {
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
-
-            CancelOngoingInteractions();
-
-            if (!TryPickCard())
-                cameraController?.StartPan(currentPointerPosition);
+            ReleaseCard();
         }
-        else if (ctx.canceled)
+        else if (pendingPack != null)
         {
-            if (isDragging)
-            {
-                ReleaseCard();
-            }
-            else if (pendingPack != null)
-            {
-                // holdThreshold 미만 → 짧은 클릭: 카드 한 장 소환
-                pendingPack.SpawnNextCard();
-                pendingPack = null;
-            }
-            else
-            {
-                cameraController?.EndPan();
-            }
+            // holdThreshold 미만 → 짧은 클릭: 카드 한 장 소환
+            pendingPack.SpawnNextCard();
+            pendingPack = null;
+        }
+        else
+        {
+            cameraController?.EndPan();
         }
     }
 
@@ -238,8 +265,32 @@ public class InputManager : MonoBehaviour
     {
         if (draggingStack == null) return;
 
-        // 팩 카드는 병합하지 않고 현재 위치에 드롭
+        // 팩 카드는 병합/판매하지 않고 현재 위치에 드롭
         bool isPackStack = draggingStack.cards.Count > 0 && draggingStack.cards[0] is PackCard;
+
+        // 1) SellPoint 우선 판정 (팩 제외)
+        if (!isPackStack && SellPoint.Instance != null
+            && SellPoint.Instance.IsInRange(draggingStack.transform.position))
+        {
+            bool nowEmpty = SellPoint.Instance.SellStack(draggingStack);
+
+            if (nowEmpty)
+            {
+                Destroy(draggingStack.gameObject);
+                draggingStack = null;
+            }
+            else
+            {
+                // 일부 카드(판매 불가)가 남아있으면 SellPoint 근처에 그대로 드롭
+                Vector3 pos = draggingStack.transform.position;
+                pos.y -= dragYOffset;
+                draggingStack.transform.position = pos;
+                draggingStack.Refresh();
+            }
+            return;
+        }
+
+        // 2) 기존 머지/드롭 로직
         CardStack target = isPackStack ? null : FindNearestStack(draggingStack.transform.position, draggingStack);
 
         if (target != null)

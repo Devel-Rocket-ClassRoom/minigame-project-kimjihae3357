@@ -10,6 +10,10 @@ public class RecipeManager : MonoBehaviour
     [Header("등록된 레시피 목록")]
     [SerializeField] private List<CardRecipe> recipes = new List<CardRecipe>();
 
+    [Header("힐 시스템")]
+    [Tooltip("Villager + Hearts 스택에서 사용할 진행/이펙트 레시피 (ingredients/result 비워둘 것)")]
+    [SerializeField] private CardRecipe healRecipe;
+
     private CardRecipe pendingRecipe;
     private float pendingElapsed;
     private int pendingFrame = -1;
@@ -60,7 +64,51 @@ public class RecipeManager : MonoBehaviour
             }
             var task = stack.gameObject.AddComponent<ProgressTask>();
             task.Begin(matched, stack, OnRecipeComplete, startElapsed);
+            return;
         }
+
+        // 일반 레시피가 안 잡히면 힐 패턴 시도
+        TryStartHealTask(stack);
+    }
+
+    private bool TryStartHealTask(CardStack stack)
+    {
+        if (healRecipe == null) return false;
+        if (stack == null || stack.cards.Count < 2) return false;
+
+        VillagerCard villager = null;
+        int heartCount = 0;
+        foreach (var c in stack.cards)
+        {
+            if (c is VillagerCard v)
+            {
+                if (villager != null) return false; // Villager 2명 이상은 패턴 아님
+                villager = v;
+            }
+            else if (c is HeartCard)
+            {
+                heartCount++;
+            }
+            else
+            {
+                return false; // 다른 카드 섞임 → 엄격 패턴 위반
+            }
+        }
+
+        if (villager == null || heartCount == 0) return false;
+        if (villager.CurrentHealth >= villager.MaxHealth) return false; // 이미 풀체력
+
+        float startElapsed = 0f;
+        if (pendingRecipe == healRecipe && pendingFrame == Time.frameCount)
+        {
+            startElapsed = pendingElapsed;
+            pendingRecipe = null;
+            pendingFrame = -1;
+        }
+
+        var task = stack.gameObject.AddComponent<ProgressTask>();
+        task.Begin(healRecipe, stack, OnRecipeComplete, startElapsed);
+        return true;
     }
 
     private CardRecipe FindMatchingRecipe(CardStack stack)
@@ -90,13 +138,46 @@ public class RecipeManager : MonoBehaviour
     {
         Debug.Log($"레시피 완료: {recipe.name}");
 
-        if (recipe.result != null)
-            SpawnResults(recipe, stack);
+        if (recipe == healRecipe)
+        {
+            ApplyHeal(stack);
+        }
+        else
+        {
+            if (recipe.result != null)
+                SpawnResults(recipe, stack);
 
-        HandleIngredients(recipe, stack);
+            HandleIngredients(recipe, stack);
+        }
 
         if (stack != null && !stack.IsEmpty)
             CheckStack(stack);
+    }
+
+    private void ApplyHeal(CardStack stack)
+    {
+        if (stack == null) return;
+
+        VillagerCard villager = null;
+        var hearts = new List<HeartCard>();
+        foreach (var c in stack.cards)
+        {
+            if (c is VillagerCard v) villager = v;
+            else if (c is HeartCard h) hearts.Add(h);
+        }
+        if (villager == null || hearts.Count == 0) return;
+
+        int totalHeal = 0;
+        foreach (var h in hearts) totalHeal += h.HealAmount;
+        villager.Heal(totalHeal);
+
+        // Hearts 제거 및 파괴
+        foreach (var h in hearts)
+        {
+            stack.cards.Remove(h);
+            Destroy(h.gameObject);
+        }
+        stack.Refresh();
     }
 
     private void SpawnResults(CardRecipe recipe, CardStack stack)

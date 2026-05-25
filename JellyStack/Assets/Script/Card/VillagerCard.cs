@@ -8,6 +8,7 @@ public class VillagerCard : Card
     public int Currenthunger {get; private set;}
 
     private VillagerCardData VillagerData => data as VillagerCardData;
+    public int MaxHealth => VillagerData != null ? VillagerData.maxHealth : 0;
 
     private void Awake()
     {
@@ -37,6 +38,13 @@ public class VillagerCard : Card
     public void Feed(int amount)
     {
         Currenthunger = Mathf.Max(0, Currenthunger - amount);
+        NotifyStatChanged();
+    }
+
+    public void Heal(int amount)
+    {
+        if (VillagerData == null || amount <= 0) return;
+        CurrentHealth = Mathf.Min(VillagerData.maxHealth, CurrentHealth + amount);
         NotifyStatChanged();
     }
 

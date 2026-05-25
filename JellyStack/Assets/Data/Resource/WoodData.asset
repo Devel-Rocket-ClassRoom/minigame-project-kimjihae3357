@@ -16,3 +16,5 @@ MonoBehaviour:
   cardPrefab: {fileID: 8481278547604517009, guid: a4841e1ef65102d40b5d17c1b9126e43, type: 3}
   cardName: "\uD1B5\uB098\uBB34"
   Image: {fileID: 21300000, guid: c31cd25f0ae4dc6498a92dcd16790da1, type: 3}
+  sellPrice: 1
+  CanSell: 1
