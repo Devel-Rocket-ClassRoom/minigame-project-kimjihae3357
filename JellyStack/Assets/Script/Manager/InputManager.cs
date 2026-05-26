@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
+
     [Header("Drag Settings")]
     [SerializeField] private float mergeDistance = 2.0f;
     [SerializeField] private float dragYOffset = 1.0f;
@@ -47,9 +49,15 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         if (mainCamera == null) mainCamera = Camera.main;
         if (cameraController == null && mainCamera != null)
             cameraController = mainCamera.GetComponent<CameraController>();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 
     private void Update()
@@ -97,8 +105,68 @@ public class InputManager : MonoBehaviour
         uiManager.TogglePause();
     }
 
-    // FeedPhase 중 카드 드래그 전체 차단 플래그
-    public static bool IsBlocked = false;
+    // FeedPhase 중 카드 드래그 전체 차단 플래그.
+    // true로 전환되는 순간 진행 중인 드래그/팩 대기/카메라 팬을 자동 취소한다.
+    private static bool _isBlocked;
+    public static bool IsBlocked
+    {
+        get => _isBlocked;
+        set
+        {
+            if (_isBlocked == value) return;
+            bool wasJustBlocked = !_isBlocked && value;
+            _isBlocked = value;
+
+            // false → true 전환 시점에 자동으로 인터랙션 강제 종료
+            if (wasJustBlocked && Instance != null)
+            {
+                Instance.ForceCancelDrag();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 외부 이벤트(FeedPhase 진입 등)로 진행 중인 드래그/팩/팬을 강제 취소.
+    /// 드래그 중이던 카드는 원래 sourceStack으로 복귀시킨다.
+    /// </summary>
+    public void ForceCancelDrag()
+    {
+        pendingPack = null;
+
+        if (cameraController != null && cameraController.IsPanning)
+            cameraController.EndPan();
+
+        if (!isDragging || draggingStack == null)
+        {
+            sourceStack = null;
+            draggingStack = null;
+            isDragging = false;
+            return;
+        }
+
+        isDragging = false;
+
+        if (sourceStack != null)
+        {
+            // 카드를 원래 스택으로 복귀
+            var cardsToReturn = new List<Card>(draggingStack.cards);
+            draggingStack.cards.Clear();
+            sourceStack.AddCards(cardsToReturn);
+            Destroy(draggingStack.gameObject);
+        }
+        else
+        {
+            // 소스가 없으면 그냥 현 위치에 떨궈둠
+            draggingStack.IsDragging = false;
+            Vector3 pos = draggingStack.transform.position;
+            pos.y -= dragYOffset;
+            draggingStack.transform.position = pos;
+            draggingStack.Refresh();
+        }
+
+        sourceStack = null;
+        draggingStack = null;
+    }
 
     // PlayerInput (Invoke Unity Events) 콜백 — 클릭
     // 실제 처리는 Update의 HandleClickStarted/HandleClickCanceled에서 수행 (UI 체크 정확성 확보)

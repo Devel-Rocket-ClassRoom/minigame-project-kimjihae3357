@@ -85,7 +85,17 @@ public class UI_Ingame : MonoBehaviour
             yield return null;
         }
         dayChangeGroup.alpha = 0f;
-        Time.timeScale = 1f;
         dayChangeGroup.gameObject.SetActive(false);
+
+        // 7일 간격으로 날씨 룰렛 표시 (시간 정지 유지 → 룰렛 끝난 뒤 복귀)
+        int day = DayManager.Instance != null ? DayManager.Instance.CurrentDay : 0;
+        if (day > 0 && day % 7 == 0 && WeatherManager.Instance != null)
+        {
+            bool rouletteDone = false;
+            WeatherManager.Instance.ShowRoulette(_ => rouletteDone = true);
+            while (!rouletteDone) yield return null;
+        }
+
+        Time.timeScale = 1f;
     }
 }
