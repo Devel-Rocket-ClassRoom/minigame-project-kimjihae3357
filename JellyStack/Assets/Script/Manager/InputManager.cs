@@ -268,29 +268,93 @@ public class InputManager : MonoBehaviour
         // 팩 카드는 병합/판매하지 않고 현재 위치에 드롭
         bool isPackStack = draggingStack.cards.Count > 0 && draggingStack.cards[0] is PackCard;
 
-        // 1) SellPoint 우선 판정 (팩 제외)
-        if (!isPackStack && SellPoint.Instance != null
-            && SellPoint.Instance.IsInRange(draggingStack.transform.position))
-        {
-            bool nowEmpty = SellPoint.Instance.SellStack(draggingStack);
+        Vector3 dropPos = draggingStack.transform.position;
+        Vector3 dropXZ = new Vector3(dropPos.x, 0f, dropPos.z);
 
-            if (nowEmpty)
+        // 1) BuyPoint 우선 판정 (팩 제외) — 콜라이더 영역 안에 떨어졌을 때
+        //    여러 BuyPoint 콜라이더가 겹친 경우엔 드롭 위치에서 가장 가까운(XZ 거리) BuyPoint를 선택
+        if (!isPackStack)
+        {
+            BuyPoint targetBuyPoint = null;
+            float bestDistSqr = float.MaxValue;
+            var buyPoints = Object.FindObjectsByType<BuyPoint>(FindObjectsSortMode.None);
+            foreach (var bp in buyPoints)
             {
-                Destroy(draggingStack.gameObject);
-                draggingStack = null;
+                if (bp == null || !bp.IsPointInside(dropPos)) continue;
+                Vector3 bpXZ = new Vector3(bp.transform.position.x, 0f, bp.transform.position.z);
+                float d = (bpXZ - dropXZ).sqrMagnitude;
+                if (d < bestDistSqr)
+                {
+                    bestDistSqr = d;
+                    targetBuyPoint = bp;
+                }
             }
-            else
+
+            if (targetBuyPoint != null)
             {
-                // 일부 카드(판매 불가)가 남아있으면 SellPoint 근처에 그대로 드롭
-                Vector3 pos = draggingStack.transform.position;
-                pos.y -= dragYOffset;
-                draggingStack.transform.position = pos;
-                draggingStack.Refresh();
+                bool purchased = targetBuyPoint.TryBuy(draggingStack);
+                if (purchased)
+                {
+                    if (draggingStack.IsEmpty)
+                    {
+                        Destroy(draggingStack.gameObject);
+                        draggingStack = null;
+                    }
+                    else
+                    {
+                        // 코인 외 잔여 카드는 BuyPoint 근처에 드롭
+                        Vector3 pos = draggingStack.transform.position;
+                        pos.y -= dragYOffset;
+                        draggingStack.transform.position = pos;
+                        draggingStack.Refresh();
+                    }
+                    return;
+                }
+                // 구매 실패(코인 부족) → 아래 SellPoint/머지 로직으로 흘림
             }
-            return;
         }
 
-        // 2) 기존 머지/드롭 로직
+        // 2) SellPoint 판정 (팩 제외) — 콜라이더 영역 안에 떨어졌을 때
+        //    여러 SellPoint 콜라이더가 겹친 경우엔 드롭 위치에서 가장 가까운(XZ 거리) SellPoint를 선택
+        if (!isPackStack)
+        {
+            SellPoint targetSellPoint = null;
+            float bestSellDistSqr = float.MaxValue;
+            var sellPoints = Object.FindObjectsByType<SellPoint>(FindObjectsSortMode.None);
+            foreach (var sp in sellPoints)
+            {
+                if (sp == null || !sp.IsPointInside(dropPos)) continue;
+                Vector3 spXZ = new Vector3(sp.transform.position.x, 0f, sp.transform.position.z);
+                float d = (spXZ - dropXZ).sqrMagnitude;
+                if (d < bestSellDistSqr)
+                {
+                    bestSellDistSqr = d;
+                    targetSellPoint = sp;
+                }
+            }
+
+            if (targetSellPoint != null)
+            {
+                bool nowEmpty = targetSellPoint.SellStack(draggingStack);
+
+                if (nowEmpty)
+                {
+                    Destroy(draggingStack.gameObject);
+                    draggingStack = null;
+                }
+                else
+                {
+                    // 일부 카드(판매 불가)가 남아있으면 SellPoint 근처에 그대로 드롭
+                    Vector3 pos = draggingStack.transform.position;
+                    pos.y -= dragYOffset;
+                    draggingStack.transform.position = pos;
+                    draggingStack.Refresh();
+                }
+                return;
+            }
+        }
+
+        // 3) 기존 머지/드롭 로직
         CardStack target = isPackStack ? null : FindNearestStack(draggingStack.transform.position, draggingStack);
 
         if (target != null)

@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PackCard : Card
 {
-    [SerializeField] private StarterPack packData;
+    [SerializeField] private CardPackData packData;   // StarterPack / RandomCardPack 등 어떤 팩 타입이든 받을 수 있음
 
     private List<CardData> remainingCards;
 
     private void Start()
     {
-        remainingCards = packData != null ? packData.GetAllCards() : new List<CardData>();
+        remainingCards = packData != null ? packData.BuildInitialList() : new List<CardData>();
     }
 
     public void SpawnNextCard()

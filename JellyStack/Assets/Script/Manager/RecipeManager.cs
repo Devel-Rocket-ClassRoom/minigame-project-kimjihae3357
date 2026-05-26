@@ -30,6 +30,35 @@ public class RecipeManager : MonoBehaviour
         pendingFrame = Time.frameCount;
     }
 
+    /// <summary>
+    /// 카드 데이터가 레시피 ingredient와 매칭되는지 판정.
+    /// 와일드카드 규칙: ingredient가 VillagerCardData이면, isBaby=false인 어떤 VillagerCardData든 매칭.
+    /// 그 외(House/Tree/Berry 등)는 reference 정확 일치.
+    /// </summary>
+    private static bool IsIngredientMatch(CardData cardData, CardData ingredient)
+    {
+        if (cardData == null || ingredient == null) return false;
+
+        // Villager 와일드카드: ingredient가 어떤 VillagerCardData이든 → 일하는 Villager만 매칭
+        if (ingredient is VillagerCardData)
+        {
+            return cardData is VillagerCardData vd && !vd.isBaby;
+        }
+
+        // 그 외: 데이터 참조 정확 일치
+        return cardData == ingredient;
+    }
+
+    /// <summary>data 리스트에서 ingredient와 매칭되는 첫 인덱스 반환. 없으면 -1.</summary>
+    private static int FindIngredientIndex(List<CardData> data, CardData ingredient)
+    {
+        for (int i = 0; i < data.Count; i++)
+        {
+            if (IsIngredientMatch(data[i], ingredient)) return i;
+        }
+        return -1;
+    }
+
     public bool CardsMatchIngredients(List<Card> cards, List<CardData> ingredients)
     {
         if (cards == null || ingredients == null || ingredients.Count == 0) return false;
@@ -37,7 +66,7 @@ public class RecipeManager : MonoBehaviour
         foreach (var c in cards) data.Add(c.data);
         foreach (var ing in ingredients)
         {
-            int idx = data.IndexOf(ing);
+            int idx = FindIngredientIndex(data, ing);
             if (idx < 0) return false;
             data.RemoveAt(idx);
         }
@@ -127,7 +156,7 @@ public class RecipeManager : MonoBehaviour
         var stackData = new List<CardData>(stack.cards.Select(c => c.data));
         foreach (var ingredient in ingredients)
         {
-            int idx = stackData.IndexOf(ingredient);
+            int idx = FindIngredientIndex(stackData, ingredient);
             if (idx < 0) return false;
             stackData.RemoveAt(idx);
         }
@@ -196,7 +225,7 @@ public class RecipeManager : MonoBehaviour
 
         foreach (var ingredient in recipe.ingredients)
         {
-            Card found = stack.cards.Find(c => c.data == ingredient && !alreadyProcessed.Contains(c));
+            Card found = stack.cards.Find(c => IsIngredientMatch(c.data, ingredient) && !alreadyProcessed.Contains(c));
             if (found == null) continue;
 
             alreadyProcessed.Add(found);

@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4045921e9aa3a4635ac6a81bbd1b5518, type: 3}
-  m_Name: BabyCardData
+  m_Name: FireVillagerData
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCardData
-  cardType: 0
+  cardType: 1
   cardPrefab: {fileID: 8481278547604517009, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  cardName: "\uC544\uAE30"
-  Image: {fileID: 21300000, guid: 2ded39fcb0ac5714b8ccdf774a12c626, type: 3}
-  villagerType: 0
-  maxHealth: 1
-  maxHunger: 1
-  attackPower: 0
-  workSpeed: 0
-  isBaby: 1
+  cardName: "\uBD88\uC758 \uC8FC\uBBFC"
+  Image: {fileID: 21300000, guid: 57371e07c9d9e294bb6e41fee58c6898, type: 3}
+  sellPrice: 2
+  CanSell: 1
+  villagerType: 1
+  maxHealth: 5
+  maxHunger: 2
+  attackPower: 4
+  workSpeed: 0.5

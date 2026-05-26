@@ -6,32 +6,37 @@ using UnityEngine;
 /// </summary>
 public class SellPoint : MonoBehaviour
 {
-    public static SellPoint Instance { get; private set; }
+    // 씬에 여러 SellPoint가 존재할 수 있으므로 싱글톤을 쓰지 않음.
+    // InputManager에서 FindObjectsByType으로 위치별 SellPoint를 찾음.
 
     [Header("판매 데이터")]
     [SerializeField] private CardData coinData;   // CoinData.asset 할당
-    [SerializeField] private float dropRadius = 2.0f;
+
+    [Header("드롭 영역")]
+    [Tooltip("이 콜라이더 위에 카드 스택이 떨어지면 판매 시도. 비워두면 GetComponent로 자동 채워짐.")]
+    [SerializeField] private Collider dropArea;
 
     [Header("코인 스폰")]
     [Tooltip("SellPoint 기준점으로부터 코인이 생성될 상대 좌표(월드 축 기준). 기본: 살짝 아래쪽(-Z).")]
     [SerializeField] private Vector3 spawnOffset = new Vector3(0f, 0f, -2.5f);
 
+    private void Reset()
+    {
+        if (dropArea == null) dropArea = GetComponent<Collider>();
+    }
+
     private void Awake()
     {
-        Instance = this;
+        if (dropArea == null) dropArea = GetComponentInChildren<Collider>();
     }
 
-    private void OnDestroy()
+    /// <summary>드롭 위치가 dropArea 콜라이더의 XZ 영역 안에 있는지 (Y는 무시).</summary>
+    public bool IsPointInside(Vector3 worldPos)
     {
-        if (Instance == this) Instance = null;
-    }
-
-    /// <summary>드래그 스택의 위치가 SellPoint 범위 안에 있는지 (XZ 거리)</summary>
-    public bool IsInRange(Vector3 worldPos)
-    {
-        Vector3 a = new Vector3(worldPos.x, 0f, worldPos.z);
-        Vector3 b = new Vector3(transform.position.x, 0f, transform.position.z);
-        return Vector3.Distance(a, b) <= dropRadius;
+        if (dropArea == null) return false;
+        var b = dropArea.bounds;
+        return worldPos.x >= b.min.x && worldPos.x <= b.max.x
+            && worldPos.z >= b.min.z && worldPos.z <= b.max.z;
     }
 
     /// <summary>
