@@ -173,6 +173,12 @@ public class InputManager : MonoBehaviour
         var card = hit.collider.GetComponent<Card>();
         if (card == null || card.stack == null) return false;
 
+        // 적 카드는 플레이어가 집을 수 없음 (드래그 차단)
+        if (card is EnemyCard) return false;
+
+        // BattlePoint 안의 카드는 전투 중이므로 픽 차단
+        if (card.stack is BattlePoint) return false;
+
         // PackCard: holdThreshold 이후 드래그 시작
         if (card is PackCard packCard)
         {
@@ -361,7 +367,21 @@ public class InputManager : MonoBehaviour
         {
             var cardsToMerge = new List<Card>(draggingStack.cards);
             draggingStack.cards.Clear();
-            target.AddCards(cardsToMerge);
+
+            if (target is BattlePoint bp)
+            {
+                // BattlePoint는 한 장씩 AddCard 호출해야 BattlePoint.AddCard(new hide)가 실행되어
+                // 공격 코루틴 시작 + ArrangeBattleCards + 영역 확장이 일어남.
+                foreach (var c in cardsToMerge)
+                {
+                    bp.AddCard(c);
+                }
+            }
+            else
+            {
+                target.AddCards(cardsToMerge);
+            }
+
             Destroy(draggingStack.gameObject);
         }
         else
@@ -404,6 +424,9 @@ public class InputManager : MonoBehaviour
             if (s == exclude) continue;
             if (s.IsEmpty) continue;
 
+            // BattlePoint는 항상 머지 허용 (전투 참전). 그 외 스택은 적 포함 시 제외.
+            if (!(s is BattlePoint) && ContainsEnemy(s)) continue;
+
             Vector3 a = new Vector3(pos.x, 0, pos.z);
             Vector3 bOrigin = new Vector3(s.transform.position.x, 0, s.transform.position.z);
             Vector3 bTop = new Vector3(s.TopCard.transform.position.x, 0, s.TopCard.transform.position.z);
@@ -416,5 +439,15 @@ public class InputManager : MonoBehaviour
             }
         }
         return nearest;
+    }
+
+    private static bool ContainsEnemy(CardStack s)
+    {
+        if (s == null) return false;
+        foreach (var c in s.cards)
+        {
+            if (c is EnemyCard) return true;
+        }
+        return false;
     }
 }

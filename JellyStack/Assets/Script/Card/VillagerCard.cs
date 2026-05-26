@@ -26,12 +26,12 @@ public class VillagerCard : Card
 
     public void TakeDamage(int amount)
     {
-        CurrentHealth -= amount;
+        CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         NotifyStatChanged();
 
-        if (CurrentHealth == 0)
+        if (CurrentHealth <= 0)
         {
-            //Die();
+            Die();
         }
     }
 

@@ -18,6 +18,9 @@ public class VillagerCardData : CardData
     public int attackPower;
     public float workSpeed;
 
+    [Tooltip("전투 시 공격 간격(초). 작을수록 자주 때림.")]
+    public float attackInterval = 1.0f;
+
     [Tooltip("true면 아기 카드로 간주되어 채집/제작 레시피에 매칭되지 않음")]
     public bool isBaby = false;
 }
