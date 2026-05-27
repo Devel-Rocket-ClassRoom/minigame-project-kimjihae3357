@@ -23,3 +23,5 @@ MonoBehaviour:
   maxHunger: 2
   attackPower: 4
   workSpeed: 0.5
+  attackInterval: 2
+  isBaby: 0

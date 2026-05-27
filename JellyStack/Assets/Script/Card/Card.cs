@@ -27,4 +27,15 @@ public class Card : MonoBehaviour
     {
         OnStatChanged?.Invoke();
     }
+
+    /// <summary>카드 사망 처리: 소속 스택에서 제거 후 GameObject 파괴.</summary>
+    public virtual void Die()
+    {
+        if (stack != null)
+        {
+            stack.cards.Remove(this);
+            stack.Refresh();
+        }
+        Destroy(gameObject);
+    }
 }
