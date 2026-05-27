@@ -180,8 +180,11 @@ public class InputManager : MonoBehaviour
     {
         if (IsBlocked)
         {
-            // FeedPhase 중: SelectFoodCard 전용 클릭 처리
-            TrySelectFood();
+            // FeedPhase 중: 카드 집기는 막되, 음식 선택 + 카메라 팬은 허용
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+            if (!TrySelectFood())
+                cameraController?.StartPan(currentPointerPosition);
             return;
         }
 
@@ -195,8 +198,12 @@ public class InputManager : MonoBehaviour
 
     private void HandleClickCanceled()
     {
-        // FeedPhase 중엔 release 처리하지 않음 (원본 OnClick의 IsBlocked 분기와 동일하게 early return)
-        if (IsBlocked) return;
+        // FeedPhase 중엔 카드 release는 없지만 카메라 팬은 종료시켜야 함
+        if (IsBlocked)
+        {
+            cameraController?.EndPan();
+            return;
+        }
 
         if (isDragging)
         {
@@ -222,14 +229,20 @@ public class InputManager : MonoBehaviour
     }
 
     // FeedPhase: SelectFoodCard 클릭 감지 (Raycast 전 레이어 무관)
-    private void TrySelectFood()
+    // 음식 인디케이터를 실제로 선택했으면 true 반환 (그 경우 카메라 팬 시작 안 함)
+    private bool TrySelectFood()
     {
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
             var indicator = hit.collider.GetComponent<SelectFoodCard>();
-            indicator?.OnClick();
+            if (indicator != null)
+            {
+                indicator.OnClick();
+                return true;
+            }
         }
+        return false;
     }
 
     // 카드(팩 포함) 집기
@@ -240,6 +253,9 @@ public class InputManager : MonoBehaviour
 
         var card = hit.collider.GetComponent<Card>();
         if (card == null || card.stack == null) return false;
+
+        // 얼어붙은 카드는 집을 수 없음 (눈 날씨)
+        if (card.IsFrozen) return false;
 
         // PackCard: holdThreshold 이후 드래그 시작
         if (card is PackCard packCard)
@@ -471,6 +487,9 @@ public class InputManager : MonoBehaviour
         {
             if (s == exclude) continue;
             if (s.IsEmpty) continue;
+
+            // 얼어붙은 카드가 든 스택은 머지 대상 제외 (얼린 카드는 항상 단일 스택)
+            if (s.BottomCard != null && s.BottomCard.IsFrozen) continue;
 
             Vector3 a = new Vector3(pos.x, 0, pos.z);
             Vector3 bOrigin = new Vector3(s.transform.position.x, 0, s.transform.position.z);
