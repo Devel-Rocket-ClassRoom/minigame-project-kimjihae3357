@@ -180,6 +180,8 @@ public class InputManager : MonoBehaviour
     {
         if (IsBlocked)
         {
+            TrySelectFood();
+
             // FeedPhase 중: 카드 집기는 막되, 음식 선택 + 카메라 팬은 허용
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -256,6 +258,12 @@ public class InputManager : MonoBehaviour
 
         // 얼어붙은 카드는 집을 수 없음 (눈 날씨)
         if (card.IsFrozen) return false;
+
+        // 적 카드는 플레이어가 잡을수 없음
+        if (card is EnemyCard) return false;
+
+        // BattlePoint 안의 카드는 전투 중이므로 픽 차단
+        if (card.stack is BattlePoint) return false;
 
         // PackCard: holdThreshold 이후 드래그 시작
         if (card is PackCard packCard)
@@ -445,7 +453,21 @@ public class InputManager : MonoBehaviour
         {
             var cardsToMerge = new List<Card>(draggingStack.cards);
             draggingStack.cards.Clear();
-            target.AddCards(cardsToMerge);
+
+            if (target is BattlePoint bp)
+            {
+                // BattlePoint는 한 장씩 addCard 호출해야 BattlePoint.AddCard(new hide)가 실행되야
+                // 공격 코루틴 시작 + ArrangeBattleCard + 영역 확장이 일어남
+                foreach (var c in cardsToMerge)
+                {
+                    bp.AddCard(c);
+                }
+            }
+            else
+            {
+                target.AddCards(cardsToMerge);
+            }
+
             Destroy(draggingStack.gameObject);
         }
         else
@@ -490,6 +512,9 @@ public class InputManager : MonoBehaviour
 
             // 얼어붙은 카드가 든 스택은 머지 대상 제외 (얼린 카드는 항상 단일 스택)
             if (s.BottomCard != null && s.BottomCard.IsFrozen) continue;
+
+            // BattlePoint는 항상 머지 허용 (전투 참전). 그 외 스택은 적 포함 시 제외.
+            if (!(s is BattlePoint) && ContainsEnemy(s)) continue;
 
             Vector3 a = new Vector3(pos.x, 0, pos.z);
             Vector3 bOrigin = new Vector3(s.transform.position.x, 0, s.transform.position.z);
