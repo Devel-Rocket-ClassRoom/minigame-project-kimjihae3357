@@ -29,6 +29,9 @@ public class CardStack : MonoBehaviour
         if (IsDragging || IsEmpty)
             return;
 
+        // 전투 영역(BattlePoint)은 밀어내기 시스템에서 제외 (자기 자신이 BattlePoint인 경우)
+        if (this is BattlePoint) return;
+
         // 근처에 겹치는걸 체크
         Collider[] hits = Physics.OverlapSphere(
             transform.position,
@@ -45,6 +48,10 @@ public class CardStack : MonoBehaviour
             CardStack otherStack = otherCard.stack;
 
             if (otherStack == this || otherStack.IsEmpty || otherStack.IsDragging)
+                continue;
+
+            // BattlePoint 카드는 밀어내기 대상에서 제외
+            if (otherStack is BattlePoint)
                 continue;
 
             Vector3 direction = transform.position - otherStack.transform.position;
