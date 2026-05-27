@@ -151,7 +151,7 @@ public class EnemyCard : Card
 
         foreach (var v in Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None))
         {
-            if (v == null) continue;
+            if (v == null || v.IsFrozen) continue;   // 얼어붙은 주민은 추적/전투 대상 제외
             float d = (v.transform.position - myPos).sqrMagnitude;
             if (d < nearestDistSqr)
             {

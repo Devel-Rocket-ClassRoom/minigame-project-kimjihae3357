@@ -180,8 +180,6 @@ public class InputManager : MonoBehaviour
     {
         if (IsBlocked)
         {
-            TrySelectFood();
-
             // FeedPhase 중: 카드 집기는 막되, 음식 선택 + 카메라 팬은 허용
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -528,5 +526,12 @@ public class InputManager : MonoBehaviour
             }
         }
         return nearest;
+    }
+
+    private bool ContainsEnemy(CardStack stack)
+    {
+        foreach (var c in stack.cards)
+            if (c is EnemyCard) return true;
+        return false;
     }
 }

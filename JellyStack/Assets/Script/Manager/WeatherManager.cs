@@ -205,7 +205,7 @@ public class WeatherManager : MonoBehaviour
     private void FreezeRandomCards()
     {
         var candidates = new List<Card>();
-        foreach (var c in Object.FindObjectsByType<Card>(FindObjectsSortMode.None))
+        foreach (var c in UnityEngine.Object.FindObjectsByType<Card>(FindObjectsSortMode.None))
             if (IsFreezable(c)) candidates.Add(c);
 
         for (int i = 0; i < freezeCount && candidates.Count > 0; i++)
@@ -222,6 +222,7 @@ public class WeatherManager : MonoBehaviour
     {
         if (c == null || c.IsFrozen) return false;
         if (c.stack == null) return false;
+        if (c.stack is BattlePoint) return false;   // 전투 중 카드 제외
 
         return c.data is FoodCardData
             || c.data is VillagerCardData

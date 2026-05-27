@@ -174,6 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
+  - component: {fileID: 705507996}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -261,6 +262,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &705507996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &730506242
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +561,7 @@ Transform:
   - {fileID: 1019916246}
   - {fileID: 918077792}
   - {fileID: 1535262850}
+  - {fileID: 1445312431}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
@@ -648,6 +679,53 @@ MonoBehaviour:
   tableMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!1 &1018297493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018297495}
+  - component: {fileID: 1018297494}
+  m_Layer: 0
+  m_Name: EnemyTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1018297494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018297493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43dc3c73a3b53b44abe3d501d0ee1ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTestSpawner
+  enemyData: {fileID: 11400000, guid: 69714c9918a0c6b4a9d794edd4cc84c7, type: 2}
+  spawnPosition: {x: 6, y: 0, z: 6}
+  spawnKey: 19
+--- !u!4 &1018297495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018297493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.29233, y: -0.12, z: -0.04999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1019916245
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,11 +1025,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   gameover: {fileID: 4667621298739381142}
   pause: {fileID: 406308883251334569}
+--- !u!1 &1266933453 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4433414727804399627, guid: fbfa7c4e9881c8242b0a4d0a72853eee, type: 3}
+  m_PrefabInstance: {fileID: 60277906778872946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!225 &1444503525 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 5192281259040935973, guid: 9b596e90da5506240a8a96986a7aadeb, type: 3}
   m_PrefabInstance: {fileID: 5440048836986227209}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1445312430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1445312431}
+  - component: {fileID: 1445312432}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1445312431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445312430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 962233589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1445312432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445312430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0932dd284e102249897324006981bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleManager
+  battlePointPrefab: {fileID: 4560525742326854172, guid: 63c91787400192e458d53f74f2927acf, type: 3}
+  contactRange: 5
 --- !u!1 &1535262849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1134,10 @@ MonoBehaviour:
   weatherDurationDays: 3
   rainSpeedMultiplier: 1.5
   rainDoubleChance: 0.3
+  snowEffect: {fileID: 1266933453}
+  icePrefab: {fileID: 4691829871770660116, guid: 03f7d46c07ce11b40aefb3141905ea5f, type: 3}
+  cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
+  freezeCount: 2
 --- !u!1 &1697116337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,6 +1329,10 @@ PrefabInstance:
     - target: {fileID: 4433414727804399627, guid: fbfa7c4e9881c8242b0a4d0a72853eee, type: 3}
       propertyPath: m_Name
       value: Weather_Snow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433414727804399627, guid: fbfa7c4e9881c8242b0a4d0a72853eee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1939,3 +2076,4 @@ SceneRoots:
   - {fileID: 1263863275}
   - {fileID: 1723756443}
   - {fileID: 941413203}
+  - {fileID: 1018297495}
