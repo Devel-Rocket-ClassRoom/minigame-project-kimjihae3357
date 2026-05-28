@@ -286,6 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 303423977877208659}
+  - component: {fileID: 971565067090626529}
   m_Layer: 5
   m_Name: Recipe_window
   m_TagString: Untagged
@@ -313,6 +314,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &971565067090626529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929976263362115225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6727924c987ff84fa67e79082163604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI_Recipe
+  button: {fileID: 1086480764691642522}
+  buttonText: {fileID: 5655310914366269864}
+  panel: {fileID: 4550124457547406128}
 --- !u!1 &5812071227771070033
 GameObject:
   m_ObjectHideFlags: 0
