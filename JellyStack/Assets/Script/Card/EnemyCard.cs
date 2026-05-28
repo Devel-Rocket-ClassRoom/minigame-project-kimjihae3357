@@ -55,6 +55,26 @@ public class EnemyCard : Card
         }
     }
 
+    public override void Die()
+    {
+        // base.Die() 이후엔 stack=null이 되므로 먼저 캡처
+        Vector3 deathPos = transform.position;
+        CardStack deathStack = stack;
+
+        base.Die();  // stack에서 제거 + Destroy(gameObject) 예약
+
+        var enemyData = data as EnemyCardData;
+        if (enemyData == null || enemyData.dropTable == null) return;
+        if (CardSpawner.Instance == null) return;
+
+        foreach (var entry in enemyData.dropTable)
+        {
+            if (entry.card == null) continue;
+            if (Random.value < entry.chance)
+                CardSpawner.Instance.SpawnNear(entry.card, deathPos, deathStack);
+        }
+    }
+
     private IEnumerator ChaseRoutine()
     {
         while (true)

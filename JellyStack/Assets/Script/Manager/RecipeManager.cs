@@ -14,6 +14,10 @@ public class RecipeManager : MonoBehaviour
     [Tooltip("Villager + Hearts 스택에서 사용할 진행/이펙트 레시피 (ingredients/result 비워둘 것)")]
     [SerializeField] private CardRecipe healRecipe;
 
+    [Header("채집 시스템")]
+    [Tooltip("채집 진행/이펙트용 레시피 템플릿 (ingredients/result 비워둘 것). 실제 결과물은 SourceCardData에서 지정.")]
+    [SerializeField] private CardRecipe gatherRecipe;
+
     private CardRecipe pendingRecipe;
     private float pendingElapsed;
     private int pendingFrame = -1;
@@ -86,6 +90,13 @@ public class RecipeManager : MonoBehaviour
         if (existingTask != null && existingTask.enabled)
             return;
 
+        // 채집 패턴을 가장 먼저 확인 (Villager + SourceCard 전용)
+        if (TryStartGatherTask(stack)) return;
+
+        // 힐 패턴을 일반 레시피보다 먼저 확인
+        // (Villager를 재료로 쓰는 레시피가 [Villager+Heart] 스택을 가로채는 것을 방지)
+        if (TryStartHealTask(stack)) return;
+
         CardRecipe matched = FindMatchingRecipe(stack);
         if (matched != null)
         {
@@ -100,9 +111,101 @@ public class RecipeManager : MonoBehaviour
             task.Begin(matched, stack, OnRecipeComplete, startElapsed);
             return;
         }
+    }
 
-        // 일반 레시피가 안 잡히면 힐 패턴 시도
-        TryStartHealTask(stack);
+    private bool TryStartGatherTask(CardStack stack)
+    {
+        if (gatherRecipe == null) return false;
+        if (stack == null || stack.cards.Count < 2) return false;
+
+        bool hasVillager = false;
+        SourceCard source = null;
+
+        // 스택이 VillagerCard + SourceCard 로만 구성되는지 검사
+        // (다른 카드 타입이 섞이면 패턴 아님 → 일반 레시피에 넘김)
+        foreach (var c in stack.cards)
+        {
+            if (c is VillagerCard v)
+            {
+                var vd = v.data as VillagerCardData;
+                if (vd == null || vd.isBaby) return false; // 아기 주민은 채집 불가
+                hasVillager = true;
+            }
+            else if (c is SourceCard s)
+            {
+                // 여러 SourceCard → 첫 번째 유효한 것만 이번 사이클에 사용
+                if (source == null) source = s;
+            }
+            else
+            {
+                return false; // 다른 카드 타입 섞임 → 채집 패턴 아님
+            }
+        }
+
+        if (!hasVillager || source == null) return false;
+
+        var sourceData = source.data as SourceCardData;
+        if (sourceData == null || sourceData.gatherResult == null) return false;
+
+        float duration = sourceData.gatherDuration > 0f
+            ? sourceData.gatherDuration
+            : gatherRecipe.duration;
+
+        float startElapsed = 0f;
+        if (pendingRecipe == gatherRecipe && pendingFrame == Time.frameCount)
+        {
+            startElapsed = pendingElapsed;
+            pendingRecipe = null;
+            pendingFrame = -1;
+        }
+
+        var task = stack.gameObject.AddComponent<ProgressTask>();
+        task.Begin(gatherRecipe, stack, OnGatherComplete, startElapsed, duration);
+        return true;
+    }
+
+    private void OnGatherComplete(CardRecipe recipe, CardStack stack)
+    {
+        if (stack == null) return;
+
+        SourceCard source = null;
+        foreach (var c in stack.cards)
+        {
+            if (c is SourceCard s) { source = s; break; }
+        }
+        if (source == null) { if (!stack.IsEmpty) CheckStack(stack); return; }
+
+        var sourceData = source.data as SourceCardData;
+        if (sourceData == null || sourceData.gatherResult == null)
+        {
+            if (!stack.IsEmpty) CheckStack(stack);
+            return;
+        }
+
+        Vector3 sourcePos = stack.transform.position;
+
+        // 날씨 2배 판정
+        int count = sourceData.gatherResultCount;
+        if (UnityEngine.Random.value < WeatherManager.GatherDoubleChance)
+        {
+            count *= 2;
+            Debug.Log("[Weather] 채집 2배 발동!");
+        }
+
+        for (int i = 0; i < count; i++)
+            CardSpawner.Instance.SpawnNear(sourceData.gatherResult, sourcePos, stack);
+
+        // SourceCard Gather 처리
+        source.Gather();
+        if (source.IsExhausted)
+        {
+            stack.cards.Remove(source);
+            Destroy(source.gameObject);
+            stack.Refresh();
+        }
+
+        if (stack != null && !stack.IsEmpty)
+            CheckStack(stack);
     }
 
     private bool TryStartHealTask(CardStack stack)
