@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: BerryRecipe
+  m_Name: GatherRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
-  ingredients:
-  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
-  - {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
-  result: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
+  ingredients: []
+  result: {fileID: 0}
   resultCount: 1
   duration: 3
-  consumeIngredients: 0
+  consumeIngredients: 1
   iconPrefab: {fileID: 0}
+  progressEffectPrefab: {fileID: 4624916414435645778, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}

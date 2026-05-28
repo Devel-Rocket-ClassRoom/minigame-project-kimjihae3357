@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e740075f14e1c42b1b6ad308a69242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  dayDuration: 5
+  dayDuration: 60
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,12 +1237,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeManager
   recipes:
-  - {fileID: 11400000, guid: 2342f3c17d75b2e409fa4164fd6e779f, type: 2}
-  - {fileID: 11400000, guid: a67a7f498c4a2a44283ab60fbd180b87, type: 2}
   - {fileID: 11400000, guid: ed30f975cdfd7754e86eb9c722e0b606, type: 2}
-  - {fileID: 11400000, guid: c4a5b554d7e76714eaeb1c7579d9765d, type: 2}
   - {fileID: 11400000, guid: 22d29c3fa0013be4cbd9413bca5ee3fd, type: 2}
+  - {fileID: 11400000, guid: 30a1ea0c38a624c4b871d6f122fdf73d, type: 2}
   healRecipe: {fileID: 11400000, guid: ed086f50b44bb9a41b8672fbd7be2375, type: 2}
+  gatherRecipe: {fileID: 11400000, guid: 0d26db7f2297e714f89f92f8a97367af, type: 2}
 --- !u!1 &1723756440
 GameObject:
   m_ObjectHideFlags: 0

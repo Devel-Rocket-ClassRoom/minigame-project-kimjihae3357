@@ -7,6 +7,7 @@ public class ProgressTask : MonoBehaviour
     private CardStack stack;
     private float elapsed;
     public float Elapsed => elapsed;
+    private float _durationOverride = -1f;
     private System.Action<CardRecipe, CardStack> onComplete;
 
     private bool isCompleted;
@@ -16,18 +17,19 @@ public class ProgressTask : MonoBehaviour
 
     private GameObject _activeEffect;
 
-    public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f)
+    public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f, float durationOverride = -1f)
     {
         this.recipe = recipe;
         this.stack = stack;
         this.elapsed = startElapsed;
         this.onComplete = onComplete;
         this.isCompleted = false;
+        this._durationOverride = durationOverride;
 
         if (stack != null && stack.ProgressBar != null)
         {
             stack.ProgressBar.Show();
-            float duration = Mathf.Max(0.01f, recipe.duration);
+            float duration = Mathf.Max(0.01f, _durationOverride > 0f ? _durationOverride : recipe.duration);
             stack.ProgressBar.SetProgress(startElapsed / duration);
         }
 
@@ -60,7 +62,7 @@ public class ProgressTask : MonoBehaviour
 
         // 시간 진행
         elapsed += Time.deltaTime;
-        float effectiveDuration = Mathf.Max(0.01f, recipe.duration);
+        float effectiveDuration = Mathf.Max(0.01f, _durationOverride > 0f ? _durationOverride : recipe.duration);
 
         bool hasSource = false;
         bool workSpeedApplied = false;
