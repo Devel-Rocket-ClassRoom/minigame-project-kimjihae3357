@@ -19,22 +19,26 @@ public class WeatherManager : MonoBehaviour
     [Tooltip("4분할 룰렛 휠 RectTransform. 휠 이미지 배치: 12시=Sunny, 3시=Rain, 6시=Snow, 9시=Storm 이어야 함.")]
     [SerializeField] private RectTransform wheel;
 
-    [Header("회전 설정")]
+    [Header("룰렛 회전 설정")]
     [SerializeField] private float spinDuration = 3.0f;
     [Tooltip("스핀 중 추가 전체 회전 수 (보여지는 회전 횟수).")]
     [SerializeField] private int extraSpins = 5;
     [Tooltip("결과 정착 후 룰렛이 화면에 머무는 시간(초).")]
     [SerializeField] private float showResultDuration = 1.2f;
 
+    [Header("날씨 적용 기간")]
+    [SerializeField] private int weatherDurationDays = 3;
+
+    [Header("햇살 효과")]
+    [SerializeField] private GameObject sunnyEffect;
+    [Tooltip("맑음(Sunny) 날씨일 때 자원 채집 결과가 2배가 될 확률 (0~1).")]
+    [SerializeField, Range(0f, 1f)] private float sunnyDoubleChance = 0.3f;
+
     [Header("날씨 효과")]
     [Tooltip("씬에 배치된 비 파티클(메인 카메라 자식, 초기 비활성). Weather_Rain.prefab 인스턴스.")]
     [SerializeField] private GameObject rainEffect;
-    [Tooltip("날씨가 지속되는 일수.")]
-    [SerializeField] private int weatherDurationDays = 3;
     [Tooltip("비 올 때 자원 채집 속도 배율 (1보다 크면 빨라짐).")]
     [SerializeField] private float rainSpeedMultiplier = 1.5f;
-    [Tooltip("비 올 때 자원 채집 결과가 2배가 될 확률 (0~1).")]
-    [SerializeField, Range(0f, 1f)] private float rainDoubleChance = 0.3f;
 
     [Header("눈 효과")]
     [Tooltip("씬에 배치된 눈 파티클(메인 카메라 자식, 초기 비활성). Weather_Snow.prefab 인스턴스.")]
@@ -45,6 +49,22 @@ public class WeatherManager : MonoBehaviour
     [SerializeField] private GameObject cardStackPrefab;
     [Tooltip("하루에 얼리는 카드 수.")]
     [SerializeField] private int freezeCount = 2;
+
+    [Header("태풍 효과")]
+    [SerializeField] private GameObject stormEffect;
+    [Tooltip("카드가 날아갈 때 카드에 붙어 따라가는 이펙트 프리팹 (카드 파괴 시 함께 제거됨).")]
+    [SerializeField] private GameObject flyAwayEffectPrefab;
+    [Tooltip("하루에 흔들리는 카드 수.")]
+    [SerializeField] private int stormShakeCount = 3;
+    [Tooltip("흔들림 세기.")]
+    [SerializeField] private float stormShakeStrength = 0.15f;
+    [Tooltip("날아가는 거리.")]
+    [SerializeField] private float flyAwayDistance = 40f;
+    [Tooltip("날아가는 시간(초).")]
+    [SerializeField] private float flyAwayDuration = 0.8f;
+
+    private readonly List<Card> _shakyCards = new List<Card>();
+    private readonly Dictionary<Card, Tween> _shakeTweens = new Dictionary<Card, Tween>();
 
     private readonly Dictionary<Card, GameObject> _frozenIce = new Dictionary<Card, GameObject>();
 
@@ -71,6 +91,7 @@ public class WeatherManager : MonoBehaviour
         if (DayManager.Instance != null)
             DayManager.Instance.OnDayChanged -= HandleDayChanged;
         UnfreezeAllCards();
+        StopAllShakes();
         // static 누수 방지 (씬 재시작 시 평소 상태로)
         GatherSpeedMultiplier = 1f;
         GatherDoubleChance = 0f;
@@ -148,14 +169,21 @@ public class WeatherManager : MonoBehaviour
         // 기본값으로 초기화 후 해당 날씨만 적용
         GatherSpeedMultiplier = 1f;
         GatherDoubleChance = 0f;
+        if (sunnyEffect != null) sunnyEffect.SetActive(false);
         if (rainEffect != null) rainEffect.SetActive(false);
+        if (snowEffect != null) snowEffect.SetActive(false);
+        if (stormEffect != null) stormEffect.SetActive(false);
 
         switch (weather)
         {
+            case WeatherType.Sunny:
+                if (sunnyEffect != null) sunnyEffect.SetActive(true);
+                GatherDoubleChance = sunnyDoubleChance;  // 드랍 2배
+                break;
+
             case WeatherType.Rain:
-                GatherSpeedMultiplier = rainSpeedMultiplier;
-                GatherDoubleChance = rainDoubleChance;
                 if (rainEffect != null) rainEffect.SetActive(true);
+                GatherSpeedMultiplier = rainSpeedMultiplier;  // 속도 증가만 유지
                 break;
 
             case WeatherType.Snow:
@@ -163,8 +191,9 @@ public class WeatherManager : MonoBehaviour
                 FreezeRandomCards();
                 break;
 
-            // Storm / Sunny: 후속 작업 (현재는 효과 없음)
-            default:
+            case WeatherType.Storm:
+                if (stormEffect != null) stormEffect.SetActive(true);
+                SelectAndShakeCards();
                 break;
         }
     }
@@ -175,14 +204,25 @@ public class WeatherManager : MonoBehaviour
         GatherSpeedMultiplier = 1f;
         GatherDoubleChance = 0f;
         _daysRemaining = 0;
+        if (sunnyEffect != null) sunnyEffect.SetActive(false);
         if (rainEffect != null) rainEffect.SetActive(false);
         if (snowEffect != null) snowEffect.SetActive(false);
+        if (stormEffect != null) stormEffect.SetActive(false);
         UnfreezeAllCards();
+        StopAllShakes();
     }
 
     private void HandleDayChanged(int newDay)
     {
         if (_daysRemaining <= 0) return;
+
+        // Storm: 날 바뀔 때 1장 날려보내기
+        if (CurrentWeather == WeatherType.Storm && _shakyCards.Count > 0)
+        {
+            int idx = UnityEngine.Random.Range(0, _shakyCards.Count);
+            FlyAwayCard(_shakyCards[idx]);
+        }
+
         _daysRemaining--;
         if (_daysRemaining <= 0)
         {
@@ -195,6 +235,13 @@ public class WeatherManager : MonoBehaviour
         {
             UnfreezeAllCards();
             FreezeRandomCards();
+        }
+
+        // 지속 중 — 태풍은 새 카드 3장 선택
+        if (CurrentWeather == WeatherType.Storm)
+        {
+            StopAllShakes();
+            SelectAndShakeCards();
         }
     }
 
@@ -259,5 +306,110 @@ public class WeatherManager : MonoBehaviour
             if (kv.Value != null) Destroy(kv.Value);
         }
         _frozenIce.Clear();
+    }
+
+    // ─────────────────────────────────────────────
+    // 태풍: 카드 흔들기 / 날려보내기
+    // ─────────────────────────────────────────────
+
+    private void SelectAndShakeCards()
+    {
+        var candidates = new List<Card>();
+        foreach (var c in UnityEngine.Object.FindObjectsByType<Card>(FindObjectsSortMode.None))
+            if (IsShakeable(c)) candidates.Add(c);
+
+        for (int i = 0; i < stormShakeCount && candidates.Count > 0; i++)
+        {
+            int idx = UnityEngine.Random.Range(0, candidates.Count);
+            var pick = candidates[idx];
+            candidates.RemoveAt(idx);
+
+            pick.suppressFollow = true;
+            var tween = pick.transform
+                .DOShakePosition(1f, new Vector3(stormShakeStrength, 0f, stormShakeStrength), 15, 90f, false, true)
+                .SetLoops(-1)
+                .SetUpdate(true);
+
+            _shakeTweens[pick] = tween;
+            _shakyCards.Add(pick);
+        }
+    }
+
+    private void StopAllShakes()
+    {
+        foreach (var kv in _shakeTweens)
+        {
+            kv.Value?.Kill();
+            if (kv.Key != null)
+            {
+                kv.Key.suppressFollow = false;
+                kv.Key.transform.localPosition = kv.Key.targetLocalPosition; // 원위치 복귀
+            }
+        }
+        _shakeTweens.Clear();
+        _shakyCards.Clear();
+    }
+
+    private void FlyAwayCard(Card card)
+    {
+        // 해당 카드의 모든 DOTween 트윈 즉시 중단 (shake 포함, 트윈 충돌 방지)
+        DOTween.Kill(card.transform);
+        _shakeTweens.Remove(card);
+        _shakyCards.Remove(card);
+
+        // 스택에서 올바르게 분리
+        var stack = card.stack;
+        if (stack != null)
+        {
+            if (stack.cards.Count > 1)
+            {
+                // SplitSingleCard: card.stack=null, SetParent(null), ArrangeCards() 포함
+                stack.SplitSingleCard(card);
+            }
+            else
+            {
+                // 혼자 있는 스택 → 스택 자체를 제거
+                stack.cards.Remove(card);
+                card.stack = null;
+                card.transform.SetParent(null);
+                Destroy(stack.gameObject);
+            }
+        }
+
+        // SplitSingleCard가 isKinematic=false로 설정하므로, DOMove를 위해 다시 kinematic 고정
+        if (card.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = true;
+
+        // 날아가기 이펙트: 카드 원래 위치에 스폰 (부모 없음, 파티클 자체적으로 Destroy 처리)
+        if (flyAwayEffectPrefab != null)
+            Instantiate(flyAwayEffectPrefab, card.transform.position, Quaternion.identity);
+
+        // 랜덤 상방으로 날려보내기
+        card.suppressFollow = true;
+        Vector3 dir = new Vector3(
+            UnityEngine.Random.Range(-1f, 1f),
+            1f,
+            UnityEngine.Random.Range(-0.5f, 0.5f)
+        ).normalized;
+        Vector3 target = card.transform.position + dir * flyAwayDistance;
+
+        card.transform
+            .DOMove(target, flyAwayDuration)
+            .SetEase(Ease.InCubic)
+            .SetUpdate(true)   // DayChangeOverlay(timeScale=0) 중에도 동작
+            .OnComplete(() =>
+            {
+                if (card != null) Destroy(card.gameObject);
+            });
+    }
+
+    private bool IsShakeable(Card c)
+    {
+        if (c == null || c.IsFrozen) return false;
+        if (c.stack == null) return false;
+        if (_shakyCards.Contains(c)) return false;  // 이미 흔들리는 카드 제외
+
+        return c.data is ResourceCardData
+            || c.data is SourceCardData
+            || c.data is FoodCardData;
     }
 }
