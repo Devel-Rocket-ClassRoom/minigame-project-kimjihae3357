@@ -472,8 +472,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8481278547604517009}
   m_Enabled: 1
-  m_SortingLayerID: -1614344219
-  m_SortingLayer: 2
+  m_SortingLayerID: 570098223
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -494,6 +494,7 @@ MonoBehaviour:
   targetLocalPosition: {x: 0, y: 0, z: 0}
   followSpeed: 10
   suppressFollow: 0
+  IsFrozen: 0
   packData: {fileID: 11400000, guid: 82d02847aed33d046bb92f0da14b7bd0, type: 2}
 --- !u!114 &1851869085641104426
 MonoBehaviour:

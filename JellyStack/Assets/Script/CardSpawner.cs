@@ -95,10 +95,24 @@ public class CardSpawner : MonoBehaviour
     {
         card.transform.position = fromPos;
         card.suppressFollow = true;
+
+        // 점프 시작 위치가 팩과 동일하므로, 이 카드의 콜라이더가 팩 클릭을 가로채지 않도록 비활성화
+        var col = card.GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
         card.transform
             .DOJump(landingPos, jumpPower, 1, jumpDuration)
             .SetEase(Ease.Linear)
-            .OnComplete(() => { if (card != null) card.suppressFollow = false; });
+            .OnComplete(() =>
+            {
+                if (card != null)
+                {
+                    card.suppressFollow = false;
+                    // 착지 후 콜라이더 복구 → 이후 정상적으로 클릭/드래그 가능
+                    var c = card.GetComponent<Collider>();
+                    if (c != null) c.enabled = true;
+                }
+            });
     }
 
     private CardStack FindSameCardStackNearby(CardData data, Vector3 center, CardStack exclude)
