@@ -135,6 +135,35 @@ public class CardStack : MonoBehaviour
         return moved;
     }
 
+    /// <summary>
+    /// 스택 중간의 단일 카드 하나만 떼어냄 (그 위 카드는 남김). 떼어낸 카드는 stack=null, 부모=null 상태.
+    /// 진행 중 작업이 남은 스택과 더 이상 매칭 안 되면 취소.
+    /// </summary>
+    public void SplitSingleCard(Card card)
+    {
+        int idx = cards.IndexOf(card);
+        if (idx < 0) return;
+
+        cards.RemoveAt(idx);
+        card.stack = null;
+        card.transform.SetParent(null);
+        if (card.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = false;
+
+        var task = GetComponent<ProgressTask>();
+        if (task != null)
+        {
+            var activeRecipe = task.Recipe;
+            bool stillValid =
+                activeRecipe != null &&
+                cards.Count >= 2 &&
+                RecipeManager.Instance != null &&
+                RecipeManager.Instance.StackMatchesIngredients(this, activeRecipe.ingredients);
+            if (!stillValid) task.Cancel();
+        }
+
+        ArrangeCards();
+    }
+
     // 카드가 찰딱 붙을 때
     public void Refresh() => ArrangeCards();
 

@@ -38,6 +38,18 @@ public class DayManager : MonoBehaviour
     {
         _pendingDayChange = false;
         CurrentDay++;
+
+        // 2일차 이후 주민 카드가 한 장도 없으면 게임오버
+        if (CurrentDay >= 2)
+        {
+            var villagers = UnityEngine.Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None);
+            if (villagers.Length == 0)
+            {
+                GameManager.Instance?.GameOver();
+                return;
+            }
+        }
+
         OnDayChanged?.Invoke(CurrentDay);
     }
 }

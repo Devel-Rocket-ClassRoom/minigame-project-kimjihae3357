@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
+
     [Header("Drag Settings")]
     [SerializeField] private float mergeDistance = 2.0f;
     [SerializeField] private float dragYOffset = 1.0f;
@@ -47,9 +49,15 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         if (mainCamera == null) mainCamera = Camera.main;
         if (cameraController == null && mainCamera != null)
             cameraController = mainCamera.GetComponent<CameraController>();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 
     private void Update()
@@ -97,8 +105,68 @@ public class InputManager : MonoBehaviour
         uiManager.TogglePause();
     }
 
-    // FeedPhase 중 카드 드래그 전체 차단 플래그
-    public static bool IsBlocked = false;
+    // FeedPhase 중 카드 드래그 전체 차단 플래그.
+    // true로 전환되는 순간 진행 중인 드래그/팩 대기/카메라 팬을 자동 취소한다.
+    private static bool _isBlocked;
+    public static bool IsBlocked
+    {
+        get => _isBlocked;
+        set
+        {
+            if (_isBlocked == value) return;
+            bool wasJustBlocked = !_isBlocked && value;
+            _isBlocked = value;
+
+            // false → true 전환 시점에 자동으로 인터랙션 강제 종료
+            if (wasJustBlocked && Instance != null)
+            {
+                Instance.ForceCancelDrag();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 외부 이벤트(FeedPhase 진입 등)로 진행 중인 드래그/팩/팬을 강제 취소.
+    /// 드래그 중이던 카드는 원래 sourceStack으로 복귀시킨다.
+    /// </summary>
+    public void ForceCancelDrag()
+    {
+        pendingPack = null;
+
+        if (cameraController != null && cameraController.IsPanning)
+            cameraController.EndPan();
+
+        if (!isDragging || draggingStack == null)
+        {
+            sourceStack = null;
+            draggingStack = null;
+            isDragging = false;
+            return;
+        }
+
+        isDragging = false;
+
+        if (sourceStack != null)
+        {
+            // 카드를 원래 스택으로 복귀
+            var cardsToReturn = new List<Card>(draggingStack.cards);
+            draggingStack.cards.Clear();
+            sourceStack.AddCards(cardsToReturn);
+            Destroy(draggingStack.gameObject);
+        }
+        else
+        {
+            // 소스가 없으면 그냥 현 위치에 떨궈둠
+            draggingStack.IsDragging = false;
+            Vector3 pos = draggingStack.transform.position;
+            pos.y -= dragYOffset;
+            draggingStack.transform.position = pos;
+            draggingStack.Refresh();
+        }
+
+        sourceStack = null;
+        draggingStack = null;
+    }
 
     // PlayerInput (Invoke Unity Events) 콜백 — 클릭
     // 실제 처리는 Update의 HandleClickStarted/HandleClickCanceled에서 수행 (UI 체크 정확성 확보)
@@ -112,8 +180,11 @@ public class InputManager : MonoBehaviour
     {
         if (IsBlocked)
         {
-            // FeedPhase 중: SelectFoodCard 전용 클릭 처리
-            TrySelectFood();
+            // FeedPhase 중: 카드 집기는 막되, 음식 선택 + 카메라 팬은 허용
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+
+            if (!TrySelectFood())
+                cameraController?.StartPan(currentPointerPosition);
             return;
         }
 
@@ -127,8 +198,12 @@ public class InputManager : MonoBehaviour
 
     private void HandleClickCanceled()
     {
-        // FeedPhase 중엔 release 처리하지 않음 (원본 OnClick의 IsBlocked 분기와 동일하게 early return)
-        if (IsBlocked) return;
+        // FeedPhase 중엔 카드 release는 없지만 카메라 팬은 종료시켜야 함
+        if (IsBlocked)
+        {
+            cameraController?.EndPan();
+            return;
+        }
 
         if (isDragging)
         {
@@ -154,14 +229,20 @@ public class InputManager : MonoBehaviour
     }
 
     // FeedPhase: SelectFoodCard 클릭 감지 (Raycast 전 레이어 무관)
-    private void TrySelectFood()
+    // 음식 인디케이터를 실제로 선택했으면 true 반환 (그 경우 카메라 팬 시작 안 함)
+    private bool TrySelectFood()
     {
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
             var indicator = hit.collider.GetComponent<SelectFoodCard>();
-            indicator?.OnClick();
+            if (indicator != null)
+            {
+                indicator.OnClick();
+                return true;
+            }
         }
+        return false;
     }
 
     // 카드(팩 포함) 집기
@@ -173,7 +254,10 @@ public class InputManager : MonoBehaviour
         var card = hit.collider.GetComponent<Card>();
         if (card == null || card.stack == null) return false;
 
-        // 적 카드는 플레이어가 집을 수 없음 (드래그 차단)
+        // 얼어붙은 카드는 집을 수 없음 (눈 날씨)
+        if (card.IsFrozen) return false;
+
+        // 적 카드는 플레이어가 잡을수 없음
         if (card is EnemyCard) return false;
 
         // BattlePoint 안의 카드는 전투 중이므로 픽 차단
@@ -370,8 +454,8 @@ public class InputManager : MonoBehaviour
 
             if (target is BattlePoint bp)
             {
-                // BattlePoint는 한 장씩 AddCard 호출해야 BattlePoint.AddCard(new hide)가 실행되어
-                // 공격 코루틴 시작 + ArrangeBattleCards + 영역 확장이 일어남.
+                // BattlePoint는 한 장씩 addCard 호출해야 BattlePoint.AddCard(new hide)가 실행되야
+                // 공격 코루틴 시작 + ArrangeBattleCard + 영역 확장이 일어남
                 foreach (var c in cardsToMerge)
                 {
                     bp.AddCard(c);
@@ -424,6 +508,9 @@ public class InputManager : MonoBehaviour
             if (s == exclude) continue;
             if (s.IsEmpty) continue;
 
+            // 얼어붙은 카드가 든 스택은 머지 대상 제외 (얼린 카드는 항상 단일 스택)
+            if (s.BottomCard != null && s.BottomCard.IsFrozen) continue;
+
             // BattlePoint는 항상 머지 허용 (전투 참전). 그 외 스택은 적 포함 시 제외.
             if (!(s is BattlePoint) && ContainsEnemy(s)) continue;
 
@@ -441,13 +528,10 @@ public class InputManager : MonoBehaviour
         return nearest;
     }
 
-    private static bool ContainsEnemy(CardStack s)
+    private bool ContainsEnemy(CardStack stack)
     {
-        if (s == null) return false;
-        foreach (var c in s.cards)
-        {
+        foreach (var c in stack.cards)
             if (c is EnemyCard) return true;
-        }
         return false;
     }
 }

@@ -77,6 +77,11 @@ public class RecipeManager : MonoBehaviour
     {
         if (stack == null || stack.cards.Count < 2)
             return;
+
+        // 얼어붙은 카드가 포함된 스택은 작업/힐 시작 불가 (눈 날씨)
+        foreach (var c in stack.cards)
+            if (c != null && c.IsFrozen) return;
+
         var existingTask = stack.GetComponent<ProgressTask>();
         if (existingTask != null && existingTask.enabled)
             return;
@@ -215,8 +220,24 @@ public class RecipeManager : MonoBehaviour
 
         Vector3 sourcePos = stack.transform.position;
 
-        for (int i = 0; i < recipe.resultCount; i++)
+        int count = recipe.resultCount;
+        // 자원 채집(스택에 SourceCard 포함) + 날씨 더블 확률 발동 시 2배
+        if (StackHasSource(stack) &&
+            UnityEngine.Random.value < WeatherManager.GatherDoubleChance)
+        {
+            count *= 2;
+            Debug.Log("[Weather] 채집 2배 발동!");
+        }
+
+        for (int i = 0; i < count; i++)
             CardSpawner.Instance.SpawnNear(recipe.result, sourcePos, stack);
+    }
+
+    private bool StackHasSource(CardStack stack)
+    {
+        foreach (var c in stack.cards)
+            if (c is SourceCard) return true;
+        return false;
     }
 
     private void HandleIngredients(CardRecipe recipe, CardStack stack)

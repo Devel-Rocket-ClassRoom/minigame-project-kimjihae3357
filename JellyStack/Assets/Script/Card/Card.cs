@@ -10,6 +10,8 @@ public class Card : MonoBehaviour
     [HideInInspector] public float followSpeed = 10f;
     [HideInInspector] public bool suppressFollow = false;
 
+    [HideInInspector] public bool IsFrozen = false;   // 눈 날씨: 얼어붙으면 집기/사용 불가
+
     public System.Action OnStatChanged;
 
     public virtual void InitializeFromData()

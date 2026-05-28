@@ -61,14 +61,23 @@ public class ProgressTask : MonoBehaviour
         // 시간 진행
         elapsed += Time.deltaTime;
         float effectiveDuration = Mathf.Max(0.01f, recipe.duration);
+
+        bool hasSource = false;
+        bool workSpeedApplied = false;
         foreach (var card in stack.cards)
         {
-            if (card.data is VillagerCardData villagerData)
+            if (!workSpeedApplied && card.data is VillagerCardData villagerData)
             {
                 effectiveDuration /= Mathf.Max(0.01f, villagerData.workSpeed);
-                break;
+                workSpeedApplied = true;
             }
+            if (card is SourceCard)
+                hasSource = true;
         }
+
+        // 자원 채집(스택에 SourceCard 포함) 작업에만 날씨 배율 적용
+        if (hasSource)
+            effectiveDuration /= Mathf.Max(0.01f, WeatherManager.GatherSpeedMultiplier);
 
         float progress = elapsed / effectiveDuration;
 
