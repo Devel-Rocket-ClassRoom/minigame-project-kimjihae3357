@@ -35,6 +35,9 @@ public class InputManager : MonoBehaviour
     private CardStack draggingStack;
     private CardStack sourceStack;
 
+    // 드래그 중 미리보기를 보여주고 있는 SellPoint (없으면 null)
+    private SellPoint currentHoveredSellPoint;
+
     // 팩 대기 상태
     private PackCard pendingPack;
     private Vector2 packPressStartPos;
@@ -132,6 +135,8 @@ public class InputManager : MonoBehaviour
     public void ForceCancelDrag()
     {
         pendingPack = null;
+
+        ClearSellPointHover();
 
         if (cameraController != null && cameraController.IsPanning)
             cameraController.EndPan();
@@ -329,12 +334,78 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
+
+        UpdateSellPointHover();
+    }
+
+    // 드래그 중인 스택의 현재 위치를 기준으로 SellPoint 호버 상태를 갱신.
+    // 가장 가까운 SellPoint 위에 있으면 그 SellPoint의 미리보기를 띄우고, 벗어나면 숨긴다.
+    // TryMergeOrDrop의 SellPoint 탐색 로직과 동일한 패턴.
+    private void UpdateSellPointHover()
+    {
+        if (draggingStack == null)
+        {
+            ClearSellPointHover();
+            return;
+        }
+
+        // 팩 카드는 판매 대상이 아니므로 미리보기 표시 안 함
+        bool isPackStack = draggingStack.cards.Count > 0 && draggingStack.cards[0] is PackCard;
+        if (isPackStack)
+        {
+            ClearSellPointHover();
+            return;
+        }
+
+        Vector3 dropPos = draggingStack.transform.position;
+        Vector3 dropXZ = new Vector3(dropPos.x, 0f, dropPos.z);
+
+        SellPoint nearest = null;
+        float bestDistSqr = float.MaxValue;
+        var sellPoints = Object.FindObjectsByType<SellPoint>(FindObjectsSortMode.None);
+        foreach (var sp in sellPoints)
+        {
+            if (sp == null || !sp.IsPointInside(dropPos)) continue;
+            Vector3 spXZ = new Vector3(sp.transform.position.x, 0f, sp.transform.position.z);
+            float d = (spXZ - dropXZ).sqrMagnitude;
+            if (d < bestDistSqr)
+            {
+                bestDistSqr = d;
+                nearest = sp;
+            }
+        }
+
+        if (nearest == currentHoveredSellPoint)
+        {
+            // 같은 SellPoint 위에 머무는 동안에도 스택 구성이 바뀔 수 있으므로 매 프레임 갱신
+            if (nearest != null) nearest.ShowPreview(draggingStack);
+            return;
+        }
+
+        if (currentHoveredSellPoint != null)
+            currentHoveredSellPoint.HidePreview();
+
+        currentHoveredSellPoint = nearest;
+
+        if (currentHoveredSellPoint != null)
+            currentHoveredSellPoint.ShowPreview(draggingStack);
+    }
+
+    private void ClearSellPointHover()
+    {
+        if (currentHoveredSellPoint != null)
+        {
+            currentHoveredSellPoint.HidePreview();
+            currentHoveredSellPoint = null;
+        }
     }
 
     // 카드 놓기
     private void ReleaseCard()
     {
         isDragging = false;
+
+        ClearSellPointHover();
 
         if (draggingStack == null)
             return;
