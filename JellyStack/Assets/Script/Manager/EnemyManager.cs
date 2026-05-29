@@ -1,23 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-[Serializable]
-public struct WaveEntry
-{
-    [Tooltip("이 날짜(OnDayChanged 값)에 발동")]
-    public int triggerDay;
-    public EnemySpawnerData spawner;
-}
 
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
-
-    [Header("웨이브 목록")]
-    [Tooltip("날짜 오름차순으로 등록 권장. 같은 날 여러 항목 가능.")]
-    [SerializeField] private List<WaveEntry> waves;
 
     [Header("스폰 위치")]
     [Tooltip("카메라 중심 기준 가장자리 반경. 이 원 둘레에서 랜덤 위치 선택.")]
@@ -28,28 +14,7 @@ public class EnemyManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        if (DayManager.Instance != null)
-            DayManager.Instance.OnDayChanged += HandleDayChanged;
-    }
-
-    private void OnDestroy()
-    {
-        if (DayManager.Instance != null)
-            DayManager.Instance.OnDayChanged -= HandleDayChanged;
-    }
-
-    private void HandleDayChanged(int day)
-    {
-        foreach (var wave in waves)
-        {
-            if (wave.triggerDay != day) continue;
-            ExecuteWave(wave.spawner);
-        }
-    }
-
-    /// <summary>외부(포털 카드 등)에서 직접 호출 가능. 내부에서 Coroutine으로 처리.</summary>
+    /// <summary>GameManager 또는 외부(포털 카드 등)에서 직접 호출. 내부에서 Coroutine으로 처리.</summary>
     public void ExecuteWave(EnemySpawnerData spawner)
     {
         if (spawner == null) return;

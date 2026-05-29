@@ -48,11 +48,15 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        Debug.Log("리스타트");
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().name
         );
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

@@ -305,6 +305,10 @@ MonoBehaviour:
   starterPackPrefab: {fileID: 8481278547604517009, guid: b69320ddfeee884429918cea4efe8eab, type: 3}
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   uiManager: {fileID: 0}
+  weatherInterval: 7
+  waveSchedules:
+  - interval: 5
+    spawner: {fileID: 11400000, guid: bbdddb00b05e9fb489184d917eb30255, type: 2}
 --- !u!1 &6238206434154902690
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,11 +338,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1637766038379180522}
   - {fileID: 8430986383983561161}
   - {fileID: 5629143000860417699}
   - {fileID: 2685186946399862100}
   - {fileID: 1184294310110386013}
-  - {fileID: 1637766038379180522}
   - {fileID: 8637359685122735360}
   - {fileID: 1833536880262342629}
   - {fileID: 4165181143307944677}
@@ -440,11 +444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099673dce5556214881d732a9d01c4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
-  waves:
-  - triggerDay: 5
-    spawner: {fileID: 11400000, guid: bbdddb00b05e9fb489184d917eb30255, type: 2}
-  - triggerDay: 10
-    spawner: {fileID: 11400000, guid: bbdddb00b05e9fb489184d917eb30255, type: 2}
   spawnRadius: 10
 --- !u!1 &8724135120346281153
 GameObject:
