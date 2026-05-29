@@ -42,6 +42,12 @@ public class InputManager : MonoBehaviour
     private PackCard pendingPack;
     private Vector2 packPressStartPos;
 
+    // CoinPoket 클릭/드래그 상태
+    private CoinPoket pendingCoinPoket;
+    private bool isDraggingCoinPoket;
+    private Plane coinPoketDragPlane;
+    private Vector3 coinPoketOffset;
+
     private Vector2 currentPointerPosition;
 
     // OnClick 콜백은 InputAction 이벤트 처리 단계에서 호출됨 (EventSystem.Update 이전).
@@ -82,6 +88,10 @@ public class InputManager : MonoBehaviour
         {
             DragCard();
         }
+        else if (isDraggingCoinPoket)
+        {
+            DragCoinPoket();
+        }
         else if (pendingPack != null &&
                  (currentPointerPosition - packPressStartPos).magnitude >= dragStartDistance)
         {
@@ -89,6 +99,11 @@ public class InputManager : MonoBehaviour
             pendingPack = null;
             Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
             StartDragging(pack, ray);
+        }
+        else if (pendingCoinPoket != null &&
+                 (currentPointerPosition - packPressStartPos).magnitude >= dragStartDistance)
+        {
+            StartDraggingCoinPoket();
         }
     }
 
@@ -135,6 +150,8 @@ public class InputManager : MonoBehaviour
     public void ForceCancelDrag()
     {
         pendingPack = null;
+        pendingCoinPoket = null;
+        isDraggingCoinPoket = false;
 
         ClearSellPointHover();
 
@@ -197,6 +214,8 @@ public class InputManager : MonoBehaviour
 
         CancelOngoingInteractions();
 
+        if (TryPickCoinPoket()) return;
+
         if (!TryPickCard())
             cameraController?.StartPan(currentPointerPosition);
     }
@@ -213,6 +232,16 @@ public class InputManager : MonoBehaviour
         if (isDragging)
         {
             ReleaseCard();
+        }
+        else if (isDraggingCoinPoket)
+        {
+            isDraggingCoinPoket = false;
+            pendingCoinPoket = null;
+        }
+        else if (pendingCoinPoket != null)
+        {
+            pendingCoinPoket.WithdrawCoin();
+            pendingCoinPoket = null;
         }
         else if (pendingPack != null)
         {
@@ -248,6 +277,44 @@ public class InputManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    // CoinPoket 클릭 감지 — 마우스다운 시 pending 저장, 드래그 거리 초과 시 이동 / 마우스업 시 WithdrawCoin
+    private bool TryPickCoinPoket()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
+        if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) return false;
+        var pocket = hit.collider.GetComponentInParent<CoinPoket>();
+        if (pocket == null) return false;
+        pendingCoinPoket = pocket;
+        packPressStartPos = currentPointerPosition;   // PackCard와 동일 필드 재사용
+        return true;
+    }
+
+    private void StartDraggingCoinPoket()
+    {
+        isDraggingCoinPoket = true;
+
+        Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
+        coinPoketDragPlane = new Plane(Vector3.up, pendingCoinPoket.transform.position);
+
+        if (coinPoketDragPlane.Raycast(ray, out float distance))
+        {
+            Vector3 mouseWorldPos = ray.GetPoint(distance);
+            coinPoketOffset = pendingCoinPoket.transform.position - mouseWorldPos;
+        }
+    }
+
+    private void DragCoinPoket()
+    {
+        if (pendingCoinPoket == null) { isDraggingCoinPoket = false; return; }
+
+        Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
+        if (coinPoketDragPlane.Raycast(ray, out float distance))
+        {
+            Vector3 mouseWorldPos = ray.GetPoint(distance);
+            pendingCoinPoket.transform.position = mouseWorldPos + coinPoketOffset;
+        }
     }
 
     // 카드(팩 포함) 집기
@@ -515,7 +582,45 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        // 3) 기존 머지/드롭 로직
+        // 3) CoinPoket 판정 (팩 제외) — 코인 카드를 주머니에 넣기
+        if (!isPackStack)
+        {
+            CoinPoket targetCoinPoket = null;
+            float bestCoinDistSqr = float.MaxValue;
+            var coinPokets = Object.FindObjectsByType<CoinPoket>(FindObjectsSortMode.None);
+            foreach (var cp in coinPokets)
+            {
+                if (cp == null || !cp.IsPointInside(dropPos)) continue;
+                Vector3 cpXZ = new Vector3(cp.transform.position.x, 0f, cp.transform.position.z);
+                float d = (cpXZ - dropXZ).sqrMagnitude;
+                if (d < bestCoinDistSqr) { bestCoinDistSqr = d; targetCoinPoket = cp; }
+            }
+
+            if (targetCoinPoket != null)
+            {
+                bool hadCoins = targetCoinPoket.PutInCoin(draggingStack);
+                if (hadCoins)
+                {
+                    if (draggingStack.IsEmpty)
+                    {
+                        Destroy(draggingStack.gameObject);
+                        draggingStack = null;
+                    }
+                    else
+                    {
+                        // 비-코인 잔여 카드는 CoinPoket 근처에 그대로 드롭
+                        Vector3 pos = draggingStack.transform.position;
+                        pos.y -= dragYOffset;
+                        draggingStack.transform.position = pos;
+                        draggingStack.Refresh();
+                    }
+                    return;
+                }
+                // 코인 없음(hadCoins=false) → 아래 머지 로직으로 흘림
+            }
+        }
+
+        // 4) 기존 머지/드롭 로직
         CardStack target = isPackStack ? null : FindNearestStack(draggingStack.transform.position, draggingStack);
 
         if (target != null)
