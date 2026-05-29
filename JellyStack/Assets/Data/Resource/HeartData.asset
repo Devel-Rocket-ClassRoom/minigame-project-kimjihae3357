@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeartData
   m_EditorClassIdentifier: Assembly-CSharp::ResourceCardData
   cardType: 3
-  cardPrefab: {fileID: 8481278547604517009, guid: a4841e1ef65102d40b5d17c1b9126e43, type: 3}
+  cardPrefab: {fileID: 8481278547604517009, guid: 66c293edfdc44744d8d304f6ea45de52, type: 3}
   cardName: "\uD558\uD2B8"
   Image: {fileID: 21300000, guid: eaacee0bc6c8bb648be6f968e08eac6e, type: 3}
   sellPrice: 1
