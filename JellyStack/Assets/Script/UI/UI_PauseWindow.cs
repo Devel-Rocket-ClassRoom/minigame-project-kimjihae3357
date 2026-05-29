@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class UI_PauseWindow : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
-    [SerializeField] private Button button;
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button exitButton;
 
     private UIManager uiManager;
 
@@ -13,7 +14,8 @@ public class UI_PauseWindow : MonoBehaviour
     {
         uiManager = manager;
 
-        button.onClick.AddListener(uiManager.ResumeGame);
+        resumeButton.onClick.AddListener(uiManager.ResumeGame);
+        exitButton.onClick.AddListener(uiManager.ExitGame);
     }
 
     public void Show()

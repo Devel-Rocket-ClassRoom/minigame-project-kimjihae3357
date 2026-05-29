@@ -133,9 +133,10 @@ public class UI_Ingame : MonoBehaviour
         dayChangeGroup.alpha = 0f;
         dayChangeGroup.gameObject.SetActive(false);
 
-        // 7일 간격으로 날씨 룰렛 표시 (시간 정지 유지 → 룰렛 끝난 뒤 복귀)
+        // 날씨 룰렛 표시 (간격은 GameManager에서 설정)
         int day = DayManager.Instance != null ? DayManager.Instance.CurrentDay : 0;
-        if (day > 0 && day % 7 == 0 && WeatherManager.Instance != null)
+        if (WeatherManager.Instance != null && GameManager.Instance != null
+            && GameManager.Instance.ShouldShowRoulette(day))
         {
             bool rouletteDone = false;
             WeatherManager.Instance.ShowRoulette(_ => rouletteDone = true);

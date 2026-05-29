@@ -15,9 +15,13 @@ MonoBehaviour:
   cardName: "\uC2A4\uD0C0\uD130\uD329"
   Image: {fileID: 0}
   cardEntries:
-  - data: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
-    count: 7
+  - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
+    count: 1
   - data: {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
     count: 1
+  - data: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
+    count: 1
+  - data: {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
+    count: 1
   - data: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
-    count: 5
+    count: 1

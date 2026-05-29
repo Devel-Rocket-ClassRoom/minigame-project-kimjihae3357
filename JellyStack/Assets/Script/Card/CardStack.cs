@@ -110,11 +110,17 @@ public class CardStack : MonoBehaviour
         if (task != null)
         {
             var activeRecipe = task.Recipe;
+            // ingredients가 비어있는 특수 레시피(gatherRecipe, healRecipe)는
+            // CanTransferTask로 별도 판정
+            bool hasIngredients = activeRecipe?.ingredients != null && activeRecipe.ingredients.Count > 0;
+
             bool stillValid =
                 activeRecipe != null &&
                 cards.Count >= 2 &&
                 RecipeManager.Instance != null &&
-                RecipeManager.Instance.StackMatchesIngredients(this, activeRecipe.ingredients);
+                (hasIngredients
+                    ? RecipeManager.Instance.StackMatchesIngredients(this, activeRecipe.ingredients)
+                    : RecipeManager.Instance.CanTransferTask(activeRecipe, cards));
 
             if (!stillValid)
             {
@@ -122,7 +128,9 @@ public class CardStack : MonoBehaviour
                     activeRecipe != null &&
                     moved.Count >= 2 &&
                     RecipeManager.Instance != null &&
-                    RecipeManager.Instance.CardsMatchIngredients(moved, activeRecipe.ingredients);
+                    (hasIngredients
+                        ? RecipeManager.Instance.CardsMatchIngredients(moved, activeRecipe.ingredients)
+                        : RecipeManager.Instance.CanTransferTask(activeRecipe, moved));
 
                 if (movedCarriesRecipe)
                     RecipeManager.Instance.StageTransfer(activeRecipe, task.Elapsed);

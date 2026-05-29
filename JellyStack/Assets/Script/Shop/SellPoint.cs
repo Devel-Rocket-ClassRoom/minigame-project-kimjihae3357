@@ -20,6 +20,9 @@ public class SellPoint : MonoBehaviour
     [Tooltip("SellPoint 기준점으로부터 코인이 생성될 상대 좌표(월드 축 기준). 기본: 살짝 아래쪽(-Z).")]
     [SerializeField] private Vector3 spawnOffset = new Vector3(0f, 0f, -2.5f);
 
+    [Header("판매가격 preview")]
+    [SerializeField] private SellPricePreview pricePreview;
+
     private void Reset()
     {
         if (dropArea == null) dropArea = GetComponent<Collider>();
@@ -40,6 +43,23 @@ public class SellPoint : MonoBehaviour
     }
 
     /// <summary>
+    /// 스택 내 CanSell=true 카드들의 sellPrice 합. 판매 미리보기와 실제 판매가 동일한 숫자를
+    /// 쓰도록 SellStack과 공유한다. stack을 변경하지 않는다.
+    /// </summary>
+    public static int CalculateSellPrice(CardStack stack)
+    {
+        if (stack == null) return 0;
+        int total = 0;
+        foreach (var c in stack.cards)
+        {
+            if (c == null || c.data == null) continue;
+            if (!c.data.CanSell) continue;
+            total += Mathf.Max(0, c.data.sellPrice);
+        }
+        return total;
+    }
+
+    /// <summary>
     /// 스택 내 CanSell=true 카드만 판매 처리. 판매 불가 카드는 stack에 남는다.
     /// 반환: 스택이 완전히 비어 호출자가 stack.gameObject를 파괴해도 되는지 여부.
     /// </summary>
@@ -47,7 +67,7 @@ public class SellPoint : MonoBehaviour
     {
         if (stack == null) return false;
 
-        int totalPrice = 0;
+        int totalPrice = CalculateSellPrice(stack);
 
         // 뒤에서 앞으로 순회하며 판매 가능한 카드 제거 (인덱스 안전)
         for (int i = stack.cards.Count - 1; i >= 0; i--)
@@ -56,7 +76,6 @@ public class SellPoint : MonoBehaviour
             if (c == null || c.data == null) continue;
             if (!c.data.CanSell) continue;
 
-            totalPrice += Mathf.Max(0, c.data.sellPrice);
             stack.cards.RemoveAt(i);
             Destroy(c.gameObject);
         }
@@ -72,5 +91,17 @@ public class SellPoint : MonoBehaviour
         }
 
         return stack.IsEmpty;
+    }
+
+    public void ShowPreview(CardStack stack)
+    {
+        if (pricePreview == null) return;
+        pricePreview.Show(CalculateSellPrice(stack));
+    }
+
+    public void HidePreview()
+    {
+        if (pricePreview == null) return;
+        pricePreview.Hide();
     }
 }

@@ -23,7 +23,7 @@ MonoBehaviour:
   jumpInterval: 3
   attackInterval: 2.5
   dropTable:
-  - card: {fileID: 11400000, guid: f536d5dbc23ce55449a49f8d37433a99, type: 2}
+  - card: {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
     chance: 1
-  - card: {fileID: 11400000, guid: f536d5dbc23ce55449a49f8d37433a99, type: 2}
+  - card: {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
     chance: 1

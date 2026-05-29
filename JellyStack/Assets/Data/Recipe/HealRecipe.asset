@@ -15,7 +15,7 @@ MonoBehaviour:
   ingredients: []
   result: {fileID: 0}
   resultCount: 0
-  duration: 2
+  duration: 5
   consumeIngredients: 0
   iconPrefab: {fileID: 0}
   progressEffectPrefab: {fileID: 5777358988600465752, guid: 7c9d7618548eb2b458362807ea261b11, type: 3}
