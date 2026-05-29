@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4045921e9aa3a4635ac6a81bbd1b5518, type: 3}
-  m_Name: FireVillagerData
+  m_Name: StoneVillagerData
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCardData
   cardType: 1
   cardPrefab: {fileID: 8481278547604517009, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  cardName: "\uBD88\uC758 \uC8FC\uBBFC"
-  Image: {fileID: 21300000, guid: 57371e07c9d9e294bb6e41fee58c6898, type: 3}
+  cardName: "\uB3CC\uC758\uC8FC\uBBFC"
+  Image: {fileID: 21300000, guid: 5a8a8accb1616c24fbf0417128429df5, type: 3}
   sellPrice: 3
   CanSell: 1
-  villagerType: 1
-  maxHealth: 5
+  villagerType: 3
+  maxHealth: 10
   maxHunger: 2
-  attackPower: 4
-  workSpeed: 0.5
-  attackInterval: 1.8
+  attackPower: 2
+  workSpeed: 1
+  attackInterval: 2
   isBaby: 0

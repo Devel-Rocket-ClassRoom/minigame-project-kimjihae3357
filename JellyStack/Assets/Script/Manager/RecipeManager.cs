@@ -258,6 +258,47 @@ public class RecipeManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// ingredients가 비어있는 특수 레시피(gatherRecipe, healRecipe)에서
+    /// 대상 카드 목록이 해당 작업을 이어받을 수 있는지 판정.
+    /// CardStack.SplitFrom()의 StageTransfer 여부 결정에 사용.
+    /// </summary>
+    public bool CanTransferTask(CardRecipe recipe, List<Card> cards)
+    {
+        if (recipe == null || cards == null) return false;
+        if (recipe == gatherRecipe) return HasGatherPattern(cards);
+        if (recipe == healRecipe)   return HasHealPattern(cards);
+        return false;
+    }
+
+    private bool HasGatherPattern(List<Card> cards)
+    {
+        bool hasVillager = false, hasSource = false;
+        foreach (var c in cards)
+        {
+            if (c is VillagerCard v)
+            {
+                if (v.data is VillagerCardData vd && !vd.isBaby) hasVillager = true;
+            }
+            else if (c is SourceCard)
+            {
+                hasSource = true;
+            }
+        }
+        return hasVillager && hasSource;
+    }
+
+    private bool HasHealPattern(List<Card> cards)
+    {
+        bool hasVillager = false, hasHeart = false;
+        foreach (var c in cards)
+        {
+            if (c is VillagerCard) hasVillager = true;
+            if (c is HeartCard)    hasHeart = true;
+        }
+        return hasVillager && hasHeart;
+    }
+
     public bool StackMatchesIngredients(CardStack stack, List<CardData> ingredients)
     {
         if (ingredients == null || ingredients.Count == 0) return false;

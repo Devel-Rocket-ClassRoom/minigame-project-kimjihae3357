@@ -16,13 +16,19 @@ MonoBehaviour:
   Image: {fileID: 0}
   cardEntries:
   - data: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
-    weight: 1
+    weight: 5
   - data: {fileID: 11400000, guid: 2056a0ec82849dc4aa4589e4be55107a, type: 2}
-    weight: 1
+    weight: 5
   - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
-    weight: 1
+    weight: 5
   - data: {fileID: 11400000, guid: 8e1ea234f25ee364b887fb3499e454be, type: 2}
     weight: 1
   - data: {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+    weight: 3
+  - data: {fileID: 11400000, guid: 06660bc46b7bb0142898ff5820305861, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 9f3155692a751534fab07b2bf12da9f2, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 5b5b83c4a850b654bab9fa3e257d2d9c, type: 2}
     weight: 1
   drawCount: 3
