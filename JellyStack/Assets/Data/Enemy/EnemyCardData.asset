@@ -24,7 +24,7 @@ MonoBehaviour:
   attackInterval: 2.5
   dropTable:
   - card: {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
-    chance: 0.3
+    chance: 0.2
   - card: {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
     chance: 0.3
   - card: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}

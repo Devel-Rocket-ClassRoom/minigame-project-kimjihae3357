@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +19,14 @@ public class BattleManager : MonoBehaviour
     [Tooltip("적 점프 후 이 거리 이내 Villager가 있으면 전투 시작 (XZ 거리).")]
     [SerializeField] private float contactRange = 1.5f;
     public float ContactRange => contactRange;
+
+    [Header("주변 카드 밀어내기")]
+    [Tooltip("전투 시작 시 이 반경 안의 카드 스택을 밀어냄.")]
+    [SerializeField] private float battlePushRadius = 4f;
+    [Tooltip("밀려나는 거리.")]
+    [SerializeField] private float battlePushDistance = 2.5f;
+    [Tooltip("밀려나는 데 걸리는 시간(초).")]
+    [SerializeField] private float battlePushDuration = 0.4f;
 
     private void Awake()
     {
@@ -57,15 +66,22 @@ public class BattleManager : MonoBehaviour
         enemyStack.cards.Clear();
 
         // 주민 카드 중 아기(isBaby)는 전투에서 제외
-        var babies = new List<Card>();
-        var fighters = new List<Card>();
+        var babies = new List<Card>();    // 전투 제외 → 스택에 남김 (아기 주민 + 비전투 카드)
+        var fighters = new List<Card>(); // 전투 참여 → BattlePoint로 이동
         foreach (var c in villagerStack.cards)
         {
-            var vd = (c is VillagerCard) ? (c.data as VillagerCardData) : null;
-            if (vd != null && vd.isBaby)
-                babies.Add(c);
+            if (c is VillagerCard vc)
+            {
+                var vd = vc.data as VillagerCardData;
+                if (vd != null && vd.isBaby)
+                    babies.Add(c);   // 아기 주민 → 전투 제외
+                else
+                    fighters.Add(c); // 성인 주민 → 전투 참여
+            }
             else
-                fighters.Add(c);
+            {
+                babies.Add(c); // 재료 등 비전투 카드 → 전투 제외, 스택에 남김
+            }
         }
         moved.AddRange(fighters);
         villagerStack.cards.Clear();
@@ -86,7 +102,28 @@ public class BattleManager : MonoBehaviour
         }
 
         battle.BeginBattle();
+        PushNearbyStacks(mid, battle);
         return true;
+    }
+
+    /// <summary>전투 시작 위치 주변 카드 스택을 DOTween으로 부드럽게 밀어냄.</summary>
+    private void PushNearbyStacks(Vector3 center, BattlePoint exclude)
+    {
+        var allStacks = Object.FindObjectsByType<CardStack>(FindObjectsSortMode.None);
+        foreach (var stack in allStacks)
+        {
+            if (stack == null || stack.IsEmpty) continue;
+            if (stack is BattlePoint) continue;
+            if (stack.IsDragging) continue;
+
+            Vector3 dir = stack.transform.position - center;
+            dir.y = 0f;
+            float dist = dir.magnitude;
+            if (dist > battlePushRadius || dist < 0.01f) continue;
+
+            Vector3 target = stack.transform.position + dir.normalized * battlePushDistance;
+            stack.transform.DOMove(target, battlePushDuration).SetEase(Ease.OutCubic);
+        }
     }
 
     /// <summary>

@@ -19,6 +19,7 @@ public class PackCard : Card
         CardData cardData = remainingCards[0];
         remainingCards.RemoveAt(0);
 
+        CameraController.Instance?.Shake();
         CardSpawner.Instance.SpawnNear(cardData, transform.position);
 
         if (remainingCards.Count == 0)
