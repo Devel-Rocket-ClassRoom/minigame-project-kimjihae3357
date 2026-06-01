@@ -467,6 +467,10 @@ MonoBehaviour:
   coinText: {fileID: 2714157738061470273}
   coinData: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
   dropArea: {fileID: 4363389709536603412}
+  animator: {fileID: 8836401702618590711}
+  pickupTrigger: Pickup
+  dropTrigger: Drop
+  putInTrigger: PutIn
 --- !u!1 &6554303867072306161
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,8 +621,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3890103968474945279, guid: 0da8b86bbf9abf444ba0fa41366bdc01, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8836401702618590711}
   m_SourcePrefab: {fileID: 100100000, guid: 0da8b86bbf9abf444ba0fa41366bdc01, type: 3}
+--- !u!1 &987847535321831168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3890103968474945279, guid: 0da8b86bbf9abf444ba0fa41366bdc01, type: 3}
+  m_PrefabInstance: {fileID: 4056026839222780415}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8836401702618590711
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987847535321831168}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 07b6a1c122db6ed43a4bbb7286fc1b5b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &4363389709536603412 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 343462389415750891, guid: 0da8b86bbf9abf444ba0fa41366bdc01, type: 3}

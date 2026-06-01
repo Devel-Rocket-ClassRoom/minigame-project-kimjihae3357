@@ -16,6 +16,10 @@ public class CardRecipe : ScriptableObject
     [Header("카드 소비됨")]
     public bool consumeIngredients = true;
 
+    [Header("유지할 재료")]
+    [Tooltip("consumeIngredients=true 이더라도 이 목록의 재료는 삭제하지 않고 스택에 남긴다.")]
+    public List<CardData> preserveIngredients = new List<CardData>();
+
     [Header("표시 아이콘")]
     public GameObject iconPrefab;
 

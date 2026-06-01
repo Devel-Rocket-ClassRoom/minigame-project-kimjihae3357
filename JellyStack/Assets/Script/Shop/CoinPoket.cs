@@ -15,6 +15,15 @@ public class CoinPoket : MonoBehaviour
     [Tooltip("코인이 드롭되는 감지 콜라이더 (BoxCollider 권장, IsTrigger 불필요)")]
     [SerializeField] private Collider dropArea;
 
+    [Header("애니메이션")]
+    [SerializeField] private Animator animator;
+    [Tooltip("드래그 시작 시 발동할 Animator 트리거 이름")]
+    [SerializeField] private string pickupTrigger = "Pickup";
+    [Tooltip("드래그 종료 시 발동할 Animator 트리거 이름")]
+    [SerializeField] private string dropTrigger = "Drop";
+    [Tooltip("코인 넣기/빼기 시 발동할 Animator 트리거 이름")]
+    [SerializeField] private string putInTrigger = "PutIn";
+
     private int coinAmount = 0;
 
     private void Start()
@@ -53,6 +62,7 @@ public class CoinPoket : MonoBehaviour
         stack.Refresh();
 
         coinAmount += coins.Count;
+        OnPutIn();
         UpdateText();
         return true;
     }
@@ -62,9 +72,28 @@ public class CoinPoket : MonoBehaviour
     {
         if (coinAmount <= 0 || coinData == null || CardSpawner.Instance == null) return;
 
+        OnPutIn();
         CardSpawner.Instance.SpawnNear(coinData, transform.position);
         coinAmount--;
         UpdateText();
+    }
+
+    public void OnPickup()
+    {
+        if (animator != null && !string.IsNullOrEmpty(pickupTrigger))
+            animator.SetTrigger(pickupTrigger);
+    }
+
+    public void OnPutIn()
+    {
+        if (animator != null && !string.IsNullOrEmpty(putInTrigger))
+            animator.SetTrigger(putInTrigger);
+    }
+
+    public void OnDrop()
+    {
+        if (animator != null && !string.IsNullOrEmpty(dropTrigger))
+            animator.SetTrigger(dropTrigger);
     }
 
     private void UpdateText()
