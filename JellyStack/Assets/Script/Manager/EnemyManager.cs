@@ -1,12 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
-    [Header("스폰 위치")]
-    [Tooltip("카메라 중심 기준 가장자리 반경. 이 원 둘레에서 랜덤 위치 선택.")]
+    [Header("스폰 영역")]
+    [Tooltip("포탈이 생성될 수 있는 영역 콜라이더 목록. 스폰 시 랜덤으로 하나 선택 후 그 안에서 위치 결정. 비어있으면 아래 반경 방식 사용.")]
+    [SerializeField] private List<Collider> spawnAreas;
+    [Tooltip("스폰 영역이 없을 때 사용하는 카메라 중심 가장자리 반경.")]
     [SerializeField] private float spawnRadius = 12f;
 
     private void Awake()
@@ -35,6 +38,7 @@ public class EnemyManager : MonoBehaviour
             portal = Instantiate(spawner.portalPrefab, pos, Quaternion.identity);
             bar = portal.GetComponent<UI_CardProgressBar>();
             bar?.Show();
+            CameraController.Instance?.ZoomToTarget(pos);
         }
 
         // 대기 시간 + ProgressBar 갱신
@@ -84,6 +88,22 @@ public class EnemyManager : MonoBehaviour
 
     private Vector3 GetRandomEdgePosition()
     {
+        // 콜라이더 목록이 있으면 랜덤으로 하나 선택 후 bounds XZ 내 랜덤 위치
+        if (spawnAreas != null && spawnAreas.Count > 0)
+        {
+            Collider col = spawnAreas[UnityEngine.Random.Range(0, spawnAreas.Count)];
+            if (col != null)
+            {
+                var b = col.bounds;
+                return new Vector3(
+                    UnityEngine.Random.Range(b.min.x, b.max.x),
+                    0f,
+                    UnityEngine.Random.Range(b.min.z, b.max.z)
+                );
+            }
+        }
+
+        // fallback: 기존 원형 가장자리 방식
         Camera cam = Camera.main;
         Vector3 center = cam != null
             ? new Vector3(cam.transform.position.x, 0f, cam.transform.position.z)

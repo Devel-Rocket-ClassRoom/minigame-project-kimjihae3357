@@ -1,9 +1,13 @@
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance { get; private set; }
+
     [Header("Zoom Setting")]
     [SerializeField] private float zoomSpeed     = 30f;
     [SerializeField] private float smoothness    = 10f;
@@ -14,6 +18,16 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float panSmoothness = 10f;
     [SerializeField] private LayerMask tableMask = ~0;
 
+    [Header("줌 연출")]
+    [Tooltip("숫자가 작을수록 크게 확대")]
+    [SerializeField] private float zoomInSize   = 5f;
+    [SerializeField] private float zoomDuration = 0.5f;
+    [SerializeField] private float zoomHoldTime = 1.5f;
+
+    [Header("쉐이크 연출")]
+    [SerializeField] private float shakeStrength = 0.3f;
+    [SerializeField] private float shakeDuration  = 0.25f;
+
     private Camera cam;
     private float targetZoom;
     private Vector3 targetPosition;
@@ -21,14 +35,14 @@ public class CameraController : MonoBehaviour
     private bool isPanning;
     private Vector3 panStartWorld;
     private Vector3 panStartCamPos;
-
+    private bool _isShaking;
 
     private void Awake()
     {
+        Instance = this;
         cam = GetComponent<Camera>();
         targetZoom = cam.orthographicSize;
         targetPosition = transform.position;
-
     }
 
     private void Update()
@@ -99,7 +113,50 @@ public class CameraController : MonoBehaviour
         cam.orthographicSize = Mathf.Lerp(
             cam.orthographicSize, targetZoom, Time.deltaTime * smoothness);
 
-        transform.position = Vector3.Lerp(
-            transform.position, targetPosition, Time.deltaTime * panSmoothness);
+        if (!_isShaking)
+            transform.position = Vector3.Lerp(
+                transform.position, targetPosition, Time.deltaTime * panSmoothness);
+    }
+
+    // ── 포탈 줌 연출 ──────────────────────────────────────────
+    public void ZoomToTarget(Vector3 worldPos)
+    {
+        StartCoroutine(ZoomRoutine(worldPos));
+    }
+
+    private IEnumerator ZoomRoutine(Vector3 worldPos)
+    {
+        Vector3 savedPos  = targetPosition;
+        float   savedZoom = targetZoom;
+
+        // 카메라가 현재 화면 중앙에서 바라보는 Y=0 지점 계산
+        Ray centerRay = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Vector3 lookAt = centerRay.origin;
+        if (Mathf.Abs(centerRay.direction.y) > 0.001f)
+        {
+            float t = -centerRay.origin.y / centerRay.direction.y;
+            lookAt = centerRay.origin + centerRay.direction * t;
+        }
+
+        // 포탈을 화면 중앙에 오게 하기 위한 카메라 이동량
+        Vector3 offset = new Vector3(worldPos.x - lookAt.x, 0f, worldPos.z - lookAt.z);
+        Vector3 camPos = targetPosition + offset;
+
+        DOTween.To(() => targetPosition, x => targetPosition = x, camPos,    zoomDuration);
+        DOTween.To(() => targetZoom,     x => targetZoom     = x, zoomInSize, zoomDuration);
+
+        yield return new WaitForSeconds(zoomDuration + zoomHoldTime);
+
+        DOTween.To(() => targetPosition, x => targetPosition = x, savedPos,  zoomDuration);
+        DOTween.To(() => targetZoom,     x => targetZoom     = x, savedZoom, zoomDuration);
+    }
+
+    // ── 카드 스폰 쉐이크 ──────────────────────────────────────
+    public void Shake()
+    {
+        if (_isShaking) return;
+        _isShaking = true;
+        transform.DOShakePosition(shakeDuration, new Vector3(shakeStrength, 0f, shakeStrength), 20, 0f)
+                 .OnComplete(() => _isShaking = false);
     }
 }

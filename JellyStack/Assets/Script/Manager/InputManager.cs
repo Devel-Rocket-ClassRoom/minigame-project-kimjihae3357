@@ -277,9 +277,11 @@ public class InputManager : MonoBehaviour
     private bool TrySelectFood()
     {
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        RaycastHit[] hits = Physics.RaycastAll(ray, Mathf.Infinity);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        foreach (var hit in hits)
         {
-            var indicator = hit.collider.GetComponent<SelectFoodCard>();
+            var indicator = hit.collider.GetComponentInParent<SelectFoodCard>();
             if (indicator != null)
             {
                 indicator.OnClick();
