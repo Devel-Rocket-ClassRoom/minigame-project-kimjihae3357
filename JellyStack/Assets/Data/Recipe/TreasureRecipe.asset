@@ -18,6 +18,6 @@ MonoBehaviour:
   result: {fileID: 11400000, guid: 5b5b83c4a850b654bab9fa3e257d2d9c, type: 2}
   resultCount: 1
   duration: 10
-  consumeIngredients: 0
+  consumeIngredients: 1
   iconPrefab: {fileID: 0}
   progressEffectPrefab: {fileID: 4624916414435645778, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}

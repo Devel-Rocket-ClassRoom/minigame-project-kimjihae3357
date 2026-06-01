@@ -51,17 +51,39 @@ public class BattleManager : MonoBehaviour
         }
         Debug.Log($"[Battle] BattlePoint 생성 at {mid}, 카드 {enemyStack.cards.Count + villagerStack.cards.Count}장 이동");
 
-        // 양쪽 스택의 카드를 모두 BattlePoint로 이동
+        // 적 카드는 전부 전투에 참여
         var moved = new List<Card>();
         moved.AddRange(enemyStack.cards);
-        moved.AddRange(villagerStack.cards);
         enemyStack.cards.Clear();
-        villagerStack.cards.Clear();
-        battle.AddCards(moved);
 
-        // 빈 원래 스택 파괴
+        // 주민 카드 중 아기(isBaby)는 전투에서 제외
+        var babies = new List<Card>();
+        var fighters = new List<Card>();
+        foreach (var c in villagerStack.cards)
+        {
+            var vd = (c is VillagerCard) ? (c.data as VillagerCardData) : null;
+            if (vd != null && vd.isBaby)
+                babies.Add(c);
+            else
+                fighters.Add(c);
+        }
+        moved.AddRange(fighters);
+        villagerStack.cards.Clear();
+
+        battle.AddCards(moved);
         Destroy(enemyStack.gameObject);
-        Destroy(villagerStack.gameObject);
+
+        // 아기가 있으면 기존 스택에 남겨둠, 없으면 빈 스택 파괴
+        if (babies.Count > 0)
+        {
+            foreach (var b in babies)
+                villagerStack.cards.Add(b);
+            villagerStack.Refresh();
+        }
+        else
+        {
+            Destroy(villagerStack.gameObject);
+        }
 
         battle.BeginBattle();
         return true;

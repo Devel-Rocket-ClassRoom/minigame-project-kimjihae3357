@@ -47,6 +47,8 @@ public class InputManager : MonoBehaviour
     private bool isDraggingCoinPoket;
     private Plane coinPoketDragPlane;
     private Vector3 coinPoketOffset;
+    private float coinPoketOriginalY;
+    [SerializeField] private float coinPoketDragYOffset = 2f;
 
     private Vector2 currentPointerPosition;
 
@@ -235,6 +237,14 @@ public class InputManager : MonoBehaviour
         }
         else if (isDraggingCoinPoket)
         {
+            // Y 원위치 복구
+            if (pendingCoinPoket != null)
+            {
+                Vector3 pos = pendingCoinPoket.transform.position;
+                pos.y = coinPoketOriginalY;
+                pendingCoinPoket.transform.position = pos;
+                pendingCoinPoket.OnDrop();
+            }
             isDraggingCoinPoket = false;
             pendingCoinPoket = null;
         }
@@ -294,6 +304,13 @@ public class InputManager : MonoBehaviour
     private void StartDraggingCoinPoket()
     {
         isDraggingCoinPoket = true;
+        pendingCoinPoket.OnPickup();
+
+        // Y 올리기
+        coinPoketOriginalY = pendingCoinPoket.transform.position.y;
+        Vector3 raisedPos = pendingCoinPoket.transform.position;
+        raisedPos.y += coinPoketDragYOffset;
+        pendingCoinPoket.transform.position = raisedPos;
 
         Ray ray = mainCamera.ScreenPointToRay(currentPointerPosition);
         coinPoketDragPlane = new Plane(Vector3.up, pendingCoinPoket.transform.position);

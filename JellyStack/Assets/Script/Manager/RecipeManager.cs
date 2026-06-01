@@ -404,7 +404,8 @@ public class RecipeManager : MonoBehaviour
                     Destroy(found.gameObject);
                 }
             }
-            else if (recipe.consumeIngredients)
+            else if (recipe.consumeIngredients
+                     && (recipe.preserveIngredients == null || !recipe.preserveIngredients.Contains(found.data)))
             {
                 stack.cards.Remove(found);
                 Destroy(found.gameObject);
