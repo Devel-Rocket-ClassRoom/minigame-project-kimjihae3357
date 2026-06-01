@@ -58,7 +58,11 @@ public class EnemyManager : MonoBehaviour
             {
                 var enemy = PickEnemy(spawner);
                 if (enemy != null)
+                {
                     CardSpawner.Instance.Spawn(enemy, pos);
+                    if (spawner.cardSpawnEffectPrefab != null)
+                        Instantiate(spawner.cardSpawnEffectPrefab, pos, Quaternion.identity);
+                }
             }
         }
 

@@ -1365,10 +1365,6 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1263863276}
-    - target: {fileID: 84651915053072991, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: waveSchedules.Array.data[0].interval
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4189152433874841181, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.87941
@@ -1437,10 +1433,6 @@ PrefabInstance:
       propertyPath: rouletteGroup
       value: 
       objectReference: {fileID: 1444503525}
-    - target: {fileID: 7304257695290024762, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: spawnAreas.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7304257695290024762, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
       propertyPath: 'spawnAreas.Array.data[0]'
       value: 
