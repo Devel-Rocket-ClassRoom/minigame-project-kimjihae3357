@@ -47,7 +47,7 @@ MonoBehaviour:
   selectCardPrefab: {fileID: 8481278547604517009, guid: 925189fbc11b71d44ba9a5aa12ab0029, type: 3}
   moveDuration: 0.5
   jumpPower: 2
-  deadEffect: {fileID: 2753832575391103974, guid: d4ecb9efae0b6714abe36f041bc2e5d3, type: 3}
+  deadEffect: {fileID: 8284828320390375843, guid: eeafee5dce3695f46894ac81f6eb1db3, type: 3}
   deadEffectDuration: 1
   eatEffect: {fileID: 948692576675648201, guid: 4cef5a5a20b229e4ba97eebc123ac55a, type: 3}
 --- !u!1 &2731453200096815905
