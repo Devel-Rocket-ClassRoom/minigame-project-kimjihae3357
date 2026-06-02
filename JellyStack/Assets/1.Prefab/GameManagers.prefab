@@ -47,7 +47,7 @@ MonoBehaviour:
   selectCardPrefab: {fileID: 8481278547604517009, guid: 925189fbc11b71d44ba9a5aa12ab0029, type: 3}
   moveDuration: 0.5
   jumpPower: 2
-  deadEffect: {fileID: 2753832575391103974, guid: d4ecb9efae0b6714abe36f041bc2e5d3, type: 3}
+  deadEffect: {fileID: 8284828320390375843, guid: eeafee5dce3695f46894ac81f6eb1db3, type: 3}
   deadEffectDuration: 1
   eatEffect: {fileID: 948692576675648201, guid: 4cef5a5a20b229e4ba97eebc123ac55a, type: 3}
 --- !u!1 &2731453200096815905
@@ -96,6 +96,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
   battlePointPrefab: {fileID: 4560525742326854172, guid: 63c91787400192e458d53f74f2927acf, type: 3}
   contactRange: 5
+  battlePushRadius: 4
+  battlePushDistance: 2.5
+  battlePushDuration: 0.4
 --- !u!1 &3239822574909648084
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +310,7 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   weatherInterval: 7
   waveSchedules:
-  - interval: 5
+  - interval: 2
     spawner: {fileID: 11400000, guid: bbdddb00b05e9fb489184d917eb30255, type: 2}
 --- !u!1 &6238206434154902690
 GameObject:
@@ -444,6 +447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099673dce5556214881d732a9d01c4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  spawnAreas:
+  - {fileID: 0}
+  - {fileID: 0}
   spawnRadius: 10
 --- !u!1 &8724135120346281153
 GameObject:
@@ -500,6 +506,7 @@ MonoBehaviour:
     m_Bits: 128
   dragStartDistance: 10
   uiManager: {fileID: 0}
+  coinPoketDragYOffset: 2
 --- !u!114 &6341057441307129407
 MonoBehaviour:
   m_ObjectHideFlags: 0

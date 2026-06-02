@@ -15,6 +15,9 @@ public class EnemySpawnerData : ScriptableObject
     [Tooltip("포탈 생성 후 적 소환까지 대기 시간(초)")]
     public float spawnDelay = 2f;
 
+    [Tooltip("적 카드 한 장이 등장할 때 스폰될 이펙트 프리팹. null이면 이펙트 없음.")]
+    public GameObject cardSpawnEffectPrefab;
+
     [Header("소환 설정")]
     [Tooltip("총 소환 수. 각 슬롯마다 spawnTable 가중치 비율로 적 종류 선택")]
     public int spawnCount = 3;

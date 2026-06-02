@@ -495,7 +495,13 @@ MonoBehaviour:
   followSpeed: 10
   suppressFollow: 0
   IsFrozen: 0
+  shadowRenderer: {fileID: 0}
+  shadowGroundY: 0.02
+  shadowBaseScale: 1
+  shadowMinScale: 0.5
+  shadowHeightRange: 1.5
   packData: {fileID: 11400000, guid: cb24cc301a136be429196b7b045e80ed, type: 2}
+  spawnEffectPrefab: {fileID: 8634025193278680523, guid: ac6336dc82a80534aaf49ae841ea729c, type: 3}
 --- !u!114 &1851869085641104426
 MonoBehaviour:
   m_ObjectHideFlags: 0

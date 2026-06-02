@@ -4,6 +4,8 @@ using UnityEngine;
 public class PackCard : Card
 {
     [SerializeField] private CardPackData packData;   // StarterPack / RandomCardPack 등 어떤 팩 타입이든 받을 수 있음
+    [Header("카드 오픈 이펙트")]
+    [SerializeField] private GameObject spawnEffectPrefab;
 
     private List<CardData> remainingCards;
 
@@ -20,6 +22,8 @@ public class PackCard : Card
         remainingCards.RemoveAt(0);
 
         CameraController.Instance?.Shake();
+        if (spawnEffectPrefab != null)
+            Instantiate(spawnEffectPrefab, transform.position, Quaternion.identity);
         CardSpawner.Instance.SpawnNear(cardData, transform.position);
 
         if (remainingCards.Count == 0)

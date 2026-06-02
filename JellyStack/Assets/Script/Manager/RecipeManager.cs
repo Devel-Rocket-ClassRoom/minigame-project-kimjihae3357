@@ -176,7 +176,15 @@ public class RecipeManager : MonoBehaviour
         if (source == null) { if (!stack.IsEmpty) CheckStack(stack); return; }
 
         var sourceData = source.data as SourceCardData;
-        if (sourceData == null || sourceData.gatherResult == null)
+        if (sourceData == null)
+        {
+            if (!stack.IsEmpty) CheckStack(stack);
+            return;
+        }
+
+        // gatherResults(랜덤 목록)와 gatherResult(단일 고정) 둘 다 없으면 스킵
+        bool hasRandomTable = sourceData.gatherResults != null && sourceData.gatherResults.Count > 0;
+        if (!hasRandomTable && sourceData.gatherResult == null)
         {
             if (!stack.IsEmpty) CheckStack(stack);
             return;
@@ -193,7 +201,11 @@ public class RecipeManager : MonoBehaviour
         }
 
         for (int i = 0; i < count; i++)
-            CardSpawner.Instance.SpawnNear(sourceData.gatherResult, sourcePos, stack);
+        {
+            CardData result = PickGatherResult(sourceData);
+            if (result != null)
+                CardSpawner.Instance.SpawnNear(result, sourcePos, stack);
+        }
 
         // SourceCard Gather 처리
         source.Gather();
@@ -375,6 +387,32 @@ public class RecipeManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
             CardSpawner.Instance.SpawnNear(recipe.result, sourcePos, stack);
+    }
+
+    /// <summary>
+    /// gatherResults 목록이 있으면 가중치 랜덤 선택, 없으면 gatherResult 단일 필드 반환.
+    /// EnemyManager.PickEnemy()와 동일한 누적 가중치 알고리즘.
+    /// </summary>
+    private CardData PickGatherResult(SourceCardData data)
+    {
+        if (data.gatherResults != null && data.gatherResults.Count > 0)
+        {
+            int total = 0;
+            foreach (var e in data.gatherResults)
+                if (e.data != null) total += Mathf.Max(0, e.weight);
+            if (total <= 0) return data.gatherResult;
+
+            int r = UnityEngine.Random.Range(0, total);
+            int cumulative = 0;
+            foreach (var e in data.gatherResults)
+            {
+                if (e.data == null) continue;
+                cumulative += Mathf.Max(0, e.weight);
+                if (r < cumulative) return e.data;
+            }
+            return data.gatherResults[data.gatherResults.Count - 1].data;
+        }
+        return data.gatherResult;
     }
 
     private bool StackHasSource(CardStack stack)
