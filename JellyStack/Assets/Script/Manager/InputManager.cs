@@ -709,6 +709,12 @@ public class InputManager : MonoBehaviour
             // BattlePoint는 항상 머지 허용 (전투 참전). 그 외 스택은 적 포함 시 제외.
             if (!(s is BattlePoint) && ContainsEnemy(s)) continue;
 
+            // 비주민 카드를 주민 위에 올릴 수 없음 (주민은 항상 최상단)
+            if (s.TopCard is VillagerCard
+                && draggingStack.cards.Count > 0
+                && !(draggingStack.cards[0] is VillagerCard))
+                continue;
+
             Vector3 a = new Vector3(pos.x, 0, pos.z);
             Vector3 bOrigin = new Vector3(s.transform.position.x, 0, s.transform.position.z);
             Vector3 bTop = new Vector3(s.TopCard.transform.position.x, 0, s.TopCard.transform.position.z);
