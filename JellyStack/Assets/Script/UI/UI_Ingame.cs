@@ -1,19 +1,32 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Ingame : MonoBehaviour
 {
     public static UI_Ingame Instance { get; private set; }
 
+    [Header("시간")]
     [SerializeField] private TMP_Text timeText;
+    [SerializeField] private Slider timeSlider;
+    [Header("날짜")]
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text nextDayText;
+    [Header("날씨")]
+    [SerializeField] private Image weatherIcon;
+    [SerializeField] private Sprite emptyIcon;
+    [SerializeField] private Sprite sunnyIcon;
+    [SerializeField] private Sprite rainIcon;
+    [SerializeField] private Sprite snowIcon;
+    [SerializeField] private Sprite stormIcon;
+    [Tooltip("경고 문구가 완전히 보이는 시간(초).")]
+    [SerializeField] private float stormWarningDuration = 2f;
+    [Header("캔버스 그룹")]
     [SerializeField] private CanvasGroup dayChangeGroup;
     [SerializeField] private CanvasGroup feedTimeGroup;
     [SerializeField] private CanvasGroup stormWarningGroup;
-    [Tooltip("경고 문구가 완전히 보이는 시간(초).")]
-    [SerializeField] private float stormWarningDuration = 2f;
+
 
     private void Awake()
     {
@@ -44,7 +57,10 @@ public class UI_Ingame : MonoBehaviour
         }
 
         if (WeatherManager.Instance != null)
+        {
             WeatherManager.Instance.OnWeatherDetermined += HandleWeatherDetermined;
+            WeatherManager.Instance.OnWeatherCleared += HandleWeatherCleared;
+        }
     }
 
     public void ShowFeedOverlay()
@@ -66,14 +82,19 @@ public class UI_Ingame : MonoBehaviour
         if (DayManager.Instance != null)
             DayManager.Instance.OnDayChanged -= HandleDayChanged;
         if (WeatherManager.Instance != null)
+        {
             WeatherManager.Instance.OnWeatherDetermined -= HandleWeatherDetermined;
+            WeatherManager.Instance.OnWeatherCleared -= HandleWeatherCleared;
+        }
     }
 
     private void Update()
     {
         int minutes = (int)(DayManager.Instance.ElapsedTime / 60f);
         int seconds = (int)(DayManager.Instance.ElapsedTime % 60f);
+        float dayDuration = DayManager.Instance.DayProgress;
         timeText.text = $"{minutes:D2}:{seconds:D2}";
+        timeSlider.value = dayDuration;
     }
 
     private void HandleDayChanged(int newDay)
@@ -87,8 +108,27 @@ public class UI_Ingame : MonoBehaviour
 
     private void HandleWeatherDetermined(WeatherType weather)
     {
+        SetWeatherIcon(weather);
         if (weather == WeatherType.Storm)
             StartCoroutine(StormWarningEffect());
+    }
+
+    private void HandleWeatherCleared()
+    {
+        if (weatherIcon != null) weatherIcon.sprite = emptyIcon;
+    }
+
+    private void SetWeatherIcon(WeatherType weather)
+    {
+        if (weatherIcon == null) return;
+        weatherIcon.sprite = weather switch
+        {
+            WeatherType.Sunny => sunnyIcon,
+            WeatherType.Rain  => rainIcon,
+            WeatherType.Snow  => snowIcon,
+            WeatherType.Storm => stormIcon,
+            _                 => emptyIcon,
+        };
     }
 
     private IEnumerator StormWarningEffect()

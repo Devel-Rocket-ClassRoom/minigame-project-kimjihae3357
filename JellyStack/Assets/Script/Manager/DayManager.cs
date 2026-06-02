@@ -9,6 +9,8 @@ public class DayManager : MonoBehaviour
     public int CurrentDay { get; private set; } = 1;
     public float ElapsedTime { get; private set; } = 0f;
 
+    public float DayProgress => ElapsedTime / dayDuration;
+
     public System.Action<int> OnDayChanged;
     public System.Action<System.Action> OnBeforeDayChanged;
 

@@ -79,6 +79,8 @@ public class WeatherManager : MonoBehaviour
 
     /// <summary>룰렛이 멈춰 결과가 확정된 시점에 호출 (UI는 아직 화면에 떠 있을 수 있음).</summary>
     public event Action<WeatherType> OnWeatherDetermined;
+    /// <summary>날씨 지속 기간이 끝나 날씨가 해제될 때 호출.</summary>
+    public event Action OnWeatherCleared;
 
     private void Awake()
     {
@@ -210,6 +212,7 @@ public class WeatherManager : MonoBehaviour
         if (stormEffect != null) stormEffect.SetActive(false);
         UnfreezeAllCards();
         StopAllShakes();
+        OnWeatherCleared?.Invoke();
     }
 
     private void HandleDayChanged(int newDay)
