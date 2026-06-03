@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCardData
   cardType: 1
   cardPrefab: {fileID: 8481278547604517009, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  cardName: "\uC77C\uBC18\uC8FC\uBBFC"
+  cardName: "\uC815\uB839"
   Image: {fileID: 21300000, guid: 3efca5ee8881e444f876faa88d60bc3a, type: 3}
   sellPrice: 1
   CanSell: 1
@@ -25,3 +25,5 @@ MonoBehaviour:
   workSpeed: 1
   attackInterval: 2
   isBaby: 0
+  adultData: {fileID: 0}
+  daysToGrow: 3

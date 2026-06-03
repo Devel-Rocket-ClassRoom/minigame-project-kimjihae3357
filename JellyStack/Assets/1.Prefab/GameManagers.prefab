@@ -261,6 +261,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
   dayDuration: 60
+--- !u!1 &5405183468456684780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2056768731656796997}
+  - component: {fileID: 8094622537633003877}
+  m_Layer: 0
+  m_Name: SettlementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2056768731656796997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5405183468456684780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4189152433874841181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8094622537633003877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5405183468456684780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2386dfd48271d454e9d208314711cab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettlementManager
+  maxCardAmount: 20
 --- !u!1 &5517583997709376537
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,9 +353,9 @@ MonoBehaviour:
   starterPackPrefab: {fileID: 8481278547604517009, guid: b69320ddfeee884429918cea4efe8eab, type: 3}
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   uiManager: {fileID: 0}
-  weatherInterval: 7
+  weatherInterval: 2
   waveSchedules:
-  - interval: 2
+  - interval: 3
     spawner: {fileID: 11400000, guid: bbdddb00b05e9fb489184d917eb30255, type: 2}
 --- !u!1 &6238206434154902690
 GameObject:
@@ -350,6 +395,7 @@ Transform:
   - {fileID: 1833536880262342629}
   - {fileID: 4165181143307944677}
   - {fileID: 8471429079692534479}
+  - {fileID: 2056768731656796997}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6516646530028741138

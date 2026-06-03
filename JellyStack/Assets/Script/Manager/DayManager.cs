@@ -14,6 +14,10 @@ public class DayManager : MonoBehaviour
     public System.Action<int> OnDayChanged;
     public System.Action<System.Action> OnBeforeDayChanged;
 
+    // FeedPhase 이후, ContinueDayChange 이전에 정산(카드 한도 체크 등)을 끼워넣을 훅.
+    // 구독자가 받은 콜백을 호출해야 다음 단계(ContinueDayChange)로 진행한다.
+    public System.Action<System.Action> OnBeforeSettlement;
+
     private bool _pendingDayChange;
 
     private void Awake() => Instance = this;
@@ -29,10 +33,18 @@ public class DayManager : MonoBehaviour
             ElapsedTime -= dayDuration;
             _pendingDayChange = true;
 
+            // 콜백 체인: FeedPhase 종료 → SettlementPhase → ContinueDayChange
+            System.Action afterSettlement = ContinueDayChange;
+            System.Action afterFeed = () =>
+            {
+                if (OnBeforeSettlement != null) OnBeforeSettlement.Invoke(afterSettlement);
+                else afterSettlement();
+            };
+
             if (OnBeforeDayChanged != null)
-                OnBeforeDayChanged.Invoke(ContinueDayChange);
+                OnBeforeDayChanged.Invoke(afterFeed);
             else
-                ContinueDayChange();
+                afterFeed();
         }
     }
 
