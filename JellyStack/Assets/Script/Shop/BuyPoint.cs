@@ -14,6 +14,9 @@ public class BuyPoint : MonoBehaviour
     [Tooltip("BuyPoint에서 판매되는 카드팩 프리팹 (PackCard 컴포넌트가 붙어 있어야 함)")]
     [SerializeField] private GameObject packPrefab;
 
+    [Tooltip("스폰될 팩에 주입할 CardPackData. 공유 프리팹 사용 시 여기서 팩 종류를 지정.")]
+    [SerializeField] private CardPackData packData;
+
     [Tooltip("팩을 감쌀 CardStack 프리팹 (GameManager의 cardStackPrefab과 동일)")]
     [SerializeField] private GameObject cardStackPrefab;
 
@@ -22,7 +25,8 @@ public class BuyPoint : MonoBehaviour
     [SerializeField] private CardData coinData;
 
     [Tooltip("팩 1개 구매에 필요한 코인 수")]
-    [Min(0)][SerializeField] private int price = 5;
+    [Min(0)][SerializeField] private int price = 3;
+    public int Price => price;
 
     [Header("드롭 영역")]
     [Tooltip("이 콜라이더 위에 카드 스택이 떨어지면 구매 시도. 비워두면 GetComponent로 자동 채워짐.")]
@@ -105,6 +109,17 @@ public class BuyPoint : MonoBehaviour
         {
             Debug.LogError("BuyPoint: packPrefab에 PackCard 컴포넌트가 없습니다.");
             return;
+        }
+
+        // packData가 설정돼 있으면 Start() 전에 동적 주입
+        if (packData != null)
+        {
+            packCard.SetPackData(packData);
+
+            // CardPackUI에도 동일하게 데이터 전달
+            var cardPackUI = packGo.GetComponent<CardPackUI>();
+            if (cardPackUI != null)
+                cardPackUI.SetData(packData, this);
         }
 
         // CardStack으로 감싸기 (없으면 그냥 두면 Card.Update가 (0,0,0)으로 끌고 감)

@@ -19,7 +19,8 @@ MonoBehaviour:
   sellPrice: 1
   CanSell: 1
   GatherCount: 3
-  gatherResult: {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   gatherResultCount: 1
   gatherDuration: 5
-  gatherResults: []
+  gatherResults:
+  - data: {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+    weight: 1

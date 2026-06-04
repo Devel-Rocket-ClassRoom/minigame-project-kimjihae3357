@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
+  m_Name: DarkPortalRecipe
+  m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
+  ingredients:
+  - {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
+  - {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
+  - {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
+  - {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
+  - {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
+  - {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
+  - {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
+  - {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
+  - {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
+  - {fileID: 11400000, guid: 95448dd73e8c93240a226e04c933d203, type: 2}
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  result: {fileID: 11400000, guid: 5f378fb86a7ef864ebdbbf8a17859d14, type: 2}
+  resultCount: 1
+  duration: 60
+  consumeIngredients: 1
+  preserveIngredients:
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  iconPrefab: {fileID: 0}
+  effectPrefab: {fileID: 0}

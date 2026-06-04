@@ -34,14 +34,14 @@ public class ProgressTask : MonoBehaviour
         }
 
         // 진행 이펙트 스폰 (스택 자식으로 부모 설정 → 카드 이동을 따라감)
-        if (recipe != null && recipe.progressEffectPrefab != null && stack != null)
+        if (recipe != null && recipe.effectPrefab != null && stack != null)
         {
             Vector3 spawnPos = stack.TopCard != null
                 ? stack.TopCard.transform.position
                 : stack.transform.position;
 
             _activeEffect = Instantiate(
-                recipe.progressEffectPrefab,
+                recipe.effectPrefab,
                 spawnPos,
                 Quaternion.identity,
                 stack.transform

@@ -78,7 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12047e0fa82b014d831a0b3cb9bc271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuyPoint
-  packPrefab: {fileID: 8481278547604517009, guid: 3b0879ae7370b0040aa55e387f31e4a2, type: 3}
+  packPrefab: {fileID: 8481278547604517009, guid: 25e8177c5cfe23340a3513dc500a26cd, type: 3}
+  packData: {fileID: 11400000, guid: cb24cc301a136be429196b7b045e80ed, type: 2}
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   coinData: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
   price: 3
@@ -469,7 +470,7 @@ GameObject:
   - component: {fileID: 910648593191011597}
   - component: {fileID: 6593402725277714183}
   m_Layer: 0
-  m_Name: AdventurePack
+  m_Name: RandomPack_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -537,8 +538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba837d3a56473034d85109ec35475742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardPackUI
-  spriteIcon: {fileID: 7797645657157942313}
+  spriteIcon: {fileID: 3991821566446852355}
   nameText: {fileID: 7216704520636137763}
+  priceText: {fileID: 9211547725332603343}
   cardPack: {fileID: 11400000, guid: cb24cc301a136be429196b7b045e80ed, type: 2}
 --- !u!1 &8340682364951468403
 GameObject:
@@ -736,3 +738,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6162901345711527081, guid: 78b90db825d1fc047a1cc28b382317c6, type: 3}
   m_PrefabInstance: {fileID: 3749249470221124171}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9211547725332603343 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5466806304823305092, guid: 78b90db825d1fc047a1cc28b382317c6, type: 3}
+  m_PrefabInstance: {fileID: 3749249470221124171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro

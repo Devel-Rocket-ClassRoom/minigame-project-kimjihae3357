@@ -17,7 +17,7 @@ MonoBehaviour:
   cardName: "\uC6D0\uC18C \uB369\uC5B4\uB9AC"
   Image: {fileID: 21300000, guid: 2ded39fcb0ac5714b8ccdf774a12c626, type: 3}
   sellPrice: 1
-  CanSell: 1
+  CanSell: 0
   villagerType: 0
   maxHealth: 1
   maxHunger: 1

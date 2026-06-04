@@ -10,14 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: TreasureRecipe
+  m_Name: StorageRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
-  - {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
-  result: {fileID: 11400000, guid: 5b5b83c4a850b654bab9fa3e257d2d9c, type: 2}
+  - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+  - {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  result: {fileID: 11400000, guid: 19b610dd0af0ead459f1161ea97519ee, type: 2}
   resultCount: 1
-  duration: 10
+  duration: 60
   consumeIngredients: 1
+  preserveIngredients:
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
   iconPrefab: {fileID: 0}
-  progressEffectPrefab: {fileID: 4624916414435645778, guid: bcf172fbe1135764eabaa39ee6b947e8, type: 3}
+  effectPrefab: {fileID: 0}

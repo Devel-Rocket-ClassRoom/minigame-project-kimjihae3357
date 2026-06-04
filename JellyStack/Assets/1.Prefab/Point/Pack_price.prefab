@@ -254,7 +254,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 1.2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8062215016658585564
 MeshRenderer:
@@ -281,7 +281,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1570773559560105147, guid: 3a3c94f4173f2df44b2fc91ef0704e02, type: 2}
+  - {fileID: 2100000, guid: 07fc52596eda83144852ffdc774ede1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_text: 00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a3c94f4173f2df44b2fc91ef0704e02, type: 2}
-  m_sharedMaterial: {fileID: -1570773559560105147, guid: 3a3c94f4173f2df44b2fc91ef0704e02, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 07fc52596eda83144852ffdc774ede1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

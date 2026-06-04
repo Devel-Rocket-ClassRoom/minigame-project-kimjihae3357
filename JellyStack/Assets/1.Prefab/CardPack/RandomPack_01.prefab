@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 86907976436508200}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2396233755996746236}
   - component: {fileID: 7428077699344513898}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 2753784247545767071}
   - component: {fileID: 8879199773139193096}
   - component: {fileID: 5934524711116554432}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Text_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 3707485651136545632}
   - component: {fileID: 578560275105535729}
   - component: {fileID: 3434512564670382638}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Sprite_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,8 +334,8 @@ Transform:
   m_GameObject: {fileID: 8457770044065137186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: -0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalPosition: {x: 0, y: -0.43, z: -0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2396233755996746236}
@@ -385,11 +385,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 570098223
-  m_SortingLayer: 1
+  m_SortingLayerID: -1769161761
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 928bb1b08a07fc443899bdf0d9ff803e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72423f61c4728154c98fa76aabdf0cb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 7483108112530119735}
   - component: {fileID: 1851869085641104426}
   m_Layer: 7
-  m_Name: AdventurePack
+  m_Name: RandomPack_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   shadowBaseScale: 1
   shadowMinScale: 0.5
   shadowHeightRange: 1.5
-  packData: {fileID: 11400000, guid: cb24cc301a136be429196b7b045e80ed, type: 2}
+  packData: {fileID: 0}
   spawnEffectPrefab: {fileID: 8634025193278680523, guid: ac6336dc82a80534aaf49ae841ea729c, type: 3}
 --- !u!114 &1851869085641104426
 MonoBehaviour:
@@ -514,9 +514,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba837d3a56473034d85109ec35475742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardPackUI
-  spriteIcon: {fileID: 4851697798442716913}
+  spriteIcon: {fileID: 578560275105535729}
   nameText: {fileID: 5934524711116554432}
-  cardPack: {fileID: 11400000, guid: cb24cc301a136be429196b7b045e80ed, type: 2}
+  priceText: {fileID: 0}
+  cardPack: {fileID: 0}
 --- !u!1 &8718462980046807130
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8508511505199461102}
   - component: {fileID: 4851697798442716913}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Image_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}

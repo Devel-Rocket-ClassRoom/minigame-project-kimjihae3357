@@ -8,7 +8,7 @@ public class SourceCardUI : MonoBehaviour
     [SerializeField] private TMP_Text countText;
 
     private SourceCard source;
-
+   
     private void Awake()
     {
         source = GetComponent<SourceCard>();

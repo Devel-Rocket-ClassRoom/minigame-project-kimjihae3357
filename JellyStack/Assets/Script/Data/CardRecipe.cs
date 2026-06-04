@@ -11,7 +11,7 @@ public class CardRecipe : ScriptableObject
     public CardData result;
     public int resultCount = 1;
 
-    [Header("작업")]
+    [Header("작업 시간")]
     public float duration = 3;
     [Header("카드 소비됨")]
     public bool consumeIngredients = true;
@@ -23,6 +23,6 @@ public class CardRecipe : ScriptableObject
     [Header("표시 아이콘")]
     public GameObject iconPrefab;
 
-    [Header("진행 이펙트")]
-    public GameObject progressEffectPrefab;   // 진행 중 카드 위에 표시할 이펙트 (선택)
+    [Header("레시피 이펙트")]
+    public GameObject effectPrefab;   // 진행 중 카드 위에 표시할 이펙트 (선택)
 }
