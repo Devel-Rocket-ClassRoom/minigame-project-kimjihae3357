@@ -5,7 +5,6 @@ using TMPro;
 public class UI_Recipe : MonoBehaviour
 {
     [SerializeField] private Button button;
-    [SerializeField] private TMP_Text buttonText;
     [SerializeField] private GameObject panel;
 
     private void Start()
@@ -18,7 +17,6 @@ public class UI_Recipe : MonoBehaviour
     {
         bool isOpen = !panel.activeSelf;
         panel.SetActive(isOpen);
-        buttonText.text = isOpen ? "<-" : "->";
     }
 
 
