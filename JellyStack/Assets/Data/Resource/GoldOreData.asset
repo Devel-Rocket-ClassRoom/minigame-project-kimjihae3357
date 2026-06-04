@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50198e5bfcb7b0b499f8ffba46f317fb, type: 3}
   m_Name: GoldOreData
   m_EditorClassIdentifier: Assembly-CSharp::ResourceCardData
-  cardType: 0
-  cardPrefab: {fileID: 0}
+  cardType: 3
+  cardPrefab: {fileID: 8481278547604517009, guid: a4841e1ef65102d40b5d17c1b9126e43, type: 3}
   cardName: "\uAE08\uAD11\uC11D"
-  Image: {fileID: 0}
-  sellPrice: 1
+  Image: {fileID: 21300000, guid: eaf22679d21cfcd419407ccf166988ee, type: 3}
+  sellPrice: 2
   CanSell: 1
