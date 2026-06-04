@@ -23,5 +23,12 @@ public class SourceCard : Card
         OnStatChanged?.Invoke();
     }
 
+    /// <summary>세이브 복원용 — 저장된 채집 횟수로 덮어쓰기.</summary>
+    public void LoadState(int count)
+    {
+        CurrentCount = count;
+        OnStatChanged?.Invoke();
+    }
+
     public bool IsExhausted => CurrentCount <= 0;
 }

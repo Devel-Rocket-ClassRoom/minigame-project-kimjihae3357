@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 7483108112530119735}
   - component: {fileID: 1851869085641104426}
   m_Layer: 7
-  m_Name: StarterCardPack
+  m_Name: StarterPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

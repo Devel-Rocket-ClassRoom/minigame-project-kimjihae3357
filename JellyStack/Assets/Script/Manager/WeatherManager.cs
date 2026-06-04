@@ -77,6 +77,9 @@ public class WeatherManager : MonoBehaviour
 
     private int _daysRemaining;
 
+    /// <summary>세이브 저장용 — 현재 날씨 남은 일수.</summary>
+    public int WeatherDaysRemaining => _daysRemaining;
+
     /// <summary>룰렛이 멈춰 결과가 확정된 시점에 호출 (UI는 아직 화면에 떠 있을 수 있음).</summary>
     public event Action<WeatherType> OnWeatherDetermined;
     /// <summary>날씨 지속 기간이 끝나 날씨가 해제될 때 호출.</summary>
@@ -196,6 +199,48 @@ public class WeatherManager : MonoBehaviour
             case WeatherType.Storm:
                 if (stormEffect != null) stormEffect.SetActive(true);
                 SelectAndShakeCards();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 세이브 복원용 — 룰렛 없이 날씨 상태를 직접 설정.
+    /// 배율·이펙트 GameObject는 적용하되, 눈/태풍의 무작위 카드 선택(얼리기/흔들기)은
+    /// 재현하지 않음 (얼린/흔든 카드 상태는 저장 대상이 아님).
+    /// </summary>
+    public void LoadWeather(WeatherType weather, int daysRemaining)
+    {
+        if (daysRemaining <= 0)
+        {
+            ClearWeather();
+            return;
+        }
+
+        CurrentWeather = weather;
+        _daysRemaining = daysRemaining;
+
+        GatherSpeedMultiplier = 1f;
+        GatherDoubleChance = 0f;
+        if (sunnyEffect != null) sunnyEffect.SetActive(false);
+        if (rainEffect != null) rainEffect.SetActive(false);
+        if (snowEffect != null) snowEffect.SetActive(false);
+        if (stormEffect != null) stormEffect.SetActive(false);
+
+        switch (weather)
+        {
+            case WeatherType.Sunny:
+                if (sunnyEffect != null) sunnyEffect.SetActive(true);
+                GatherDoubleChance = sunnyDoubleChance;
+                break;
+            case WeatherType.Rain:
+                if (rainEffect != null) rainEffect.SetActive(true);
+                GatherSpeedMultiplier = rainSpeedMultiplier;
+                break;
+            case WeatherType.Snow:
+                if (snowEffect != null) snowEffect.SetActive(true);
+                break;
+            case WeatherType.Storm:
+                if (stormEffect != null) stormEffect.SetActive(true);
                 break;
         }
     }

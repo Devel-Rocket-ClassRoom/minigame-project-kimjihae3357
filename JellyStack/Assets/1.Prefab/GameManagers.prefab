@@ -396,6 +396,7 @@ Transform:
   - {fileID: 4165181143307944677}
   - {fileID: 8471429079692534479}
   - {fileID: 2056768731656796997}
+  - {fileID: 4085439803560555098}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6516646530028741138
@@ -449,6 +450,51 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c54f8d98f85ceed459739930a4c4e059, type: 2}
   healRecipe: {fileID: 11400000, guid: ed086f50b44bb9a41b8672fbd7be2375, type: 2}
   gatherRecipe: {fileID: 11400000, guid: 0d26db7f2297e714f89f92f8a97367af, type: 2}
+--- !u!1 &7946867287396609875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4085439803560555098}
+  - component: {fileID: 4295111178051302411}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4085439803560555098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7946867287396609875}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4189152433874841181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4295111178051302411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7946867287396609875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e550afdd8563b8e4395c72d3abc9f327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
+  database: {fileID: 0}
 --- !u!1 &8528474873972301618
 GameObject:
   m_ObjectHideFlags: 0

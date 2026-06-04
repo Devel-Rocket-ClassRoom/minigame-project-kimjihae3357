@@ -38,7 +38,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnStarterPack();
+        // 세이브 로드로 진입한 경우 스타터팩을 스폰하지 않음 (SaveManager가 복원).
+        if (!SaveSystem.LoadRequested)
+            SpawnStarterPack();
+
         if (DayManager.Instance != null)
             DayManager.Instance.OnDayChanged += HandleDayChanged;
     }

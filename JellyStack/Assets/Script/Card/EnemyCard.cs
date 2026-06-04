@@ -44,6 +44,13 @@ public class EnemyCard : Card
         CurrentHealth = EnemyData.maxHealth;
     }
 
+    /// <summary>세이브 복원용 — 저장된 체력으로 덮어쓰기.</summary>
+    public void LoadState(int health)
+    {
+        CurrentHealth = health;
+        NotifyStatChanged();
+    }
+
     public void TakeDamage(int amount)
     {
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
