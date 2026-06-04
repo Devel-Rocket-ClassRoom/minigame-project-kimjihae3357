@@ -9,6 +9,12 @@ public class PackCard : Card
 
     private List<CardData> remainingCards;
 
+    /// <summary>BuyPoint에서 스폰 직후 packData를 동적으로 주입. Start() 전에 호출해야 함.</summary>
+    public void SetPackData(CardPackData data)
+    {
+        packData = data;
+    }
+
     private void Start()
     {
         remainingCards = packData != null ? packData.BuildInitialList() : new List<CardData>();

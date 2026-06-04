@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VillagerCardData
   cardType: 1
   cardPrefab: {fileID: 8481278547604517009, guid: 97f65bda5819a144e9d5d053a5b4ccc7, type: 3}
-  cardName: "\uB3CC\uC758\uC8FC\uBBFC"
+  cardName: "\uB3CC\uC758 \uC815\uB839"
   Image: {fileID: 21300000, guid: 5a8a8accb1616c24fbf0417128429df5, type: 3}
   sellPrice: 3
-  CanSell: 1
+  CanSell: 0
   villagerType: 3
   maxHealth: 10
   maxHunger: 2
@@ -25,3 +25,5 @@ MonoBehaviour:
   workSpeed: 1
   attackInterval: 2
   isBaby: 0
+  adultData: {fileID: 0}
+  daysToGrow: 3

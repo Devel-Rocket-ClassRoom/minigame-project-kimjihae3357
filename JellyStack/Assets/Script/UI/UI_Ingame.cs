@@ -26,6 +26,12 @@ public class UI_Ingame : MonoBehaviour
     [SerializeField] private CanvasGroup dayChangeGroup;
     [SerializeField] private CanvasGroup feedTimeGroup;
     [SerializeField] private CanvasGroup stormWarningGroup;
+    [SerializeField] private CanvasGroup settlementGroup;
+
+    [Header("카드 제한")]
+    [SerializeField] private TMP_Text maxCardAmountText;
+    [SerializeField] private Color cardLimitExceedColor = Color.red;
+    private Color _cardLimitDefaultColor;
 
 
     private void Awake()
@@ -37,6 +43,10 @@ public class UI_Ingame : MonoBehaviour
     {
         DayManager.Instance.OnDayChanged += HandleDayChanged;
         dayText.text = $"{DayManager.Instance.CurrentDay}";
+
+        // 카드 한도 텍스트의 인스펙터 원본 색을 캐시. 초과 상태에서 풀릴 때 이 색으로 복원.
+        if (maxCardAmountText != null)
+            _cardLimitDefaultColor = maxCardAmountText.color;
 
         if (dayChangeGroup != null)
         {
@@ -54,6 +64,12 @@ public class UI_Ingame : MonoBehaviour
         {
             stormWarningGroup.alpha = 0f;
             stormWarningGroup.gameObject.SetActive(false);
+        }
+
+        if (settlementGroup != null)
+        {
+            settlementGroup.alpha = 0f;
+            settlementGroup.gameObject.SetActive(false);
         }
 
         if (WeatherManager.Instance != null)
@@ -77,6 +93,23 @@ public class UI_Ingame : MonoBehaviour
         feedTimeGroup.gameObject.SetActive(false);
     }
 
+    public void ShowSettlementOverlay()
+    {
+        if (settlementGroup == null) return;
+        settlementGroup.gameObject.SetActive(true);
+        settlementGroup.alpha = 1f;
+        // 카드 드래그를 가리지 않도록 raycast는 막지 않음.
+        settlementGroup.interactable = true;
+        settlementGroup.blocksRaycasts = false;
+    }
+
+    public void HideSettlementOverlay()
+    {
+        if (settlementGroup == null) return;
+        settlementGroup.alpha = 0f;
+        settlementGroup.gameObject.SetActive(false);
+    }
+
     private void OnDestroy()
     {
         if (DayManager.Instance != null)
@@ -95,6 +128,15 @@ public class UI_Ingame : MonoBehaviour
         float dayDuration = DayManager.Instance.DayProgress;
         timeText.text = $"{minutes:D2}:{seconds:D2}";
         timeSlider.value = dayDuration;
+
+        // 카드 한도 표시: 현재카드/최대카드. 초과 시 빨간색.
+        if (maxCardAmountText != null && SettlementManager.Instance != null)
+        {
+            var sm = SettlementManager.Instance;
+            maxCardAmountText.text = $"{sm.CurrentCardCount}/{sm.MaxCardAmount}";
+            maxCardAmountText.color = sm.CurrentCardCount > sm.MaxCardAmount
+                ? cardLimitExceedColor : _cardLimitDefaultColor;
+        }
     }
 
     private void HandleDayChanged(int newDay)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VillagerPack
   m_EditorClassIdentifier: Assembly-CSharp::RandomCardPack
   cardName: "\uC8FC\uBBFC\uD329"
-  Image: {fileID: 0}
+  Image: {fileID: 21300000, guid: 72423f61c4728154c98fa76aabdf0cb1, type: 3}
   cardEntries:
   - data: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
     weight: 5

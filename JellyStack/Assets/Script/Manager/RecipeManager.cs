@@ -145,7 +145,7 @@ public class RecipeManager : MonoBehaviour
         if (!hasVillager || source == null) return false;
 
         var sourceData = source.data as SourceCardData;
-        if (sourceData == null || sourceData.gatherResult == null) return false;
+        if (sourceData == null || !HasGatherResults(sourceData)) return false;
 
         float duration = sourceData.gatherDuration > 0f
             ? sourceData.gatherDuration
@@ -182,9 +182,8 @@ public class RecipeManager : MonoBehaviour
             return;
         }
 
-        // gatherResults(랜덤 목록)와 gatherResult(단일 고정) 둘 다 없으면 스킵
-        bool hasRandomTable = sourceData.gatherResults != null && sourceData.gatherResults.Count > 0;
-        if (!hasRandomTable && sourceData.gatherResult == null)
+        // 랜덤 채집 결과 목록이 없으면 스킵
+        if (!HasGatherResults(sourceData))
         {
             if (!stack.IsEmpty) CheckStack(stack);
             return;
@@ -390,29 +389,49 @@ public class RecipeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// gatherResults 목록이 있으면 가중치 랜덤 선택, 없으면 gatherResult 단일 필드 반환.
+    /// gatherResults 목록에서 가중치 기반으로 하나를 선택.
     /// EnemyManager.PickEnemy()와 동일한 누적 가중치 알고리즘.
     /// </summary>
     private CardData PickGatherResult(SourceCardData data)
     {
-        if (data.gatherResults != null && data.gatherResults.Count > 0)
-        {
-            int total = 0;
-            foreach (var e in data.gatherResults)
-                if (e.data != null) total += Mathf.Max(0, e.weight);
-            if (total <= 0) return data.gatherResult;
+        if (data == null || data.gatherResults == null || data.gatherResults.Count == 0)
+            return null;
 
-            int r = UnityEngine.Random.Range(0, total);
-            int cumulative = 0;
-            foreach (var e in data.gatherResults)
-            {
-                if (e.data == null) continue;
-                cumulative += Mathf.Max(0, e.weight);
-                if (r < cumulative) return e.data;
-            }
-            return data.gatherResults[data.gatherResults.Count - 1].data;
+        int total = 0;
+        foreach (var e in data.gatherResults)
+            if (e.data != null) total += Mathf.Max(0, e.weight);
+
+        if (total <= 0)
+            return null;
+
+        int r = UnityEngine.Random.Range(0, total);
+        int cumulative = 0;
+        CardData lastValidResult = null;
+
+        foreach (var e in data.gatherResults)
+        {
+            if (e.data == null) continue;
+
+            lastValidResult = e.data;
+            cumulative += Mathf.Max(0, e.weight);
+            if (r < cumulative) return e.data;
         }
-        return data.gatherResult;
+
+        return lastValidResult;
+    }
+
+    private bool HasGatherResults(SourceCardData data)
+    {
+        if (data == null || data.gatherResults == null)
+            return false;
+
+        foreach (var e in data.gatherResults)
+        {
+            if (e.data != null && e.weight > 0)
+                return true;
+        }
+
+        return false;
     }
 
     private bool StackHasSource(CardStack stack)
