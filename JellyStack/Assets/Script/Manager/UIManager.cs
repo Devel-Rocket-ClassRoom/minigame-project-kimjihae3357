@@ -46,9 +46,16 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    public void SaveGame()
+    {
+        if (SaveManager.Instance != null)
+            SaveManager.Instance.Save();
+    }
+
     public void RestartGame()
     {
         Time.timeScale = 1f;
+        SaveSystem.LoadRequested = false;   // 재시작은 새 게임 취급
 
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().name

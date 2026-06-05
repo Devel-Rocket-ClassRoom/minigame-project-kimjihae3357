@@ -79,6 +79,13 @@ public class UI_Ingame : MonoBehaviour
         }
     }
 
+    /// <summary>세이브 복원 후 날짜 텍스트만 갱신 (오버레이/이벤트 없이).</summary>
+    public void RefreshDayText()
+    {
+        if (dayText != null && DayManager.Instance != null)
+            dayText.text = $"{DayManager.Instance.CurrentDay}";
+    }
+
     public void ShowFeedOverlay()
     {
         if (feedTimeGroup == null) return;

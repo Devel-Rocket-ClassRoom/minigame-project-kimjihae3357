@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82f60ea91e4f8b478fc15a62b00a630, type: 3}
   m_Name: DarkPortal
   m_EditorClassIdentifier: Assembly-CSharp::BuildingCardData
-  cardType: 0
-  cardPrefab: {fileID: 0}
+  cardType: 4
+  cardPrefab: {fileID: 8481278547604517009, guid: f4b0432d3a59d7f43998e79e6ba49abd, type: 3}
   cardName: "\uC5B4\uB460\uC758 \uD3EC\uD0C8"
-  Image: {fileID: 0}
-  sellPrice: 1
+  Image: {fileID: 21300000, guid: 7d3e8484e031f9a40a1add14f5c67b87, type: 3}
+  sellPrice: 10
   CanSell: 1

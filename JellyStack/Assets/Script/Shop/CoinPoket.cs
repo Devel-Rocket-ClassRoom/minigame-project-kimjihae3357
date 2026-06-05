@@ -26,6 +26,16 @@ public class CoinPoket : MonoBehaviour
 
     private int coinAmount = 0;
 
+    /// <summary>세이브 저장용 — 현재 보관 코인 수.</summary>
+    public int CoinAmount => coinAmount;
+
+    /// <summary>세이브 복원용 — 저장된 코인 수로 설정.</summary>
+    public void LoadCoinAmount(int amount)
+    {
+        coinAmount = Mathf.Max(0, amount);
+        UpdateText();
+    }
+
     private void Start()
     {
         UpdateText(); // 초기 표시 "0"

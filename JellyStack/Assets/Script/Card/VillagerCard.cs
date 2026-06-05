@@ -11,10 +11,20 @@ public class VillagerCard : Card
     public int MaxHealth => VillagerData != null ? VillagerData.maxHealth : 0;
 
     private int birthDay = -1;
+    public int BirthDay => birthDay;
 
     private void Awake()
     {
         InitializeFromData();
+    }
+
+    /// <summary>세이브 복원용 — InitializeFromData() 이후 저장값으로 덮어쓰기.</summary>
+    public void LoadState(int health, int hunger, int savedBirthDay)
+    {
+        CurrentHealth = health;
+        Currenthunger = hunger;
+        birthDay = savedBirthDay;
+        NotifyStatChanged();
     }
 
     private void Start()

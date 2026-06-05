@@ -19,9 +19,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  preserveIngredients:
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
   result: {fileID: 11400000, guid: 01152f8b2299d1f40a225d961049fa08, type: 2}
   resultCount: 1
   duration: 30
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
-  progressEffectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 0}

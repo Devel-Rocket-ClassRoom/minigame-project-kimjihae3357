@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CardPackUI : MonoBehaviour
@@ -11,6 +10,11 @@ public class CardPackUI : MonoBehaviour
     [SerializeField] private CardPackData cardPack;
 
     private BuyPoint point;
+
+    private void Awake()
+    {
+        FindBuyPoint();
+    }
 
     private void Start()
     {
@@ -27,10 +31,24 @@ public class CardPackUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (cardPack == null) return;
+        FindBuyPoint();
+
+        if (cardPack == null)
+        {
+            // 데이터 없을 때 placeholder 텍스트가 월드에 표시되지 않도록 숨김
+            if (nameText != null)  nameText.text  = "";
+            if (priceText != null) priceText.text = "";
+            return;
+        }
 
         if (spriteIcon != null) spriteIcon.sprite = cardPack.Image;
         if (nameText != null)   nameText.text     = cardPack.cardName;
         if (priceText != null && point != null) priceText.text = point.Price.ToString();
+    }
+
+    private void FindBuyPoint()
+    {
+        if (point == null)
+            point = GetComponentInParent<BuyPoint>();
     }
 }

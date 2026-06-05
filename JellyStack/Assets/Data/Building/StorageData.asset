@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StorageData
   m_EditorClassIdentifier: Assembly-CSharp::BuildingCardData
   cardType: 4
-  cardPrefab: {fileID: 0}
+  cardPrefab: {fileID: 8481278547604517009, guid: f4b0432d3a59d7f43998e79e6ba49abd, type: 3}
   cardName: "\uCC3D\uACE0"
-  Image: {fileID: 0}
-  sellPrice: 3
+  Image: {fileID: 21300000, guid: 787551c7f67e0a647b17b582d3248bb9, type: 3}
+  sellPrice: 5
   CanSell: 1

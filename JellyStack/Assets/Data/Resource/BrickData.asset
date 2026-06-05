@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50198e5bfcb7b0b499f8ffba46f317fb, type: 3}
   m_Name: BrickData
   m_EditorClassIdentifier: Assembly-CSharp::ResourceCardData
-  cardType: 0
+  cardType: 3
   cardPrefab: {fileID: 0}
   cardName: "\uBCBD\uB3CC"
-  Image: {fileID: 0}
+  Image: {fileID: 21300000, guid: 403cfea1868fe5a45ade7188b52c99c9, type: 3}
   sellPrice: 1
   CanSell: 1

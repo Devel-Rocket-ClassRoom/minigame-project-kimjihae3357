@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MineData
   m_EditorClassIdentifier: Assembly-CSharp::SourceCardData
   cardType: 0
-  cardPrefab: {fileID: 0}
-  cardName: "\uCC44\uC11D\uC7A5"
-  Image: {fileID: 0}
-  sellPrice: 1
+  cardPrefab: {fileID: 8481278547604517009, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+  cardName: "\uAD11\uC0B0"
+  Image: {fileID: 21300000, guid: 819bbad1b7b6d324b9f1be7adb33c515, type: 3}
+  sellPrice: 5
   CanSell: 1
   GatherCount: 50
   gatherResultCount: 1

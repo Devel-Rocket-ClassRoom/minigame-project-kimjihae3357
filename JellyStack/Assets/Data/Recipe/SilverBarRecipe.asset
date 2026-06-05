@@ -15,13 +15,11 @@ MonoBehaviour:
   ingredients:
   - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
   - {fileID: 11400000, guid: 5e490e050143cf846a6ef9c89f977a4d, type: 2}
-  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  preserveIngredients:
+  - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
   result: {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
   resultCount: 1
   duration: 30
   consumeIngredients: 1
-  preserveIngredients:
-  - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
-  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
   iconPrefab: {fileID: 0}
   effectPrefab: {fileID: 0}

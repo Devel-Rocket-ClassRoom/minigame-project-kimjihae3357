@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4cfb397149a7a43906fb81fc5ccae0, type: 3}
+  m_Name: WorldTreeData
+  m_EditorClassIdentifier: Assembly-CSharp::SourceCardData
+  cardType: 2
+  cardPrefab: {fileID: 8481278547604517009, guid: 456be6442ba56f047963b72b189b910e, type: 3}
+  cardName: "\uC138\uACC4\uC218"
+  Image: {fileID: 21300000, guid: d028a8b31381ee5488c248f917ff93b7, type: 3}
+  sellPrice: 1
+  CanSell: 1
+  GatherCount: 5
+  gatherResultCount: 1
+  gatherDuration: 5
+  gatherResults:
+  - data: {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
+    weight: 1

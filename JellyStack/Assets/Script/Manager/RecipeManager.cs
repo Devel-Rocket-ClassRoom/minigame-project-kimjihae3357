@@ -6,6 +6,7 @@ using UnityEngine;
 public class RecipeManager : MonoBehaviour
 {
     public static RecipeManager Instance { get; private set; }
+    public IReadOnlyList<CardRecipe> Recipes => recipes;
 
     [Header("등록된 레시피 목록")]
     [SerializeField] private List<CardRecipe> recipes = new List<CardRecipe>();

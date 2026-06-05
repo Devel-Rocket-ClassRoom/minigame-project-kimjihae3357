@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
+  m_Name: SmelterRecipe
+  m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
+  ingredients:
+  - {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
+  - {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
+  - {fileID: 11400000, guid: a5f7c96cb8f9e8746a73b897a35b8d01, type: 2}
+  - {fileID: 11400000, guid: a5f7c96cb8f9e8746a73b897a35b8d01, type: 2}
+  - {fileID: 11400000, guid: ac3b7fff9025d4b4d9aee3fb33bb2b29, type: 2}
+  - {fileID: 11400000, guid: ac3b7fff9025d4b4d9aee3fb33bb2b29, type: 2}
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  preserveIngredients:
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  result: {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
+  resultCount: 1
+  duration: 60
+  consumeIngredients: 1
+  iconPrefab: {fileID: 0}
+  effectPrefab: {fileID: 0}

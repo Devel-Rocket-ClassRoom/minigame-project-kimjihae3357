@@ -22,6 +22,17 @@ public class DayManager : MonoBehaviour
 
     private void Awake() => Instance = this;
 
+    /// <summary>
+    /// 세이브 복원용 — 저장된 날짜/경과시간으로 설정.
+    /// OnDayChanged는 호출하지 않음 (웨이브·날씨·날짜전환 오버레이 부작용 방지).
+    /// 날짜 UI 갱신은 호출자가 별도로 처리.
+    /// </summary>
+    public void LoadDay(int day, float elapsed)
+    {
+        CurrentDay = day;
+        ElapsedTime = elapsed;
+    }
+
     private void Update()
     {
         if (_pendingDayChange) return;
