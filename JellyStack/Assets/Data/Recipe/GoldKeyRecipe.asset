@@ -16,11 +16,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
   - {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
   - {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
-  result: {fileID: 11400000, guid: 5b5b83c4a850b654bab9fa3e257d2d9c, type: 2}
+  preserveIngredients:
+  - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
+  result: {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
   resultCount: 1
   duration: 10
   consumeIngredients: 1
-  preserveIngredients:
-  - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
   iconPrefab: {fileID: 0}
   effectPrefab: {fileID: 0}

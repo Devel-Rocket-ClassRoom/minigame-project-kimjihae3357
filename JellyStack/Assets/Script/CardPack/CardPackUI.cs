@@ -27,7 +27,13 @@ public class CardPackUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (cardPack == null) return;
+        if (cardPack == null)
+        {
+            // 데이터 없을 때 placeholder 텍스트가 월드에 표시되지 않도록 숨김
+            if (nameText != null)  nameText.text  = "";
+            if (priceText != null) priceText.text = "";
+            return;
+        }
 
         if (spriteIcon != null) spriteIcon.sprite = cardPack.Image;
         if (nameText != null)   nameText.text     = cardPack.cardName;

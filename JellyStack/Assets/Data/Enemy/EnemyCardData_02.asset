@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0587b0aa7af4f4da0a7dfd3fa89588, type: 3}
+  m_Name: EnemyCardData_02
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCardData
+  cardType: 5
+  cardPrefab: {fileID: 8481278547604517009, guid: 61207d9c9200155468d844adb2235f3c, type: 3}
+  cardName: "\uC232\uC758 \uBC29\uB791\uC790"
+  Image: {fileID: 21300000, guid: e8f6140ce7b552549a6225cbaeae2382, type: 3}
+  sellPrice: 0
+  CanSell: 0
+  maxHealth: 10
+  attackPower: 1
+  jumpInterval: 3
+  attackInterval: 2.5
+  dropTable:
+  - card: {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
+    chance: 0.2
+  - card: {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
+    chance: 0.3
+  - card: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
+    chance: 0.7

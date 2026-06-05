@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02666ec1dbc544d57b3e698abab8d894, type: 3}
+  m_Name: FairySoupData
+  m_EditorClassIdentifier: Assembly-CSharp::FoodCardData
+  cardType: 6
+  cardPrefab: {fileID: 8481278547604517009, guid: ef4ebec3ca50b024c8cfcb04f6f7ebca, type: 3}
+  cardName: "\uC694\uC815\uC2A4\uD504"
+  Image: {fileID: 21300000, guid: 9d7cd3aa5b247e844b9e815a0b7ef6a7, type: 3}
+  sellPrice: 3
+  CanSell: 1
+  maxFullness: 3

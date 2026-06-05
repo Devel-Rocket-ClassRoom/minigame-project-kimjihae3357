@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 690a3c529903a564cbe0a3c4767569e0, type: 3}
-  m_Name: EnemySpawnerData
+  m_Name: EnemySpawnerData_02
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnerData
   portalPrefab: {fileID: 7628352160121096060, guid: 541426c66b6ef9447bf47f3ca2189849, type: 3}
   spawnDelay: 10
@@ -18,4 +18,6 @@ MonoBehaviour:
   spawnCount: 1
   spawnTable:
   - data: {fileID: 11400000, guid: 69714c9918a0c6b4a9d794edd4cc84c7, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 53a845caaa923d64494d6065d15b94bf, type: 2}
     weight: 1

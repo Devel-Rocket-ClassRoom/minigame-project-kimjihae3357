@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: SilverBarRecipe
+  m_Name: FairySoupRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
-  - {fileID: 11400000, guid: 5e490e050143cf846a6ef9c89f977a4d, type: 2}
+  - {fileID: 11400000, guid: b7b431415ae71e84ea6c6f9f1232e45e, type: 2}
+  - {fileID: 11400000, guid: b19f6c258f4151d40b5b4a55f7cfb2e2, type: 2}
   preserveIngredients:
-  - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
-  result: {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
+  - {fileID: 11400000, guid: b7b431415ae71e84ea6c6f9f1232e45e, type: 2}
+  result: {fileID: 11400000, guid: a67e7a5f3eae3484b8a188fc0c667f99, type: 2}
   resultCount: 1
-  duration: 30
+  duration: 15
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
   effectPrefab: {fileID: 0}

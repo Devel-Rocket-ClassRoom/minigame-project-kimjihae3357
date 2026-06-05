@@ -241,8 +241,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294959530
+  m_fontColor: {r: 0.6650944, g: 0.8838928, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -334,7 +334,7 @@ Transform:
   m_GameObject: {fileID: 8457770044065137186}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.43, z: -0}
+  m_LocalPosition: {x: 0, y: -0.5, z: -0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -516,6 +516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardPackUI
   spriteIcon: {fileID: 4851697798442716913}
   nameText: {fileID: 5934524711116554432}
+  priceText: {fileID: 0}
   cardPack: {fileID: 11400000, guid: 0b8a1d1f527feab428294c3374a68bec, type: 2}
 --- !u!1 &8718462980046807130
 GameObject:
