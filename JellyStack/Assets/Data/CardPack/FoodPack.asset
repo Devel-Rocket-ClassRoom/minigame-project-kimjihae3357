@@ -15,14 +15,14 @@ MonoBehaviour:
   cardName: "\uB0E0\uB0E0\uD329"
   Image: {fileID: 21300000, guid: c301d1b1d1211d343b5bf6f023530f85, type: 3}
   cardEntries:
-  - data: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
-    weight: 3
   - data: {fileID: 11400000, guid: 2056a0ec82849dc4aa4589e4be55107a, type: 2}
     weight: 3
   - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
     weight: 3
   - data: {fileID: 11400000, guid: 14a4bd3770b97d6439c7544acbf94bfe, type: 2}
     weight: 1
-  - data: {fileID: 11400000, guid: 14a4bd3770b97d6439c7544acbf94bfe, type: 2}
+  - data: {fileID: 11400000, guid: b19f6c258f4151d40b5b4a55f7cfb2e2, type: 2}
     weight: 1
-  drawCount: 3
+  - data: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
+    weight: 5
+  drawCount: 4

@@ -90,6 +90,11 @@ public class SellPoint : MonoBehaviour
                 CardSpawner.Instance.SpawnNear(coinData, spawnPos);
         }
 
+        // 정산 페이즈 중이면 한 프레임 뒤에 카운팅 갱신
+        // (Destroy()는 프레임 끝에 적용되므로 같은 프레임에 카운팅하면 아직 카드가 살아있음)
+        if (SettlementManager.Instance != null && SettlementManager.Instance.IsInSettlement)
+            SettlementManager.Instance.RequestRefresh();
+
         return stack.IsEmpty;
     }
 

@@ -23,4 +23,6 @@ MonoBehaviour:
   gatherDuration: 5
   gatherResults:
   - data: {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+    weight: 10
+  - data: {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
     weight: 1

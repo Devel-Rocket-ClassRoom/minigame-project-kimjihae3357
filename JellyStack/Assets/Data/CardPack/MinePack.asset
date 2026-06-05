@@ -16,5 +16,19 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: b68400dc24f13a8418e648f50ea39e16, type: 3}
   cardEntries:
   - data: {fileID: 11400000, guid: 76bf9c9fbe466db44b92336a9b247990, type: 2}
+    weight: 50
+  - data: {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
+    weight: 20
+  - data: {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
     weight: 5
-  drawCount: 3
+  - data: {fileID: 11400000, guid: 5e490e050143cf846a6ef9c89f977a4d, type: 2}
+    weight: 10
+  - data: {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
+    weight: 5
+  - data: {fileID: 11400000, guid: 97ca5ac3916124a4792886e91dd46baa, type: 2}
+    weight: 10
+  - data: {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
+    weight: 5
+  - data: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
+    weight: 30
+  drawCount: 5

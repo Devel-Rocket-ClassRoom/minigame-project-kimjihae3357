@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6754936133978921381}
   - component: {fileID: 5308392588165778828}
   - component: {fileID: 4482708422324514653}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sprite_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 1204066763290007724}
   - component: {fileID: 900606842618919316}
   - component: {fileID: 7294769118057400814}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: RandomPack_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5160419040648114835}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   packData: {fileID: 11400000, guid: 82d02847aed33d046bb92f0da14b7bd0, type: 2}
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   coinData: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
-  price: 5
+  price: 15
   dropArea: {fileID: 1204066763290007724}
   spawnOffset: {x: 0, y: 0, z: -2.5}
 --- !u!1 &5590496090668632220
@@ -248,7 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1093677678007180894}
   - component: {fileID: 6801383454196562447}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Image_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 6446275054004465269}
   - component: {fileID: 3086952905861868700}
   - component: {fileID: 8605037864472568454}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Text_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 958977890340602737}
   - component: {fileID: 5558693096394907840}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5137843873284275969}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}

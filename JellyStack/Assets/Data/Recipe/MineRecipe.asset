@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: HouseRecipe
+  m_Name: MineRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
-  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
-  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
+  - {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
+  - {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
   preserveIngredients:
   - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
-  result: {fileID: 11400000, guid: 01152f8b2299d1f40a225d961049fa08, type: 2}
+  result: {fileID: 11400000, guid: ccc4aa1ca6fde5649bf486010d260a04, type: 2}
   resultCount: 1
-  duration: 30
+  duration: 60
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
   effectPrefab: {fileID: 0}

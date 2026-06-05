@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: FarmRecipe
+  m_Name: CampFireRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: 14a4bd3770b97d6439c7544acbf94bfe, type: 2}
-  - {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
-  preserveIngredients:
-  - {fileID: 11400000, guid: 14a4bd3770b97d6439c7544acbf94bfe, type: 2}
-  result: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
+  - {fileID: 11400000, guid: a5f7c96cb8f9e8746a73b897a35b8d01, type: 2}
+  - {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
+  preserveIngredients: []
+  result: {fileID: 11400000, guid: b7b431415ae71e84ea6c6f9f1232e45e, type: 2}
   resultCount: 1
   duration: 40
   consumeIngredients: 1

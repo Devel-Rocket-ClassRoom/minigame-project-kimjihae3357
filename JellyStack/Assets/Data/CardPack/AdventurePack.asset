@@ -21,6 +21,4 @@ MonoBehaviour:
     weight: 3
   - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
     weight: 3
-  - data: {fileID: 11400000, guid: 14a4bd3770b97d6439c7544acbf94bfe, type: 2}
-    weight: 1
   drawCount: 3

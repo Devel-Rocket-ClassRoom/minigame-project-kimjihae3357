@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8314569897375302075}
   - component: {fileID: 6107980481188037914}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1769161761
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
@@ -156,7 +156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2823260997081202241}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4587069353033938311}
   - component: {fileID: 9091865842749339570}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Image_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 7447412006090098684}
   - component: {fileID: 6215891308214760586}
   - component: {fileID: 2257376878776951166}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sprite_icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 2258171311144575981}
   - component: {fileID: 8754527095132885692}
   - component: {fileID: 6559429412008446346}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: RandomPack_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,8 +434,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6309924054893320449}
   m_Enabled: 1
-  m_SortingLayerID: 570098223
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 7461888419971369893}
   - component: {fileID: 6668107258018709056}
   - component: {fileID: 6805675012277962389}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Text_name
   m_TagString: Untagged
   m_Icon: {fileID: 0}

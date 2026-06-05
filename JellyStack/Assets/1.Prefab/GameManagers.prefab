@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettlementManager
   maxCardAmount: 20
+  coinCardData: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
 --- !u!1 &5517583997709376537
 GameObject:
   m_ObjectHideFlags: 0
