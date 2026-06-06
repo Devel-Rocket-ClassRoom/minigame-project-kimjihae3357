@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "CardRecipe", menuName = "CardRecipe/CardRecipe")]
@@ -12,7 +13,14 @@ public class CardRecipe : ScriptableObject
     public List<CardData> preserveIngredients = new List<CardData>();
 
     [Header("결과물")]
-    public CardData result;
+    [FormerlySerializedAs("result")]
+    [Tooltip("스폰할 카드. 비워두면 카드는 안 나옴.")]
+    public CardData cardResult;
+
+    [Tooltip("스폰할 카드팩. 비워두면 카드팩은 안 나옴. cardResult와 동시에 설정 가능 — 둘 다 나옴.")]
+    public CardPackData packResult;
+
+    [Tooltip("cardResult 전용 — 카드를 몇 개 스폰할지. packResult에는 영향 없음(항상 1개).")]
     public int resultCount = 1;
 
     [Header("작업 시간")]

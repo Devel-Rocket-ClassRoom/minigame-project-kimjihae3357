@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: HealRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients: []
-  result: {fileID: 0}
+  preserveIngredients: []
+  cardResult: {fileID: 0}
+  packResult: {fileID: 0}
   resultCount: 0
   duration: 5
   consumeIngredients: 0
   iconPrefab: {fileID: 0}
-  progressEffectPrefab: {fileID: 5777358988600465752, guid: 7c9d7618548eb2b458362807ea261b11, type: 3}
+  effectPrefab: {fileID: 4711437946137620990, guid: ddb34d9af5a050c48a4cf4881bc39bec, type: 3}

@@ -114,7 +114,9 @@ public class UI_RecipeCategory : MonoBehaviour
         if (resultType == CardType.None)
             return true;
 
-        return recipe.result != null && recipe.result.cardType == resultType;
+        // cardResult가 있으면 그 cardType으로 필터링.
+        // 카드 없이 packResult만 있는 레시피는 cardType이 없으므로 None(전체)에서만 노출.
+        return recipe.cardResult != null && recipe.cardResult.cardType == resultType;
     }
 
     private void ClearEntries()

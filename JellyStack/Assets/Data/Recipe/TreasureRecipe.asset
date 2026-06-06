@@ -17,7 +17,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
   preserveIngredients:
   - {fileID: 11400000, guid: d09384732634d72439c5360b5ad428ce, type: 2}
-  result: {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
+  cardResult: {fileID: 0}
+  packResult: {fileID: 11400000, guid: 3c862ff26dd24fc46b4d1992c88f5747, type: 2}
   resultCount: 1
   duration: 10
   consumeIngredients: 1

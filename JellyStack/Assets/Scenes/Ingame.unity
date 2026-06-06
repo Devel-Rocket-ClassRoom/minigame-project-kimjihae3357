@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   - component: {fileID: 963194231}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -711,6 +712,103 @@ AudioSource:
   m_Resource: {fileID: 8300000, guid: b4492a4a4c727e94087966f6ae5cd06e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &963194232
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2678,86 +2776,22 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1263863276}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: recipes.Array.size
-      value: 18
+    - target: {fileID: 1965268766527924497, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[0]'
+    - target: {fileID: 2316531409658699965, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
+      propertyPath: cardSpawnSfx
       value: 
-      objectReference: {fileID: 11400000, guid: 22d29c3fa0013be4cbd9413bca5ee3fd, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[1]'
+      objectReference: {fileID: 8300000, guid: a550cb02580f00c40b4ba02aeff3acb4, type: 3}
+    - target: {fileID: 3347268672404987489, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
+      propertyPath: bgmSource
       value: 
-      objectReference: {fileID: 11400000, guid: 3ac320bfa729b274da7e7f9e0aa82ec4, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[2]'
+      objectReference: {fileID: 963194231}
+    - target: {fileID: 3347268672404987489, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
+      propertyPath: sfxSource
       value: 
-      objectReference: {fileID: 11400000, guid: 91b2b40f774aeec4a907fccac4ee4035, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c14612202025c3148893ba1c9ea071d5, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 02773f711659bb34286c0dbf9d2b07ac, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c54f8d98f85ceed459739930a4c4e059, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[6]'
-      value: 
-      objectReference: {fileID: 11400000, guid: caa94ec47e7ed864d99cfacc7fa0715a, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[7]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 30a1ea0c38a624c4b871d6f122fdf73d, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[8]'
-      value: 
-      objectReference: {fileID: 11400000, guid: ed30f975cdfd7754e86eb9c722e0b606, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[9]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 0211b3c50bf3b134390de9d5ebddc188, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[10]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 909303535d6977f409420fef08e8d389, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[11]'
-      value: 
-      objectReference: {fileID: 11400000, guid: e719fdc91c079dc40a7fef5694721c6c, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[12]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 231d761e53b86c04897fe89a9cfe2c9f, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[13]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 72084efb55fcc3e4ebafe813c6e9e3c3, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[14]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6dd43a62bfbf5334eb6d805eb12f3098, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[15]'
-      value: 
-      objectReference: {fileID: 11400000, guid: ab63dd5566e903c4e8a7da99caee0d76, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[16]'
-      value: 
-      objectReference: {fileID: 11400000, guid: ac9a2fc353da694419da80772e8db760, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[17]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 7cd38cf8bd2ca5547a69265fcb17034e, type: 2}
-    - target: {fileID: 3124829537650347299, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: 'recipes.Array.data[18]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 7cd38cf8bd2ca5547a69265fcb17034e, type: 2}
+      objectReference: {fileID: 963194231}
     - target: {fileID: 4189152433874841181, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.87941
@@ -2834,10 +2868,6 @@ PrefabInstance:
       propertyPath: 'spawnAreas.Array.data[1]'
       value: 
       objectReference: {fileID: 2040200269}
-    - target: {fileID: 8094622537633003877, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
-      propertyPath: storageCardData
-      value: 
-      objectReference: {fileID: 11400000, guid: 19b610dd0af0ead459f1161ea97519ee, type: 2}
     - target: {fileID: 8612457606323598146, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
       propertyPath: uiManager
       value: 

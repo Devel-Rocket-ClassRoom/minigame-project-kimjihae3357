@@ -45,6 +45,17 @@ public class BattlePoint : CardStack
     private bool _battleStarted;
     private bool _battleEnded;
 
+    // SoundManager에 전투 활성/비활성 알림 — Instantiate / Destroy 라이프사이클에 자동 연동.
+    private void OnEnable()
+    {
+        SoundManager.Instance?.RegisterBattle();
+    }
+
+    private void OnDisable()
+    {
+        SoundManager.Instance?.UnregisterBattle();
+    }
+
     public void BeginBattle()
     {
         if (_battleStarted) return;

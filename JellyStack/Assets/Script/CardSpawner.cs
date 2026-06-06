@@ -7,6 +7,12 @@ public class CardSpawner : MonoBehaviour
 
     [Header("프리팹")]
     [SerializeField] private GameObject cardStackPrefab;
+    [Tooltip("CardPackData를 받아 스폰할 PackCard prefab. (BuyPoint와 동일한 prefab을 연결).")]
+    [SerializeField] private GameObject packCardPrefab;
+
+    [Header("효과음")]
+    [Tooltip("카드(또는 카드팩)가 생성될 때 SoundManager.PlaySFX로 재생할 효과음. 비워두면 무음.")]
+    [SerializeField] private AudioClip cardSpawnSfx;
 
     [Header("점프 애니메이션")]
     [SerializeField] private float jumpPower = 1.5f;
@@ -65,7 +71,64 @@ public class CardSpawner : MonoBehaviour
 
         if (fromPos.HasValue) AnimateJump(card, fromPos.Value, worldPos);
 
+        SoundManager.Instance?.PlaySFX(cardSpawnSfx);
+
         return card;
+    }
+
+    /// <summary>
+    /// 카드팩(CardPackData)을 PackCard prefab으로 스폰. BuyPoint.SpawnPack 패턴을 따른다.
+    /// 빈 자리를 찾아 PackCard + CardStack을 만들고 packData를 Start() 전에 주입.
+    /// 점프 애니메이션은 fromPos(sourcePos)가 주어지면 그 위치에서 튀어나오는 식.
+    /// </summary>
+    public PackCard SpawnPack(CardPackData packData, Vector3 sourcePos, CardStack excludeStack = null)
+    {
+        if (packData == null)
+        {
+            Debug.LogError("SpawnPack 실패: packData가 null");
+            return null;
+        }
+        if (packCardPrefab == null)
+        {
+            Debug.LogError("SpawnPack 실패: CardSpawner.packCardPrefab이 설정되지 않음 (인스펙터에서 PackCard prefab 할당 필요)");
+            return null;
+        }
+
+        Vector3 landingPos = FindEmptySpawnPosition(sourcePos);
+
+        var packGo = Instantiate(packCardPrefab, landingPos, Quaternion.identity);
+        var packCard = packGo.GetComponent<PackCard>();
+        if (packCard == null)
+        {
+            Debug.LogError($"SpawnPack 실패: {packCardPrefab.name}에 PackCard 컴포넌트가 없습니다.");
+            Destroy(packGo);
+            return null;
+        }
+
+        // Start() 전에 packData 주입 (PackCard.Start가 BuildInitialList를 호출하기 때문)
+        packCard.SetPackData(packData);
+
+        // CardPackUI도 있으면 동일하게 데이터 전달 (BuyPoint 패턴과 일치)
+        var packUI = packGo.GetComponent<CardPackUI>();
+        if (packUI != null) packUI.SetData(packData, null);
+
+        // CardStack으로 감싸기 (없으면 Card.Update가 (0,0,0)으로 끌고 감)
+        if (cardStackPrefab != null)
+        {
+            var stackGo = Instantiate(cardStackPrefab, landingPos, Quaternion.identity);
+            var newStack = stackGo.GetComponent<CardStack>();
+            if (newStack != null)
+                newStack.AddCard(packCard);
+            else
+                Debug.LogError("SpawnPack: cardStackPrefab에 CardStack 컴포넌트가 없습니다.");
+        }
+
+        // 점프 애니메이션 (sourcePos에서 landingPos로)
+        AnimateJump(packCard, sourcePos, landingPos);
+
+        SoundManager.Instance?.PlaySFX(cardSpawnSfx);
+
+        return packCard;
     }
 
     // 기존 스택에 카드 추가
@@ -87,6 +150,8 @@ public class CardSpawner : MonoBehaviour
         targetStack.AddCard(card);
 
         if (fromPos.HasValue) AnimateJump(card, fromPos.Value, targetStack.transform.position);
+
+        SoundManager.Instance?.PlaySFX(cardSpawnSfx);
 
         return card;
     }
