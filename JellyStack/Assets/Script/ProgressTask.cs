@@ -17,7 +17,7 @@ public class ProgressTask : MonoBehaviour
 
     private GameObject _activeEffect;
 
-    public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f, float durationOverride = -1f)
+    public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f, float durationOverride = -1f, GameObject effectOverride = null)
     {
         this.recipe = recipe;
         this.stack = stack;
@@ -34,14 +34,16 @@ public class ProgressTask : MonoBehaviour
         }
 
         // 진행 이펙트 스폰 (스택 자식으로 부모 설정 → 카드 이동을 따라감)
-        if (recipe != null && recipe.effectPrefab != null && stack != null)
+        // effectOverride가 지정되면 우선 사용(예: SourceCardData별 채집 이펙트), 없으면 레시피 이펙트.
+        GameObject effectToSpawn = effectOverride != null ? effectOverride : (recipe != null ? recipe.effectPrefab : null);
+        if (effectToSpawn != null && stack != null)
         {
             Vector3 spawnPos = stack.TopCard != null
                 ? stack.TopCard.transform.position
                 : stack.transform.position;
 
             _activeEffect = Instantiate(
-                recipe.effectPrefab,
+                effectToSpawn,
                 spawnPos,
                 Quaternion.identity,
                 stack.transform

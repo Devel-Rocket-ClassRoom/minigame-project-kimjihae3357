@@ -161,7 +161,7 @@ public class RecipeManager : MonoBehaviour
         }
 
         var task = stack.gameObject.AddComponent<ProgressTask>();
-        task.Begin(gatherRecipe, stack, OnGatherComplete, startElapsed, duration);
+        task.Begin(gatherRecipe, stack, OnGatherComplete, startElapsed, duration, sourceData.gatherEffectPrefab);
         return true;
     }
 
