@@ -23,4 +23,4 @@ MonoBehaviour:
   duration: 10
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 9004098351934062035, guid: a2f0b04ea7dd2a345935a73bcd512d7b, type: 3}
