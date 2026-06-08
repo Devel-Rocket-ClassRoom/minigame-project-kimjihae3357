@@ -11,13 +11,13 @@ public class BuyPoint : MonoBehaviour
     // InputManager에서 FindObjectsByType으로 위치별 BuyPoint를 찾음.
 
     [Header("판매 대상 팩")]
-    [Tooltip("[더 이상 사용되지 않음] 스폰은 CardSpawner.packCardPrefab을 사용. 슬롯은 호환을 위해 남겨둠.")]
+    [Tooltip("BuyPoint에서 판매되는 카드팩 프리팹 (PackCard 컴포넌트가 붙어 있어야 함)")]
     [SerializeField] private GameObject packPrefab;
 
     [Tooltip("스폰될 팩에 주입할 CardPackData. 공유 프리팹 사용 시 여기서 팩 종류를 지정.")]
     [SerializeField] private CardPackData packData;
 
-    [Tooltip("[더 이상 사용되지 않음] CardStack 래핑은 CardSpawner.SpawnPack 내부에서 처리. 슬롯은 호환을 위해 남겨둠.")]
+    [Tooltip("팩을 감쌀 CardStack 프리팹 (GameManager의 cardStackPrefab과 동일)")]
     [SerializeField] private GameObject cardStackPrefab;
 
     [Header("결제 조건")]
@@ -63,7 +63,7 @@ public class BuyPoint : MonoBehaviour
     /// </summary>
     public bool TryBuy(CardStack stack)
     {
-        if (stack == null) return false;
+        if (stack == null || packPrefab == null) return false;
         if (coinData == null) return false;
         if (price <= 0)
         {
@@ -101,28 +101,52 @@ public class BuyPoint : MonoBehaviour
 
     private void SpawnPack()
     {
-        if (packData == null)
+        Vector3 spawnPos = transform.position + spawnOffset;
+
+        var packGo = Instantiate(packPrefab, spawnPos, Quaternion.identity);
+        var packCard = packGo.GetComponent<PackCard>();
+        if (packCard == null)
         {
-            Debug.LogError("BuyPoint: packData가 설정되지 않음.");
-            return;
-        }
-        if (CardSpawner.Instance == null)
-        {
-            Debug.LogError("BuyPoint: CardSpawner.Instance가 null — 씬에 CardSpawner가 있는지 확인하세요.");
+            Debug.LogError("BuyPoint: packPrefab에 PackCard 컴포넌트가 없습니다.");
             return;
         }
 
-        // CardSpawner.SpawnPack에 위임 — 점프 애니메이션 + 효과음 + CardStack 래핑 + PackCard/CardPackUI 데이터 주입까지
-        // 일반 카드 스폰과 동일한 연출로 통일된다.
-        // sourcePos = BuyPoint 위치 (팩이 BuyPoint에서 튀어나오는 시작점)
-        // landing  = BuyPoint + spawnOffset (인스펙터에서 지정한 정확한 착지 위치)
-        Vector3 landing = transform.position + spawnOffset;
-        var packCard = CardSpawner.Instance.SpawnPack(packData, transform.position, landing);
-        if (packCard == null) return;
+        // packData가 설정돼 있으면 Start() 전에 동적 주입
+        if (packData != null)
+        {
+            packCard.SetPackData(packData);
 
-        // BuyPoint 참조 주입 — CardPackUI가 가격 표시(point.Price)에 사용.
-        // (CardSpawner.SpawnPack 내부에서는 BuyPoint를 모르므로 여기서 한 번 더 SetData 호출.)
-        var packUI = packCard.GetComponent<CardPackUI>();
-        if (packUI != null) packUI.SetData(packData, this);
+            // CardPackUI에도 동일하게 데이터 전달
+            var cardPackUI = packGo.GetComponent<CardPackUI>();
+            if (cardPackUI != null)
+                cardPackUI.SetData(packData, this);
+        }
+
+        // CardStack으로 감싸기 (없으면 그냥 두면 Card.Update가 (0,0,0)으로 끌고 감)
+        if (cardStackPrefab != null)
+        {
+            var stackGo = Instantiate(cardStackPrefab, spawnPos, Quaternion.identity);
+            var newStack = stackGo.GetComponent<CardStack>();
+            if (newStack != null)
+            {
+                newStack.AddCard(packCard);
+            }
+            else
+            {
+                Debug.LogError("BuyPoint: cardStackPrefab에 CardStack 컴포넌트가 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("BuyPoint: cardStackPrefab이 비어있어 팩이 CardStack에 감싸지지 않습니다.");
+        }
+
+        // 일반 카드 스폰과 동일한 연출 적용 — 점프 애니메이션(BuyPoint 위치에서 spawnPos로) + 효과음.
+        // CardSpawner의 공용 메서드만 빌려쓰고, prefab 인스턴스화 로직 자체는 BuyPoint가 그대로 유지.
+        if (CardSpawner.Instance != null)
+        {
+            CardSpawner.Instance.AnimateJump(packCard, transform.position, spawnPos);
+            CardSpawner.Instance.PlayCardSpawnSfx();
+        }
     }
 }

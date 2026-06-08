@@ -32,6 +32,15 @@ public class CardSpawner : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary>
+    /// 외부(예: BuyPoint)에서 카드/팩 스폰 효과음을 동일하게 재생할 수 있게 공개.
+    /// 인스펙터의 cardSpawnSfx 슬롯이 비어있으면 무음.
+    /// </summary>
+    public void PlayCardSpawnSfx()
+    {
+        SoundManager.Instance?.PlaySFX(cardSpawnSfx);
+    }
+
     // 소스 위치 주변에 빈자리를 찾아 카드 스폰 (자동 병합 포함)
     public Card SpawnNear(CardData data, Vector3 sourcePos, CardStack excludeStack = null)
     {
@@ -156,7 +165,10 @@ public class CardSpawner : MonoBehaviour
         return card;
     }
 
-    private void AnimateJump(Card card, Vector3 fromPos, Vector3 landingPos)
+    /// <summary>
+    /// 외부(예: BuyPoint)에서 카드/팩 스폰 시 동일한 점프 연출을 적용할 수 있게 공개.
+    /// </summary>
+    public void AnimateJump(Card card, Vector3 fromPos, Vector3 landingPos)
     {
         card.transform.position = fromPos;
         card.suppressFollow = true;
