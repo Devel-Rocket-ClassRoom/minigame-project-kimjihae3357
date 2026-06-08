@@ -509,7 +509,7 @@ Transform:
   - {fileID: 8471429079692534479}
   - {fileID: 2056768731656796997}
   - {fileID: 4085439803560555098}
-  - {fileID: 2870617647376156691}
+  - {fileID: 2101539320789475628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6516646530028741138
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!1001 &6285778833862970556
+--- !u!1001 &7910506645894768003
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -819,15 +819,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8137416293386060975, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.84192
       objectReference: {fileID: 0}
     - target: {fileID: 8137416293386060975, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8137416293386060975, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -8.88731
       objectReference: {fileID: 0}
     - target: {fileID: 8137416293386060975, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
       propertyPath: m_LocalRotation.w
@@ -857,21 +857,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8739359960525984477, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
-      propertyPath: bgmSource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8739359960525984477, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
-      propertyPath: sfxSource
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
---- !u!4 &2870617647376156691 stripped
+--- !u!4 &2101539320789475628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8137416293386060975, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
-  m_PrefabInstance: {fileID: 6285778833862970556}
+  m_PrefabInstance: {fileID: 7910506645894768003}
   m_PrefabAsset: {fileID: 0}
