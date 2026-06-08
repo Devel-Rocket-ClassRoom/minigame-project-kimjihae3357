@@ -16,6 +16,9 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+# 버전이 붙은 빌드 산출물 폴더 (예: Build_1.0.0) 및 영상 파일 제외
+/[Bb]uild_*/
+*.mp4
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log
