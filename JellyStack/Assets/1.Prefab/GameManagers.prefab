@@ -568,13 +568,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed30f975cdfd7754e86eb9c722e0b606, type: 2}
   - {fileID: 11400000, guid: 0211b3c50bf3b134390de9d5ebddc188, type: 2}
   - {fileID: 11400000, guid: 909303535d6977f409420fef08e8d389, type: 2}
-  - {fileID: 11400000, guid: e719fdc91c079dc40a7fef5694721c6c, type: 2}
+  - {fileID: 11400000, guid: 7cd38cf8bd2ca5547a69265fcb17034e, type: 2}
   - {fileID: 11400000, guid: 231d761e53b86c04897fe89a9cfe2c9f, type: 2}
   - {fileID: 11400000, guid: 72084efb55fcc3e4ebafe813c6e9e3c3, type: 2}
   - {fileID: 11400000, guid: 6dd43a62bfbf5334eb6d805eb12f3098, type: 2}
   - {fileID: 11400000, guid: ab63dd5566e903c4e8a7da99caee0d76, type: 2}
   - {fileID: 11400000, guid: ac9a2fc353da694419da80772e8db760, type: 2}
-  - {fileID: 11400000, guid: 7cd38cf8bd2ca5547a69265fcb17034e, type: 2}
+  - {fileID: 11400000, guid: 1e6c03e30da851e4a8cbee1b0d6af8a1, type: 2}
+  - {fileID: 11400000, guid: e719fdc91c079dc40a7fef5694721c6c, type: 2}
   healRecipe: {fileID: 11400000, guid: ed086f50b44bb9a41b8672fbd7be2375, type: 2}
   gatherRecipe: {fileID: 11400000, guid: 0d26db7f2297e714f89f92f8a97367af, type: 2}
 --- !u!1 &7946867287396609875
@@ -855,6 +856,14 @@ PrefabInstance:
     - target: {fileID: 8137416293386060975, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739359960525984477, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
+      propertyPath: bgmSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739359960525984477, guid: 0482c1ac9da07164fbd9a7e90aef7f60, type: 3}
+      propertyPath: sfxSource
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -474,8 +474,10 @@ public class RecipeManager : MonoBehaviour
                 }
             }
             else if (recipe.consumeIngredients
-                     && (recipe.preserveIngredients == null || !recipe.preserveIngredients.Contains(found.data)))
+                     && (recipe.preserveIngredients == null || !recipe.preserveIngredients.Contains(ingredient)))
             {
+                // ingredient 기준으로 체크: 와일드카드 매칭(예: 어떤 주민이든 NormalVillagerData ingredient에 매칭)
+                // 시 found.data가 ingredient와 달라도 ingredient가 preserve 목록이면 유지.
                 stack.cards.Remove(found);
                 Destroy(found.gameObject);
             }

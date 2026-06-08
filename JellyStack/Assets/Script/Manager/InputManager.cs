@@ -451,7 +451,7 @@ public class InputManager : MonoBehaviour
         var sellPoints = Object.FindObjectsByType<SellPoint>(FindObjectsSortMode.None);
         foreach (var sp in sellPoints)
         {
-            if (sp == null || !sp.IsPointInside(dropPos)) continue;
+            if (sp == null || !sp.OverlapsWith(draggingStack)) continue;
             Vector3 spXZ = new Vector3(sp.transform.position.x, 0f, sp.transform.position.z);
             float d = (spXZ - dropXZ).sqrMagnitude;
             if (d < bestDistSqr)
@@ -570,7 +570,7 @@ public class InputManager : MonoBehaviour
             var sellPoints = Object.FindObjectsByType<SellPoint>(FindObjectsSortMode.None);
             foreach (var sp in sellPoints)
             {
-                if (sp == null || !sp.IsPointInside(dropPos)) continue;
+                if (sp == null || !sp.OverlapsWith(draggingStack)) continue;
                 Vector3 spXZ = new Vector3(sp.transform.position.x, 0f, sp.transform.position.z);
                 float d = (spXZ - dropXZ).sqrMagnitude;
                 if (d < bestSellDistSqr)
