@@ -15,9 +15,9 @@ MonoBehaviour:
   portalPrefab: {fileID: 7628352160121096060, guid: 541426c66b6ef9447bf47f3ca2189849, type: 3}
   spawnDelay: 10
   cardSpawnEffectPrefab: {fileID: 9116799104325397984, guid: 0a2dc4b7efd806440bbcad1c6acf8052, type: 3}
-  spawnCount: 1
+  spawnCount: 2
   spawnTable:
   - data: {fileID: 11400000, guid: 69714c9918a0c6b4a9d794edd4cc84c7, type: 2}
-    weight: 1
+    weight: 5
   - data: {fileID: 11400000, guid: 53a845caaa923d64494d6065d15b94bf, type: 2}
     weight: 1

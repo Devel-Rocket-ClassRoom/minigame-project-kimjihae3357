@@ -7,7 +7,9 @@ using UnityEngine;
 ///   - title       → Text_info_title
 ///   - info        → Text_Box > Text_info
 ///   - tip         → Tip_Text_Box > Text_tip_info (빈 문자열이면 Tip_Text_Box 통째로 숨김)
-///   - mainImage   → Left_Panel의 Image sprite
+///
+/// 좌측 비주얼은 페이지별 스프라이트 애니메이션을 지원하기 위해 데이터가 아니라
+/// UI_TutorialWindow의 leftContainer 자식 GameObject로 관리한다 (자식 순서 = 페이지 인덱스).
 /// (Image_Line, Tip_Text_Box 안의 "TIP" 헤더/장식 Image는 고정 요소이므로 데이터에 없음.)
 /// </summary>
 [System.Serializable]
@@ -23,9 +25,6 @@ public class TutorialPage
     [Tooltip("팁 박스 본문 (Text_tip_info에 표시). 비워두면 Tip_Text_Box 자체가 자동 숨김.")]
     [TextArea(2, 6)]
     public string tip;
-
-    [Tooltip("좌측 패널에 표시할 메인 이미지 (Left_Panel의 Image sprite).")]
-    public Sprite mainImage;
 }
 
 /// <summary>

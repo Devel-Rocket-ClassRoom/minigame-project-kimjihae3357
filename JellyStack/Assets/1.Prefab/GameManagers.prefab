@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2870617647376156691}
   - component: {fileID: 3347268672404987489}
   m_Layer: 0
-  m_Name: BGMManager
+  m_Name: SoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,9 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BGMManager
   bgmSource: {fileID: 0}
+  sfxSource: {fileID: 0}
   defaultBGM: {fileID: 8300000, guid: bb947a2f34618644da54f8bc9172cf00, type: 3}
   battleBGM: {fileID: 8300000, guid: 4979ef00b6af4084eb8ddc1087efbe82, type: 3}
   fadeDuration: 0.5
+  sfxVolumeScale: 1
 --- !u!1 &2031119985566669779
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +149,59 @@ MonoBehaviour:
   battlePushRadius: 4
   battlePushDistance: 2.5
   battlePushDuration: 0.4
+--- !u!1 &3095551212916266088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7558749764565916878}
+  - component: {fileID: 7002004164654879209}
+  m_Layer: 0
+  m_Name: spawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7558749764565916878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095551212916266088}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -11.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7368110812673482596}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7002004164654879209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095551212916266088}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 50, y: 1, z: 8}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3239822574909648084
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +266,57 @@ MonoBehaviour:
   stormShakeStrength: 0.15
   flyAwayDistance: 40
   flyAwayDuration: 0.8
+--- !u!1 &3782780096896063975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7368110812673482596}
+  - component: {fileID: 5386289148235132576}
+  m_Layer: 0
+  m_Name: WorldTreeSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7368110812673482596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782780096896063975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7558749764565916878}
+  m_Father: {fileID: 4189152433874841181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5386289148235132576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782780096896063975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f876ce526e6b1d4082753eb1ae7b0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandomCardSpawner
+  drops:
+  - card: {fileID: 11400000, guid: 6755a2b627dfe5543bd7c4e0ecf69838, type: 2}
+    intervalDays: 3
+    chance: 0.1
+    spawnAreas:
+    - {fileID: 7002004164654879209}
 --- !u!1 &4011896227158954656
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardSpawner
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   packCardPrefab: {fileID: 0}
+  cardSpawnSfx: {fileID: 8300000, guid: a550cb02580f00c40b4ba02aeff3acb4, type: 3}
   jumpPower: 3
   jumpDuration: 0.3
   cardMask:
@@ -445,6 +552,7 @@ Transform:
   - {fileID: 5629143000860417699}
   - {fileID: 2685186946399862100}
   - {fileID: 1184294310110386013}
+  - {fileID: 7368110812673482596}
   - {fileID: 8637359685122735360}
   - {fileID: 1833536880262342629}
   - {fileID: 4165181143307944677}

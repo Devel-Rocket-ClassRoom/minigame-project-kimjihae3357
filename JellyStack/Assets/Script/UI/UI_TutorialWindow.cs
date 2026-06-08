@@ -7,7 +7,8 @@ using UnityEngine.UI;
 /// TutorialBook(ScriptableObject) 의 페이지 목록을 좌/우 버튼으로 넘기며 표시한다.
 ///
 /// 페이지별로 갱신되는 슬롯:
-///   - leftImage     (Left_Panel의 Image)            → page.mainImage
+///   - leftContainer (Left_Panel 등 좌측 비주얼 컨테이너) → 자식 GameObject 중 페이지 인덱스에 해당하는 것만 활성
+///                                                          (페이지마다 스프라이트 애니메이션 GameObject를 자식으로 두는 패턴)
 ///   - titleText     (Text_info_title)               → page.title
 ///   - infoText      (Text_Box > Text_info)          → page.info
 ///   - tipInfoText   (Tip_Text_Box > Text_tip_info)  → page.tip
@@ -22,9 +23,11 @@ public class UI_TutorialWindow : MonoBehaviour
     [Header("튜토리얼 데이터")]
     [SerializeField] private TutorialBook book;
 
-    [Header("이미지")]
-    [Tooltip("Left_Panel의 Image 컴포넌트 (좌측 메인 비주얼).")]
-    [SerializeField] private Image leftImage;
+    [Header("좌측 비주얼")]
+    [Tooltip("페이지별 GameObject(스프라이트 애니메이션 등)를 담은 컨테이너. " +
+             "자식 GameObject 순서가 페이지 인덱스와 일치해야 하며, " +
+             "페이지 전환 시 해당 인덱스 자식만 활성화된다.")]
+    [SerializeField] private GameObject leftContainer;
 
     [Header("텍스트")]
     [Tooltip("페이지 번호 표시 (\"1/5\" 형식).")]
@@ -123,6 +126,12 @@ public class UI_TutorialWindow : MonoBehaviour
                 for (int i = 0; i < pageDots.Length; i++)
                     if (pageDots[i] != null) pageDots[i].gameObject.SetActive(false);
             }
+            if (leftContainer != null)
+            {
+                var t = leftContainer.transform;
+                for (int i = 0; i < t.childCount; i++)
+                    t.GetChild(i).gameObject.SetActive(false);
+            }
             return;
         }
 
@@ -139,9 +148,13 @@ public class UI_TutorialWindow : MonoBehaviour
         if (tipInfoText != null) tipInfoText.text = page.tip ?? "";
         if (tipBox != null) tipBox.SetActive(hasTip);
 
-        // 좌측 메인 이미지
-        if (leftImage != null && page.mainImage != null)
-            leftImage.sprite = page.mainImage;
+        // 좌측 비주얼: 컨테이너의 자식 중 currentPage 인덱스인 것만 활성화 (페이지별 스프라이트 애니메이션 GameObject swap)
+        if (leftContainer != null)
+        {
+            var t = leftContainer.transform;
+            for (int i = 0; i < t.childCount; i++)
+                t.GetChild(i).gameObject.SetActive(i == currentPage);
+        }
 
         // 페이지 점: 현재 페이지만 active 색, 나머지는 inactive 색, 페이지 수 초과 점은 숨김
         if (pageDots != null)

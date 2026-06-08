@@ -64,6 +64,11 @@ public class RandomCardSpawner : MonoBehaviour
 
             if (!TryPickPosition(entry.spawnAreas, out Vector3 pos)) continue;
 
+            // 적 포탈 등장과 동일한 연출: 드래그 중이면 강제 취소 후 카메라를 스폰 위치로 이동.
+            // 카메라가 부드럽게 이동하는 동안 CardSpawner.Spawn의 점프 애니메이션이 같이 보임.
+            InputManager.Instance?.ForceCancelDrag();
+            CameraController.Instance?.ZoomToTarget(pos);
+
             CardSpawner.Instance?.Spawn(entry.card, pos);
         }
     }

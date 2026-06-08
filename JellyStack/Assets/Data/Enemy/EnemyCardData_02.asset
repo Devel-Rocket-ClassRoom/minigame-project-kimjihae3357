@@ -18,10 +18,10 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: e8f6140ce7b552549a6225cbaeae2382, type: 3}
   sellPrice: 0
   CanSell: 0
-  maxHealth: 10
+  maxHealth: 7
   attackPower: 1
   jumpInterval: 3
-  attackInterval: 2.5
+  attackInterval: 1.7
   dropTable:
   - card: {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
     chance: 0.2

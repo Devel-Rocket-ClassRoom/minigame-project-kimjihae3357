@@ -77,11 +77,11 @@ public class CardSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// 카드팩(CardPackData)을 PackCard prefab으로 스폰. BuyPoint.SpawnPack 패턴을 따른다.
-    /// 빈 자리를 찾아 PackCard + CardStack을 만들고 packData를 Start() 전에 주입.
-    /// 점프 애니메이션은 fromPos(sourcePos)가 주어지면 그 위치에서 튀어나오는 식.
+    /// 카드팩(CardPackData)을 PackCard prefab으로 스폰. BuyPoint/RecipeManager 공통 진입점.
+    /// PackCard + CardStack을 만들고 packData를 Start() 전에 주입, sourcePos에서 landingPos로 점프 애니메이션 + SFX 일관 처리.
+    /// landingOverride가 주어지면 그 위치로 정확히 떨어지고, 없으면 sourcePos 주변 빈 자리를 자동 탐색.
     /// </summary>
-    public PackCard SpawnPack(CardPackData packData, Vector3 sourcePos, CardStack excludeStack = null)
+    public PackCard SpawnPack(CardPackData packData, Vector3 sourcePos, Vector3? landingOverride = null)
     {
         if (packData == null)
         {
@@ -94,7 +94,7 @@ public class CardSpawner : MonoBehaviour
             return null;
         }
 
-        Vector3 landingPos = FindEmptySpawnPosition(sourcePos);
+        Vector3 landingPos = landingOverride ?? FindEmptySpawnPosition(sourcePos);
 
         var packGo = Instantiate(packCardPrefab, landingPos, Quaternion.identity);
         var packCard = packGo.GetComponent<PackCard>();

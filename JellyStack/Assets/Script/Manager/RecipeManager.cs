@@ -396,7 +396,7 @@ public class RecipeManager : MonoBehaviour
         // 카드팩 결과 — 채워져 있으면 1개 스폰 (resultCount 무관, 날씨 보너스 무관)
         if (recipe.packResult != null)
         {
-            CardSpawner.Instance.SpawnPack(recipe.packResult, sourcePos, stack);
+            CardSpawner.Instance.SpawnPack(recipe.packResult, sourcePos);
         }
     }
 
