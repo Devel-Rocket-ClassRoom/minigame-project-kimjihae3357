@@ -2416,6 +2416,10 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1263863276}
+    - target: {fileID: 84651915053072991, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
+      propertyPath: weatherInterval
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3347268672404987489, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
       propertyPath: bgmSource
       value: 
