@@ -21,7 +21,7 @@ MonoBehaviour:
   villagerType: 2
   maxHealth: 7
   maxHunger: 2
-  attackPower: 15
+  attackPower: 1
   workSpeed: 1.5
   attackInterval: 2
   isBaby: 0
