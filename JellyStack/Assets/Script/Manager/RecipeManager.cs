@@ -75,7 +75,8 @@ public class RecipeManager : MonoBehaviour
             if (idx < 0) return false;
             data.RemoveAt(idx);
         }
-        return true;
+        // 정확 일치: 레시피 재료를 전부 소모한 후 카드 목록에 남는 카드가 없어야 함
+        return data.Count == 0;
     }
 
     public void CheckStack(CardStack stack)
@@ -321,7 +322,8 @@ public class RecipeManager : MonoBehaviour
             if (idx < 0) return false;
             stackData.RemoveAt(idx);
         }
-        return true;
+        // 정확 일치: 레시피 재료를 전부 소모한 후 스택에 남는 카드가 없어야 함
+        return stackData.Count == 0;
     }
 
     private void OnRecipeComplete(CardRecipe recipe, CardStack stack)

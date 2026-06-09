@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12047e0fa82b014d831a0b3cb9bc271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuyPoint
-  packPrefab: {fileID: 8481278547604517009, guid: 25e8177c5cfe23340a3513dc500a26cd, type: 3}
+  packPrefab: {fileID: 8481278547604517009, guid: 1727fb79d1adb5643a523231465d5205, type: 3}
   packData: {fileID: 11400000, guid: 2c0e5832ef8f6914ca3eaa80a8fbe587, type: 2}
   cardStackPrefab: {fileID: 550124152560615381, guid: 153dab5638da6e24d97492423837158e, type: 3}
   coinData: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
