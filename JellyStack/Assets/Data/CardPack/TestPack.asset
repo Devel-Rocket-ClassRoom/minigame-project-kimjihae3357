@@ -17,15 +17,13 @@ MonoBehaviour:
   cardEntries:
   - data: {fileID: 11400000, guid: 9f3155692a751534fab07b2bf12da9f2, type: 2}
     count: 1
-  - data: {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
-    count: 1
-  - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
-    count: 1
-  - data: {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
+  - data: {fileID: 11400000, guid: 30a5c4d5c6b2b6f40ad3fec1eeaa6261, type: 2}
     count: 3
-  - data: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
+  - data: {fileID: 11400000, guid: 15ef349eb1c25934b900730d2362075c, type: 2}
+    count: 3
+  - data: {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
+    count: 3
+  - data: {fileID: 11400000, guid: 2f1ab54315b89204ca302afc9918ea12, type: 2}
     count: 1
-  - data: {fileID: 11400000, guid: 5e490e050143cf846a6ef9c89f977a4d, type: 2}
-    count: 1
-  - data: {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
+  - data: {fileID: 11400000, guid: c89cde174f03bc04bb855e54e9c6c40d, type: 2}
     count: 1

@@ -8,10 +8,13 @@ public class UI_GameOverWindow : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private Button button;
 
+    private UIManager uiManager;
 
-    private void OnClick()
+    public void Init(UIManager manager)
     {
+        uiManager = manager;
 
+        if (button != null) button.onClick.AddListener(uiManager.ExitGame);
     }
 
     public void Show()

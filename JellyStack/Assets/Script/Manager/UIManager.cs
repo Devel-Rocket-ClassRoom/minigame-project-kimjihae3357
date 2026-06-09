@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        gameover.Init(this);
         gameover.Hide();
         pause.Init(this);
         pause.Hide();

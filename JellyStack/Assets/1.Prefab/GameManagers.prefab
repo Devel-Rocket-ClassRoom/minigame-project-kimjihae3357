@@ -96,8 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
   battlePointPrefab: {fileID: 4560525742326854172, guid: 63c91787400192e458d53f74f2927acf, type: 3}
   contactRange: 5
-  battlePushRadius: 4
-  battlePushDistance: 2.5
+  battlePushDistance: 5
   battlePushDuration: 0.4
 --- !u!1 &3095551212916266088
 GameObject:
@@ -576,6 +575,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac9a2fc353da694419da80772e8db760, type: 2}
   - {fileID: 11400000, guid: 1e6c03e30da851e4a8cbee1b0d6af8a1, type: 2}
   - {fileID: 11400000, guid: e719fdc91c079dc40a7fef5694721c6c, type: 2}
+  - {fileID: 11400000, guid: 70e46bb33ab443d42b34b8fd8a43f94f, type: 2}
   healRecipe: {fileID: 11400000, guid: ed086f50b44bb9a41b8672fbd7be2375, type: 2}
   gatherRecipe: {fileID: 11400000, guid: 0d26db7f2297e714f89f92f8a97367af, type: 2}
 --- !u!1 &7946867287396609875

@@ -21,8 +21,6 @@ public class BattleManager : MonoBehaviour
     public float ContactRange => contactRange;
 
     [Header("주변 카드 밀어내기")]
-    [Tooltip("전투 시작 시 이 반경 안의 카드 스택을 밀어냄.")]
-    [SerializeField] private float battlePushRadius = 4f;
     [Tooltip("밀려나는 거리.")]
     [SerializeField] private float battlePushDistance = 2.5f;
     [Tooltip("밀려나는 데 걸리는 시간(초).")]
@@ -106,9 +104,18 @@ public class BattleManager : MonoBehaviour
         return true;
     }
 
-    /// <summary>전투 시작 위치 주변 카드 스택을 DOTween으로 부드럽게 밀어냄.</summary>
-    private void PushNearbyStacks(Vector3 center, BattlePoint exclude)
+    /// <summary>
+    /// 전투 시작/합류 위치 주변 카드 스택을 DOTween으로 부드럽게 밀어냄.
+    /// 감지 영역은 BattlePoint 콜라이더의 bounds(XZ 평면) 안에 있는 stack만.
+    /// 밀어낼 거리/시간은 인스펙터의 distance/duration 사용.
+    /// TryStartBattle 및 EnemyCard.JoinExistingBattle 등 외부에서 호출 가능하도록 public.
+    /// </summary>
+    public void PushNearbyStacks(Vector3 center, BattlePoint exclude)
     {
+        if (exclude == null) return;
+        var bpCollider = exclude.GetComponentInChildren<Collider>();
+        if (bpCollider == null) return;   // 콜라이더 없으면 감지 불가 → 아무것도 안 함
+
         var allStacks = Object.FindObjectsByType<CardStack>(FindObjectsSortMode.None);
         foreach (var stack in allStacks)
         {
@@ -116,12 +123,16 @@ public class BattleManager : MonoBehaviour
             if (stack is BattlePoint) continue;
             if (stack.IsDragging) continue;
 
-            Vector3 dir = stack.transform.position - center;
+            Vector3 stackPos = stack.transform.position;
+            Vector3 dir = stackPos - center;
             dir.y = 0f;
-            float dist = dir.magnitude;
-            if (dist > battlePushRadius || dist < 0.01f) continue;
+            if (dir.sqrMagnitude < 0.01f) continue;
 
-            Vector3 target = stack.transform.position + dir.normalized * battlePushDistance;
+            // Y는 BattlePoint 콜라이더 중심 Y로 맞춰 XZ 평면 기준으로 Contains 판정
+            Vector3 probe = new Vector3(stackPos.x, bpCollider.bounds.center.y, stackPos.z);
+            if (!bpCollider.bounds.Contains(probe)) continue;
+
+            Vector3 target = stackPos + dir.normalized * battlePushDistance;
             stack.transform.DOMove(target, battlePushDuration).SetEase(Ease.OutCubic);
         }
     }

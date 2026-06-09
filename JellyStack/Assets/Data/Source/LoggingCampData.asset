@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4cfb397149a7a43906fb81fc5ccae0, type: 3}
   m_Name: LoggingCampData
   m_EditorClassIdentifier: Assembly-CSharp::SourceCardData
-  cardType: 0
+  cardType: 2
   cardPrefab: {fileID: 8481278547604517009, guid: 456be6442ba56f047963b72b189b910e, type: 3}
   cardName: "\uBC8C\uBAA9\uC7A5"
-  Image: {fileID: 0}
+  Image: {fileID: 21300000, guid: 26e124934ffec354181c156cabd55b0b, type: 3}
   sellPrice: 3
   CanSell: 1
   GatherCount: 50
@@ -24,3 +24,4 @@ MonoBehaviour:
   gatherResults:
   - data: {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
     weight: 1
+  gatherEffectPrefab: {fileID: 0}

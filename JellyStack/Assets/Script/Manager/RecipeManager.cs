@@ -340,6 +340,11 @@ public class RecipeManager : MonoBehaviour
             if (recipe.cardResult != null || recipe.packResult != null)
                 SpawnResults(recipe, stack);
 
+            // 가디언 레시피: 작업 완료 시 EnemySpawnerData로 포탈 + 적 스폰 트리거.
+            // EnemyManager.ExecuteWave가 포탈 연출/대기/스폰을 모두 처리.
+            if (recipe.enemySpawnerResult != null)
+                EnemyManager.Instance?.ExecuteWave(recipe.enemySpawnerResult);
+
             HandleIngredients(recipe, stack);
         }
 

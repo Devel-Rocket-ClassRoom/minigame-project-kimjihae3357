@@ -125,6 +125,7 @@ public class SettlementManager : MonoBehaviour
     private void PauseProgressTasks()
     {
         ProgressTask.IsPaused = true;
+        EnemyManager.IsPaused = true;   // SettlementPhase 중 적 점프/공격 정지
         pausedProgressTasks = true;
     }
 
@@ -133,6 +134,7 @@ public class SettlementManager : MonoBehaviour
         if (!pausedProgressTasks) return;
 
         ProgressTask.IsPaused = false;
+        EnemyManager.IsPaused = false;  // 적 점프/공격 재개
         pausedProgressTasks = false;
     }
 
