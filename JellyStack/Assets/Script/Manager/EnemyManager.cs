@@ -6,6 +6,13 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
+    /// <summary>
+    /// FeedPhase / SettlementPhase 동안 적 행동(추적 점프, 전투 공격)을 일시정지하는 플래그.
+    /// ProgressTask.IsPaused / InputManager.IsBlocked와 동일한 패턴.
+    /// EnemyCard.ChaseRoutine과 BattlePoint.AttackerRoutine에서 가드로 사용.
+    /// </summary>
+    public static bool IsPaused = false;
+
     [Header("스폰 영역")]
     [Tooltip("포탈이 생성될 수 있는 영역 콜라이더 목록. 스폰 시 랜덤으로 하나 선택 후 그 안에서 위치 결정. 비어있으면 아래 반경 방식 사용.")]
     [SerializeField] private List<Collider> spawnAreas;
@@ -36,8 +43,13 @@ public class EnemyManager : MonoBehaviour
         if (spawner.portalPrefab != null)
         {
             portal = Instantiate(spawner.portalPrefab, pos, Quaternion.identity);
-            bar = portal.GetComponent<UI_CardProgressBar>();
+            // 자식 GameObject(Canvas_Enemy_ProgressBar)에 컴포넌트가 붙어있을 수 있으므로
+            // GetComponentInChildren 사용. (true = 비활성 자식까지 포함, Start에서 Hide된 상태도 OK)
+            bar = portal.GetComponentInChildren<UI_CardProgressBar>(true);
             bar?.Show();
+            // 카메라가 포탈 위치로 줌하기 직전, 드래그 중이던 카드가 카메라에 끌려가지
+            // 않도록 강제로 해제(원래 stack으로 복귀)한다. FeedPhase 진입 시와 같은 패턴.
+            InputManager.Instance?.ForceCancelDrag();
             CameraController.Instance?.ZoomToTarget(pos);
         }
 

@@ -451,7 +451,7 @@ public class InputManager : MonoBehaviour
         var sellPoints = Object.FindObjectsByType<SellPoint>(FindObjectsSortMode.None);
         foreach (var sp in sellPoints)
         {
-            if (sp == null || !sp.IsPointInside(dropPos)) continue;
+            if (sp == null || !sp.OverlapsWith(draggingStack)) continue;
             Vector3 spXZ = new Vector3(sp.transform.position.x, 0f, sp.transform.position.z);
             float d = (spXZ - dropXZ).sqrMagnitude;
             if (d < bestDistSqr)
@@ -570,7 +570,7 @@ public class InputManager : MonoBehaviour
             var sellPoints = Object.FindObjectsByType<SellPoint>(FindObjectsSortMode.None);
             foreach (var sp in sellPoints)
             {
-                if (sp == null || !sp.IsPointInside(dropPos)) continue;
+                if (sp == null || !sp.OverlapsWith(draggingStack)) continue;
                 Vector3 spXZ = new Vector3(sp.transform.position.x, 0f, sp.transform.position.z);
                 float d = (spXZ - dropXZ).sqrMagnitude;
                 if (d < bestSellDistSqr)
@@ -644,6 +644,13 @@ public class InputManager : MonoBehaviour
 
         if (target != null)
         {
+            // 머지 직전 draggingStack을 dragYOffset만큼 내림.
+            // AddCards/AddCard는 SetParent(worldPositionStays=true)라 카드 world position을 유지하므로,
+            // 부모를 먼저 내려놓으면 자식 카드들도 자연스럽게 내려간 위치에서 target stack에 합류 → 들린 채 고정되는 버그 방지.
+            Vector3 dropPosLow = draggingStack.transform.position;
+            dropPosLow.y -= dragYOffset;
+            draggingStack.transform.position = dropPosLow;
+
             var cardsToMerge = new List<Card>(draggingStack.cards);
             draggingStack.cards.Clear();
 

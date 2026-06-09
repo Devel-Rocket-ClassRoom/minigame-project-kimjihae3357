@@ -27,12 +27,24 @@ public class UI_RecipeEntry : MonoBehaviour
 
     private string GetResultText(CardRecipe recipe)
     {
-        string resultName = GetCardName(recipe.result, recipe.name);
+        // 자동 분기: cardResult / packResult 둘 다 있으면 둘 다 표시 (" + "로 연결).
+        var parts = new List<string>();
 
-        if (recipe.resultCount > 1)
-            return $"{resultName} x{recipe.resultCount}";
+        if (recipe.cardResult != null)
+        {
+            string cardName = GetCardName(recipe.cardResult, recipe.name);
+            parts.Add(recipe.resultCount > 1 ? $"{cardName} x{recipe.resultCount}" : cardName);
+        }
 
-        return resultName;
+        if (recipe.packResult != null)
+        {
+            string packName = !string.IsNullOrEmpty(recipe.packResult.cardName)
+                ? recipe.packResult.cardName
+                : recipe.packResult.name;
+            parts.Add(packName);
+        }
+
+        return parts.Count > 0 ? string.Join(" + ", parts) : recipe.name;
     }
 
     private string GetIngredientsText(List<CardData> ingredients)

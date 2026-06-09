@@ -24,3 +24,4 @@ MonoBehaviour:
   gatherResults:
   - data: {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
     weight: 1
+  gatherEffectPrefab: {fileID: 9004098351934062035, guid: 09024fbd3c4cbd04ca53be48e6a48e73, type: 3}

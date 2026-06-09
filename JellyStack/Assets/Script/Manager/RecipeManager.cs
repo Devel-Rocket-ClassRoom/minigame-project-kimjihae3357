@@ -75,7 +75,8 @@ public class RecipeManager : MonoBehaviour
             if (idx < 0) return false;
             data.RemoveAt(idx);
         }
-        return true;
+        // 정확 일치: 레시피 재료를 전부 소모한 후 카드 목록에 남는 카드가 없어야 함
+        return data.Count == 0;
     }
 
     public void CheckStack(CardStack stack)
@@ -161,7 +162,7 @@ public class RecipeManager : MonoBehaviour
         }
 
         var task = stack.gameObject.AddComponent<ProgressTask>();
-        task.Begin(gatherRecipe, stack, OnGatherComplete, startElapsed, duration);
+        task.Begin(gatherRecipe, stack, OnGatherComplete, startElapsed, duration, sourceData.gatherEffectPrefab);
         return true;
     }
 
@@ -321,7 +322,8 @@ public class RecipeManager : MonoBehaviour
             if (idx < 0) return false;
             stackData.RemoveAt(idx);
         }
-        return true;
+        // 정확 일치: 레시피 재료를 전부 소모한 후 스택에 남는 카드가 없어야 함
+        return stackData.Count == 0;
     }
 
     private void OnRecipeComplete(CardRecipe recipe, CardStack stack)
@@ -334,7 +336,8 @@ public class RecipeManager : MonoBehaviour
         }
         else
         {
-            if (recipe.result != null)
+            // cardResult / packResult 중 하나라도 채워져 있으면 SpawnResults 호출. 둘 다 채워졌으면 둘 다 스폰.
+            if (recipe.cardResult != null || recipe.packResult != null)
                 SpawnResults(recipe, stack);
 
             HandleIngredients(recipe, stack);
@@ -376,17 +379,27 @@ public class RecipeManager : MonoBehaviour
 
         Vector3 sourcePos = stack.transform.position;
 
-        int count = recipe.resultCount;
-        // 자원 채집(스택에 SourceCard 포함) + 날씨 더블 확률 발동 시 2배
-        if (StackHasSource(stack) &&
-            UnityEngine.Random.value < WeatherManager.GatherDoubleChance)
+        // 카드 결과 — 채워져 있으면 resultCount만큼 스폰 (날씨 더블 보너스 적용)
+        if (recipe.cardResult != null)
         {
-            count *= 2;
-            Debug.Log("[Weather] 채집 2배 발동!");
+            int count = recipe.resultCount;
+            // 자원 채집(스택에 SourceCard 포함) + 날씨 더블 확률 발동 시 2배
+            if (StackHasSource(stack) &&
+                UnityEngine.Random.value < WeatherManager.GatherDoubleChance)
+            {
+                count *= 2;
+                Debug.Log("[Weather] 채집 2배 발동!");
+            }
+
+            for (int i = 0; i < count; i++)
+                CardSpawner.Instance.SpawnNear(recipe.cardResult, sourcePos, stack);
         }
 
-        for (int i = 0; i < count; i++)
-            CardSpawner.Instance.SpawnNear(recipe.result, sourcePos, stack);
+        // 카드팩 결과 — 채워져 있으면 1개 스폰 (resultCount 무관, 날씨 보너스 무관)
+        if (recipe.packResult != null)
+        {
+            CardSpawner.Instance.SpawnPack(recipe.packResult, sourcePos);
+        }
     }
 
     /// <summary>
@@ -463,8 +476,10 @@ public class RecipeManager : MonoBehaviour
                 }
             }
             else if (recipe.consumeIngredients
-                     && (recipe.preserveIngredients == null || !recipe.preserveIngredients.Contains(found.data)))
+                     && (recipe.preserveIngredients == null || !recipe.preserveIngredients.Contains(ingredient)))
             {
+                // ingredient 기준으로 체크: 와일드카드 매칭(예: 어떤 주민이든 NormalVillagerData ingredient에 매칭)
+                // 시 found.data가 ingredient와 달라도 ingredient가 preserve 목록이면 유지.
                 stack.cards.Remove(found);
                 Destroy(found.gameObject);
             }

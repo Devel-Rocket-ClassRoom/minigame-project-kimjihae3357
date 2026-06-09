@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: CampFireRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: a5f7c96cb8f9e8746a73b897a35b8d01, type: 2}
+  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
   - {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
-  preserveIngredients: []
-  result: {fileID: 11400000, guid: b7b431415ae71e84ea6c6f9f1232e45e, type: 2}
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  preserveIngredients:
+  - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
+  cardResult: {fileID: 11400000, guid: b7b431415ae71e84ea6c6f9f1232e45e, type: 2}
+  packResult: {fileID: 0}
   resultCount: 1
   duration: 40
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 9004098351934062035, guid: 7aeeb75055d9c424daee6a80d7cc18da, type: 3}

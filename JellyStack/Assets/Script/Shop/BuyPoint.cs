@@ -140,5 +140,13 @@ public class BuyPoint : MonoBehaviour
         {
             Debug.LogWarning("BuyPoint: cardStackPrefab이 비어있어 팩이 CardStack에 감싸지지 않습니다.");
         }
+
+        // 일반 카드 스폰과 동일한 연출 적용 — 점프 애니메이션(BuyPoint 위치에서 spawnPos로) + 효과음.
+        // CardSpawner의 공용 메서드만 빌려쓰고, prefab 인스턴스화 로직 자체는 BuyPoint가 그대로 유지.
+        if (CardSpawner.Instance != null)
+        {
+            CardSpawner.Instance.AnimateJump(packCard, transform.position, spawnPos);
+            CardSpawner.Instance.PlayCardSpawnSfx();
+        }
     }
 }

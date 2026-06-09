@@ -120,6 +120,15 @@ public class SaveManager : MonoBehaviour
         // 모든 매니저의 Awake/Start(예: WeatherManager.ClearWeather)가 끝난 뒤 덮어쓰기
         yield return null;
 
+        // 안전망: 이전 씬(Title/Pause/GameOver)에서 넘어온 비정상 상태 강제 정상화.
+        // 특히 Time.timeScale은 씬 로드 시 자동 리셋되지 않는 전역 변수이므로, 직전 세션에서
+        // pause/gameover 상태(timeScale=0)로 메인 메뉴로 나갔다면 이어하기 직후에도 0이 유지됨.
+        // ESC → Resume Game이 사후에 처리해주던 timeScale 복원을 처음부터 명시적으로 보장.
+        Time.timeScale = 1f;
+        InputManager.IsBlocked = false;
+        ProgressTask.IsPaused = false;
+        EnemyManager.IsPaused = false;
+
         var data = SaveSystem.Read();
         if (data == null || !data.hasData) yield break;
         if (database == null)
@@ -172,7 +181,21 @@ public class SaveManager : MonoBehaviour
             if (card != null) stack.AddCard(card);
         }
 
-        // 채집/제작 패턴이면 작업 자동 재시작 (진행도는 0부터)
+        // 카드 targetLocalPosition을 ArrangeCards로 갱신 (CheckStack 전에 먼저!)
+        stack.Refresh();
+
+        // Card.Update의 Lerp가 한 프레임 후에야 transform을 따라잡기 때문에,
+        // 복원 직후 카드 transform.position이 아직 targetLocalPosition에 도달 안 한 상태.
+        // 그대로 CheckStack을 호출하면 ProgressTask가 stack.TopCard.transform.position을
+        // 잘못된 위치(원점 등)로 읽어서 채집 effect가 엉뚱한 자리에 박힘.
+        // → 강제로 transform.localPosition을 targetLocalPosition으로 즉시 동기화.
+        foreach (var card in stack.cards)
+        {
+            if (card != null)
+                card.transform.localPosition = card.targetLocalPosition;
+        }
+
+        // 채집/제작 패턴이면 작업 자동 재시작 (진행도는 0부터). 위치 동기화 이후 호출이 핵심.
         if (RecipeManager.Instance != null && !stack.IsEmpty)
             RecipeManager.Instance.CheckStack(stack);
     }

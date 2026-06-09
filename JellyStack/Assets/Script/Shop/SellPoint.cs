@@ -43,6 +43,31 @@ public class SellPoint : MonoBehaviour
     }
 
     /// <summary>
+    /// 드래그 중인 스택의 Collider bounds(XZ)가 dropArea bounds(XZ)와 겹치는지 확인.
+    /// 중심점 체크보다 직관적 — 카드 엣지가 영역에 닿으면 판매 가능 판정.
+    /// </summary>
+    public bool OverlapsWith(CardStack stack)
+    {
+        if (dropArea == null || stack == null) return false;
+        var sellBounds = dropArea.bounds;
+
+        // 스택의 모든 카드 콜라이더 중 하나라도 XZ 겹치면 true
+        foreach (var card in stack.cards)
+        {
+            if (card == null) continue;
+            var col = card.GetComponent<Collider>();
+            if (col == null) continue;
+            var cb = col.bounds;
+
+            // XZ 평면 겹침 체크 (Y 무시)
+            bool overlapX = cb.max.x >= sellBounds.min.x && cb.min.x <= sellBounds.max.x;
+            bool overlapZ = cb.max.z >= sellBounds.min.z && cb.min.z <= sellBounds.max.z;
+            if (overlapX && overlapZ) return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 스택 내 CanSell=true 카드들의 sellPrice 합. 판매 미리보기와 실제 판매가 동일한 숫자를
     /// 쓰도록 SellStack과 공유한다. stack을 변경하지 않는다.
     /// </summary>

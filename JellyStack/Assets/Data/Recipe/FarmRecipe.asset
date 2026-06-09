@@ -17,9 +17,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94ecf2a9f8d1b5f4f9e557b3162fb4cd, type: 2}
   preserveIngredients:
   - {fileID: 11400000, guid: 14a4bd3770b97d6439c7544acbf94bfe, type: 2}
-  result: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
+  cardResult: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
+  packResult: {fileID: 0}
   resultCount: 1
-  duration: 40
+  duration: 50
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
   effectPrefab: {fileID: 0}
