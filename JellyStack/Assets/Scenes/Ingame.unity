@@ -2211,6 +2211,10 @@ PrefabInstance:
       propertyPath: uiManager
       value: 
       objectReference: {fileID: 1263863276}
+    - target: {fileID: 84651915053072991, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
+      propertyPath: starterPackPrefab
+      value: 
+      objectReference: {fileID: 8481278547604517009, guid: b69320ddfeee884429918cea4efe8eab, type: 3}
     - target: {fileID: 4189152433874841181, guid: 09746eb8e5b291340bb75cd024fd8423, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

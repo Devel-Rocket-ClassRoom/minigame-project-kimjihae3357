@@ -23,8 +23,11 @@ MonoBehaviour:
   gatherDuration: 10
   gatherResults:
   - data: {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
-    weight: 30
+    weight: 10
   - data: {fileID: 11400000, guid: 5e490e050143cf846a6ef9c89f977a4d, type: 2}
     weight: 5
   - data: {fileID: 11400000, guid: 97ca5ac3916124a4792886e91dd46baa, type: 2}
     weight: 1
+  - data: {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
+    weight: 20
+  gatherEffectPrefab: {fileID: 0}
