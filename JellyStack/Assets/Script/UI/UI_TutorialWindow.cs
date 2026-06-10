@@ -13,7 +13,6 @@ using UnityEngine.UI;
 ///   - infoText      (Text_Box > Text_info)          → page.info
 ///   - tipInfoText   (Tip_Text_Box > Text_tip_info)  → page.tip
 ///   - tipBox        (Tip_Text_Box GameObject)       → page.tip 빈 문자열이면 비활성
-///   - pageText      (Button > Button > Text_page)   → "현재/전체"
 ///   - pageDots[]    (Page > 1~5 의 Image들)         → 활성 페이지만 activeDotColor
 ///
 /// 좌측/우측 페이지 버튼은 첫 페이지/마지막 페이지에서 자동으로 interactable=false.
@@ -30,8 +29,6 @@ public class UI_TutorialWindow : MonoBehaviour
     [SerializeField] private GameObject leftContainer;
 
     [Header("텍스트")]
-    [Tooltip("페이지 번호 표시 (\"1/5\" 형식).")]
-    [SerializeField] private TMP_Text pageText;
     [Tooltip("Text_info_title — 페이지 제목.")]
     [SerializeField] private TMP_Text titleText;
     [Tooltip("Text_info — 본문 설명.")]
@@ -114,7 +111,6 @@ public class UI_TutorialWindow : MonoBehaviour
         // 데이터 없으면 안전 출력만
         if (book == null || book.pages == null || book.pages.Count == 0)
         {
-            if (pageText != null) pageText.text = "0/0";
             if (titleText != null) titleText.text = "";
             if (infoText != null) infoText.text = "";
             if (tipInfoText != null) tipInfoText.text = "";
@@ -139,7 +135,6 @@ public class UI_TutorialWindow : MonoBehaviour
         var page = book.pages[currentPage];
 
         // 텍스트
-        if (pageText != null) pageText.text = $"{currentPage + 1}/{book.pages.Count}";
         if (titleText != null) titleText.text = page.title ?? "";
         if (infoText != null) infoText.text = page.info ?? "";
 

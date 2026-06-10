@@ -80,6 +80,10 @@ public class EnemyCard : Card
             if (Random.value < entry.chance)
                 CardSpawner.Instance.SpawnNear(entry.card, deathPos, deathStack);
         }
+
+        // 엔딩 보스 처치 체크 — GameManager에 등록된 보스(endingBossData)라면 엔딩 창 트리거.
+        if (GameManager.Instance != null && GameManager.Instance.IsEndingBoss(data))
+            GameManager.Instance.ShowGameEnding();
     }
 
     private IEnumerator ChaseRoutine()
