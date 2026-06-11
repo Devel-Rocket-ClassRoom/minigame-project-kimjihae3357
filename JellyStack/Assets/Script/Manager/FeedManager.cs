@@ -58,6 +58,7 @@ public class FeedManager : MonoBehaviour
 
         InputManager.IsBlocked = true;
         ProgressTask.IsPaused = true;   // 채집 진행 정지
+        EnemyManager.IsPaused = true;   // FeedPhase 중 적 점프/공격 정지
 
         if (UI_Ingame.Instance != null)
             UI_Ingame.Instance.ShowFeedOverlay();
@@ -201,6 +202,7 @@ public class FeedManager : MonoBehaviour
 
         InputManager.IsBlocked = false;
         ProgressTask.IsPaused = false;  // 채집 진행 재개
+        EnemyManager.IsPaused = false;  // 적 점프/공격 재개
 
         if (success)
         {

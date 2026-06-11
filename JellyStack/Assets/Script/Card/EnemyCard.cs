@@ -80,6 +80,10 @@ public class EnemyCard : Card
             if (Random.value < entry.chance)
                 CardSpawner.Instance.SpawnNear(entry.card, deathPos, deathStack);
         }
+
+        // 엔딩 보스 처치 체크 — GameManager에 등록된 보스(endingBossData)라면 엔딩 창 트리거.
+        if (GameManager.Instance != null && GameManager.Instance.IsEndingBoss(data))
+            GameManager.Instance.ShowGameEnding();
     }
 
     private IEnumerator ChaseRoutine()
@@ -91,6 +95,7 @@ public class EnemyCard : Card
                 : 2f;
             yield return new WaitForSeconds(interval);
 
+            if (EnemyManager.IsPaused) continue;    // FeedPhase / SettlementPhase 중 적 정지
             if (_isJumping) continue;
             if (stack == null) continue;            // 스택 없으면 (0,0,0) 빨림 회피
             if (stack is BattlePoint) continue;     // 이미 전투 중이면 점프 정지
@@ -168,6 +173,10 @@ public class EnemyCard : Card
         }
 
         Destroy(sourceStack.gameObject);
+
+        // 새 적이 합류해 BattlePoint가 커진 시점에도 주변 스택을 밀어내 시야 확보.
+        // TryStartBattle 경로와 동일한 push 연출 적용.
+        BattleManager.Instance?.PushNearbyStacks(bp.transform.position, bp);
     }
 
     private VillagerCard FindNearestVillager()
@@ -179,6 +188,7 @@ public class EnemyCard : Card
         foreach (var v in Object.FindObjectsByType<VillagerCard>(FindObjectsSortMode.None))
         {
             if (v == null || v.IsFrozen) continue;   // 얼어붙은 주민은 추적/전투 대상 제외
+            if (v.data is VillagerCardData vd && vd.isBaby) continue;   // 아기 주민은 추적/전투 대상 제외
             float d = (v.transform.position - myPos).sqrMagnitude;
             if (d < nearestDistSqr)
             {

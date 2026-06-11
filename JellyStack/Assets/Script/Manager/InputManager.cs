@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class InputManager : MonoBehaviour
 {
@@ -656,11 +657,38 @@ public class InputManager : MonoBehaviour
 
             if (target is BattlePoint bp)
             {
-                // BattlePoint는 한 장씩 addCard 호출해야 BattlePoint.AddCard(new hide)가 실행되야
-                // 공격 코루틴 시작 + ArrangeBattleCard + 영역 확장이 일어남
+                // BattlePoint는 한 장씩 addCard 호출해야 공격 코루틴 시작 + ArrangeBattleCard + 영역 확장이 일어남.
+                // 단, 전투 참여 자격은 "성인 주민(VillagerCard with isBaby=false)"으로 제한.
+                // 그 외(아기 주민, 재료/음식/자원/팩 등 비전투 카드)는 BattlePoint에 넣지 않고
+                // draggingStack에 남겨 BattlePoint 옆에 별도 stack으로 떨어뜨려 "밀려나는" 효과를 만든다.
+                var nonFighters = new List<Card>();
                 foreach (var c in cardsToMerge)
                 {
-                    bp.AddCard(c);
+                    bool isAdultVillager = c is VillagerCard vc
+                                        && vc.data is VillagerCardData vd
+                                        && !vd.isBaby;
+                    if (isAdultVillager)
+                        bp.AddCard(c);
+                    else
+                        nonFighters.Add(c);
+                }
+
+                if (nonFighters.Count > 0)
+                {
+                    foreach (var c in nonFighters)
+                        draggingStack.cards.Add(c);
+                    draggingStack.Refresh();
+
+                    // BattlePoint에서 멀어지는 방향으로 DOMove로 밀어냄 (밀려나는 시각 효과).
+                    // BattleManager.PushNearbyStacks의 distance/duration 값(2.5 / 0.4)과 동일 톤.
+                    Vector3 from = draggingStack.transform.position;
+                    Vector3 dir = from - bp.transform.position;
+                    dir.y = 0f;
+                    if (dir.sqrMagnitude < 0.01f) dir = Vector3.right;
+                    Vector3 pushTarget = from + dir.normalized * 2.5f;
+                    draggingStack.transform.DOMove(pushTarget, 0.4f).SetEase(Ease.OutCubic);
+
+                    return;   // draggingStack에 카드가 남았으므로 Destroy 하지 않음
                 }
             }
             else

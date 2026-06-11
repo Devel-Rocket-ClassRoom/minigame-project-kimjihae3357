@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProgressTask : MonoBehaviour
@@ -16,6 +17,11 @@ public class ProgressTask : MonoBehaviour
     public static bool IsPaused = false;
 
     private GameObject _activeEffect;
+
+    // 작업 시작 시점 stack.cards 스냅샷. 매 프레임 이 카드들이 stack에 그대로 있는지 검증해
+    // 판매/사망/분리 등 어떤 경로로든 재료가 빠지면 즉시 Cancel.
+    // (RecipeManager.CheckStack은 정확 일치일 때만 task를 시작하므로 시작 시점 stack.cards = 레시피 재료.)
+    private List<Card> _ingredientSnapshot;
 
     public void Begin(CardRecipe recipe, CardStack stack, System.Action<CardRecipe, CardStack> onComplete, float startElapsed = 0f, float durationOverride = -1f, GameObject effectOverride = null)
     {
@@ -49,6 +55,9 @@ public class ProgressTask : MonoBehaviour
                 stack.transform
             );
         }
+
+        // 시작 시점 재료 카드 스냅샷 — 이후 Update에서 매 프레임 검증해 재료가 빠지면 Cancel.
+        _ingredientSnapshot = stack != null ? new List<Card>(stack.cards) : null;
     }
 
     private void Update()
@@ -60,6 +69,21 @@ public class ProgressTask : MonoBehaviour
         {
             Cancel();
             return;
+        }
+
+        // 시작 시점 재료 카드 중 하나라도 사라지거나 stack 밖이면 작업 중단.
+        // (판매/사망/머지/분리 등 모든 카드 제거 경로를 ProgressTask 자체에서 한 곳에 커버.)
+        if (_ingredientSnapshot != null)
+        {
+            for (int i = 0; i < _ingredientSnapshot.Count; i++)
+            {
+                var c = _ingredientSnapshot[i];
+                if (c == null || !stack.cards.Contains(c))
+                {
+                    Cancel();
+                    return;
+                }
+            }
         }
 
         // 시간 진행

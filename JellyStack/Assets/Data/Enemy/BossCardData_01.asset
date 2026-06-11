@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c0587b0aa7af4f4da0a7dfd3fa89588, type: 3}
-  m_Name: EnemyCardData_03
+  m_Name: BossCardData_01
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCardData
   cardType: 5
   cardPrefab: {fileID: 8481278547604517009, guid: 61207d9c9200155468d844adb2235f3c, type: 3}
@@ -18,14 +18,14 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: e2fc8d5cd79c1834b9bf274334412d9b, type: 3}
   sellPrice: 0
   CanSell: 0
-  maxHealth: 10
-  attackPower: 1
+  maxHealth: 30
+  attackPower: 3
   jumpInterval: 3
   attackInterval: 2.5
   dropTable:
   - card: {fileID: 11400000, guid: a8502e516d841e24c9e252e63aa31594, type: 2}
-    chance: 0.2
+    chance: 1
   - card: {fileID: 11400000, guid: 3a2aa49396df80549aea8e45120dc3af, type: 2}
-    chance: 0.3
+    chance: 1
   - card: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
-    chance: 0.7
+    chance: 0.5

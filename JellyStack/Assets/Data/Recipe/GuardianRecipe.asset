@@ -10,20 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33cea8e47c952ef4c8c58c190a6ff52a, type: 3}
-  m_Name: StorageRecipe
+  m_Name: GuardianRecipe
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
-  - {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
-  - {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
-  - {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
-  - {fileID: 11400000, guid: 5e490e050143cf846a6ef9c89f977a4d, type: 2}
+  - {fileID: 11400000, guid: 2f1ab54315b89204ca302afc9918ea12, type: 2}
   - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
   preserveIngredients:
   - {fileID: 11400000, guid: 00e2e4f22a4674fc8968b08762e17737, type: 2}
-  cardResult: {fileID: 11400000, guid: 19b610dd0af0ead459f1161ea97519ee, type: 2}
+  cardResult: {fileID: 0}
   packResult: {fileID: 0}
   resultCount: 1
-  duration: 60
+  enemySpawnerResult: {fileID: 11400000, guid: cf2f0c5545d9a9b45a1993ac1363daa5, type: 2}
+  duration: 10
   consumeIngredients: 1
   iconPrefab: {fileID: 0}
-  effectPrefab: {fileID: 9004098351934062035, guid: 7aeeb75055d9c424daee6a80d7cc18da, type: 3}
+  effectPrefab: {fileID: 8943549800310513221, guid: eb634b58199e2694889ecc382af67557, type: 3}

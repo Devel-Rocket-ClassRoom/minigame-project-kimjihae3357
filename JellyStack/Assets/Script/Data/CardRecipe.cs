@@ -23,6 +23,11 @@ public class CardRecipe : ScriptableObject
     [Tooltip("cardResult 전용 — 카드를 몇 개 스폰할지. packResult에는 영향 없음(항상 1개).")]
     public int resultCount = 1;
 
+    [Tooltip("작업 완료 시 EnemyManager.ExecuteWave에 전달할 EnemySpawnerData. " +
+             "포탈 생성 → spawnDelay 대기 → 적 스폰까지 EnemySpawnerData 설정대로 처리됨. " +
+             "(선택, 가디언 레시피용)")]
+    public EnemySpawnerData enemySpawnerResult;
+
     [Header("작업 시간")]
     public float duration = 3;
     [Header("카드 소비됨")]

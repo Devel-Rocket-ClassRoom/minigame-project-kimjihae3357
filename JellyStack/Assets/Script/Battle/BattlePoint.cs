@@ -13,9 +13,15 @@ public class BattlePoint : CardStack
     [Header("전투 영역")]
     [Tooltip("빨간 사각형을 그리는 SpriteRenderer (자식 'Square'의 컴포넌트). DrawMode=Tiled여야 함.")]
     [SerializeField] private SpriteRenderer areaSprite;
+    [Tooltip("전투 영역 콜라이더 (자식 'Collider'의 BoxCollider). " +
+             "카드 수에 따라 areaSprite와 함께 size가 자동 확장되어 PushNearbyStacks 감지 영역도 따라 커진다.")]
+    [SerializeField] private BoxCollider areaCollider;
     [SerializeField] private Vector2 baseAreaSize = new Vector2(9f, 9f);
     [Tooltip("카드 한 장 추가될 때마다 영역에 더해질 크기.")]
     [SerializeField] private Vector2 sizePerCard = new Vector2(1f, 0f);
+
+    // areaCollider의 초기 size를 캐시 — 확장 기준점.
+    private Vector3 _initialColliderSize;
 
     [Header("배치")]
     [Tooltip("같은 줄 내 카드 사이 간격 (X 축).")]
@@ -44,6 +50,12 @@ public class BattlePoint : CardStack
     private readonly Dictionary<Card, Coroutine> _attackRoutines = new Dictionary<Card, Coroutine>();
     private bool _battleStarted;
     private bool _battleEnded;
+
+    private void Awake()
+    {
+        // 콜라이더 초기 size를 캐시해 두고, UpdateAreaSize에서 sizePerCard 단위로 확장 적용.
+        if (areaCollider != null) _initialColliderSize = areaCollider.size;
+    }
 
     // SoundManager에 전투 활성/비활성 알림 — Instantiate / Destroy 라이프사이클에 자동 연동.
     private void OnEnable()
@@ -92,6 +104,10 @@ public class BattlePoint : CardStack
             float interval = GetAttackInterval(attacker);
             yield return new WaitForSeconds(interval);
 
+            if (_battleEnded) yield break;
+            if (attacker == null || !cards.Contains(attacker)) yield break;
+            // FeedPhase / SettlementPhase 중엔 공격 사이클 정지 (적/주민 모두)
+            while (EnemyManager.IsPaused) yield return null;
             if (_battleEnded) yield break;
             if (attacker == null || !cards.Contains(attacker)) yield break;
 
@@ -291,9 +307,22 @@ public class BattlePoint : CardStack
 
     private void UpdateAreaSize()
     {
-        if (areaSprite == null) return;
         int extra = Mathf.Max(0, cards.Count - 2);
-        areaSprite.size = baseAreaSize + sizePerCard * extra;
+
+        if (areaSprite != null)
+            areaSprite.size = baseAreaSize + sizePerCard * extra;
+
+        // 콜라이더도 같이 확장 → PushNearbyStacks 감지 영역도 자동으로 따라 커짐.
+        // sizePerCard는 Sprite XY 기준 — World XZ 평면에 매핑 (X=가로, Y=세로(=World Z)).
+        // BoxCollider.size.y(높이)는 그대로 유지 (수직 방향이라 push 감지에 무관).
+        if (areaCollider != null)
+        {
+            areaCollider.size = new Vector3(
+                _initialColliderSize.x + sizePerCard.x * extra,
+                _initialColliderSize.y,
+                _initialColliderSize.z + sizePerCard.y * extra
+            );
+        }
     }
 
     /// <summary>위/아래 줄 분리 배치: 적은 윗줄(-Z), 주민은 아랫줄(+Z). 각 줄은 가운데 정렬.</summary>

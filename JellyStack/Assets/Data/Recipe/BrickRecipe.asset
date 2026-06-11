@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardRecipe
   ingredients:
   - {fileID: 11400000, guid: 179068ea94777b54ea876dd9403f5de4, type: 2}
-  - {fileID: 11400000, guid: b27739be562255d49b436796e81d46b6, type: 2}
+  - {fileID: 11400000, guid: 3b9b70d2ac7e1d940a0d7d9799d15233, type: 2}
   preserveIngredients:
   - {fileID: 11400000, guid: 179068ea94777b54ea876dd9403f5de4, type: 2}
   cardResult: {fileID: 11400000, guid: ac3b7fff9025d4b4d9aee3fb33bb2b29, type: 2}

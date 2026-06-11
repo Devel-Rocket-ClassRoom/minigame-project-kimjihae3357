@@ -14,8 +14,7 @@ public class UI_GameOverWindow : MonoBehaviour
     {
         uiManager = manager;
 
-        exitButton.onClick.AddListener(uiManager.ExitGame);
-
+        if (exitButton != null) exitButton.onClick.AddListener(uiManager.ExitGame);
     }
 
     public void Show()

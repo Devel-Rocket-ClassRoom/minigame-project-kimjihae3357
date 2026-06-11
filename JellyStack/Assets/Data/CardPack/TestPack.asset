@@ -16,14 +16,6 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: 58d5890415e622440a232301db5dfc90, type: 3}
   cardEntries:
   - data: {fileID: 11400000, guid: 9f3155692a751534fab07b2bf12da9f2, type: 2}
-    count: 1
-  - data: {fileID: 11400000, guid: ad6b0eafa58715d4ba26b75eeead4635, type: 2}
-    count: 1
-  - data: {fileID: 11400000, guid: 329c2fd063645aa4e82d287fefa7383e, type: 2}
-    count: 1
-  - data: {fileID: 11400000, guid: a9324ef549ee42447ad679f361b990c6, type: 2}
-    count: 3
-  - data: {fileID: 11400000, guid: bc10e954629371a49917ee734726b4fc, type: 2}
-    count: 15
-  - data: {fileID: 11400000, guid: c3342bad9a873da429da30bfdec070ea, type: 2}
+    count: 5
+  - data: {fileID: 11400000, guid: 2f1ab54315b89204ca302afc9918ea12, type: 2}
     count: 1

@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("각 항목은 독립적으로 발동. 예: interval=3이면 3일, 6일, 9일마다 소환.")]
     [SerializeField] private List<WaveSchedule> waveSchedules;
 
+    [Header("엔딩")]
+    [Tooltip("이 EnemyCardData(예: BossCardData_03)를 가진 적이 처치되면 GameEnding_window가 표시된다. 비워두면 엔딩 트리거 안 됨.")]
+    [SerializeField] private EnemyCardData endingBossData;
+
     private Vector3 startSpawnPosition = Vector3.zero;
 
     private void Awake()
@@ -56,6 +60,19 @@ public class GameManager : MonoBehaviour
     {
         if (uiManager != null)
             uiManager.ShowGameOver();
+    }
+
+    /// <summary>주어진 카드 데이터가 엔딩 보스인지 검사. EnemyCard.Die에서 사용.</summary>
+    public bool IsEndingBoss(CardData data)
+    {
+        return endingBossData != null && data == endingBossData;
+    }
+
+    /// <summary>엔딩 보스 처치 시 호출. UIManager에 엔딩 창 표시 위임.</summary>
+    public void ShowGameEnding()
+    {
+        if (uiManager != null)
+            uiManager.ShowGameEnding();
     }
 
     /// <summary>날씨 룰렛 발동 여부 판정 — UI_Ingame에서 호출</summary>
