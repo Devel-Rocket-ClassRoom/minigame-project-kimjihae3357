@@ -6,7 +6,7 @@ public class UI_GameOverWindow : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
     [SerializeField] private Image image;
-    [SerializeField] private Button button;
+    [SerializeField] private Button exitButton;
 
     private UIManager uiManager;
 
@@ -14,7 +14,7 @@ public class UI_GameOverWindow : MonoBehaviour
     {
         uiManager = manager;
 
-        if (button != null) button.onClick.AddListener(uiManager.ExitGame);
+        if (exitButton != null) exitButton.onClick.AddListener(uiManager.ExitGame);
     }
 
     public void Show()
