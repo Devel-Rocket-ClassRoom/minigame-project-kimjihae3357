@@ -29,7 +29,11 @@ public class SaveManager : MonoBehaviour
 
     public void Save()
     {
-        SaveSystem.Write(Capture());
+        var data = Capture();
+        SaveSystem.Write(data);
+
+        if (FirebaseManager.Instance != null && FirebaseManager.Instance.IsSignedIn)
+            _ = FirebaseManager.Instance.SaveGameAsync(data);
     }
 
     private GameSaveData Capture()

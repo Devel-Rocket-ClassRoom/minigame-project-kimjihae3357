@@ -2,9 +2,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class UI_TitleWindow : MonoBehaviour
 {
+    public static UI_TitleWindow Instance { get; private set;  }
 
     [SerializeField] private Button startButton;
     [SerializeField] private Button continueButton;
@@ -16,13 +18,71 @@ public class UI_TitleWindow : MonoBehaviour
     [Tooltip("Continue 버튼의 부모 오브젝트. 세이브 없을 때 숨길 대상.")]
     [SerializeField] private GameObject continueContainer;
 
-    void Start()
+    [Header("로그인 창")]
+    [SerializeField] private GameObject loginWindow;
+
+    [Header("로그인 정보")]
+    [SerializeField] private GameObject loginInfo;
+    [SerializeField] private TMP_Text loginIdText;
+    [SerializeField] private Button logoutButton;
+
+    private void Awake() => Instance = this; 
+
+    private async Task Start()
     {
         startButton.onClick.AddListener(NewGame);
         continueButton.onClick.AddListener(ContinueGame);
         exitButton.onClick.AddListener(ExitGame);
 
+        if (logoutButton != null)
+            logoutButton.onClick.AddListener(OnLogoutClicked);
+
+        if (FirebaseManager.Instance != null)
+            await FirebaseManager.Instance.ReadyTask;
+
+        bool signedIn = FirebaseManager.Instance != null && FirebaseManager.Instance.IsSignedIn;
+        if (signedIn)
+            await OnSignedIn();
+        else
+        {
+            if (loginWindow != null)
+                loginWindow.SetActive(true);
+            if (loginInfo != null)
+                loginInfo.SetActive(false);
+        }
+    }
+
+    public async Task OnSignedIn()
+    {
+        if (loginWindow != null)
+            loginWindow.SetActive(false);
+
+        if (loginInfo != null)
+            loginInfo.SetActive(true);
+
+        if (loginIdText != null)
+            loginIdText.text = FirebaseManager.Instance.Email;
+
+        var cloud = await FirebaseManager.Instance.LoadGameAsync();
+        if (cloud != null)
+            SaveSystem.Write(cloud);
+        else SaveSystem.Delete();
+
         RefreshSaveInfo();
+    }
+
+    public void OnLogoutClicked()
+    {
+        FirebaseManager.Instance.SignOut();
+
+        if (loginInfo != null)
+            loginInfo.SetActive(false );
+
+        if (loginWindow != null)
+            loginWindow.SetActive(true );
+
+        SaveSystem.Delete();
+        RefreshSaveInfo() ;
     }
 
     private void RefreshSaveInfo()

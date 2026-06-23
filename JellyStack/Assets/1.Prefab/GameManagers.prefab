@@ -467,6 +467,7 @@ MonoBehaviour:
     spawner: {fileID: 11400000, guid: bbdddb00b05e9fb489184d917eb30255, type: 2}
   - interval: 12
     spawner: {fileID: 11400000, guid: 2a9639a1802c59b4fb1f34cc68e25fcd, type: 2}
+  endingBossData: {fileID: 0}
 --- !u!1 &6238206434154902690
 GameObject:
   m_ObjectHideFlags: 0
