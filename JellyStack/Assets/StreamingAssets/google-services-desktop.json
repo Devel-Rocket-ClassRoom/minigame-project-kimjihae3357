@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "801274230999",
+    "firebase_url": "https://miniproject-1f094-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "miniproject-1f094",
+    "storage_bucket": "miniproject-1f094.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801274230999:android:fb28c19c7c770ef8365892",
+        "android_client_info": {
+          "package_name": "com.kjh3357.miniproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHSs_gTVcRra4-WJAtBaXM52Aj829EG8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
