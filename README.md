@@ -12,7 +12,7 @@
 
 | 항목 | 내용 |
 | --- | --- |
-| 프로젝트명 | **SpiritStack** (Unity 프로젝트 폴더명은 초기 명칭인 `JellyStack`) |
+| 프로젝트명 | **SpiritStack** |
 | 장르 | 카드 스태킹 생존 경영 시뮬레이션 |
 | 플랫폼 | PC (Windows Standalone) · WebGL |
 | 엔진 | Unity **6000.3.15f1** (URP) |
@@ -124,22 +124,17 @@ SpiritStack은 이 핵심 재미(카드 스태킹 · 조합 · 생존 사이클)
 | --- |
 | <img src="docs/screenshots/game_over.png" width="480" alt="주민이 모두 사망하면 게임 오버"> |
 
-> 스크린샷은 `Build_1.0.3_Web` (WebGL 빌드)에서 촬영했습니다.
-
 ---
 
 ## 실행 방법
 
 ### 빌드 실행
 
-- **Windows** — `JellyStack/Build_1.0.3/SpiritStack.exe` 실행
-- **WebGL** — `JellyStack/Build_1.0.3_Web/`은 정적 웹 서버가 필요합니다.
-  `.data`/`.wasm`/`.framework.js` 파일이 gzip으로 압축되어 있으므로,
-  서버가 `Content-Encoding: gzip` 헤더를 내려주도록 설정한 뒤 `index.html`을 열어주세요.
+- **Windows** — `SpiritStack/Build_1.0.3/SpiritStack.exe` 실행
 
 ### 에디터에서 실행
 
-1. Unity **6000.3.15f1** 로 `JellyStack/` 폴더를 엽니다.
+1. Unity **6000.3.15f1** 로 `SpiritStack/` 폴더를 엽니다.
 2. `Assets/Scenes/Title.unity` 를 열고 재생합니다. (인게임 씬은 `Assets/Scenes/Ingame.unity`)
 
 조작은 마우스만 사용합니다 — **카드 드래그**로 스택/이동, **빈 공간 드래그**로 카메라 이동, **휠**로 줌, **ESC**로 일시정지.
@@ -169,7 +164,7 @@ SpiritStack은 이 핵심 재미(카드 스태킹 · 조합 · 생존 사이클)
 ### 프로젝트 구조
 
 ```
-JellyStack/Assets/
+SpiritStack/Assets/
 ├── Script/
 │   ├── Manager/     # GameManager, DayManager, WeatherManager, RecipeManager,
 │   │                #  EnemyManager, FeedManager, SettlementManager,
